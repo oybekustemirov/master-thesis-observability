@@ -1,0 +1,58 @@
+[17:02:31] === RUN CDC-P1-r1-F1R-20260909170231 ===
+[17:02:31] mode=CDC profile=P1 rep=1 tps=50 duration=180s fault=F1R
+[17:02:31] jar: target/master-thesis-observability-0.0.1-SNAPSHOT.jar
+[17:02:31] arxiv redo tozalanmoqda
+[17:02:31] workload tozalanmoqda (reference saqlanadi)
+workload reset; reference data preserved
+AQ backlog purged: 0 -> 0
+[17:02:39] Kafka topigi qayta yaratilmoqda
+[17:02:49] ilova ishga tushirilmoqda (mode=CDC)
+[17:03:07] ilova tayyor (pid 4120622)
+[17:03:07] Debezium konnektori ro'yxatdan o'tkazilmoqda (CDC, prefix=obsv_cdc_p1_r1_f1r_20260909170231)
+konnektor ro'yxatdan o'tkazilmoqda: a1-cdc-obsv_cdc_p1_r1_f1r_20260909170231 (prefix=obsv_cdc_p1_r1_f1r_20260909170231)
+konnektor RUNNING (2s)
+streaming tasdiqlanmoqda (heartbeat topigi: __debezium-heartbeat.obsv_cdc_p1_r1_f1r_20260909170231)
+streaming tasdiqlandi (1 urinish)
+[17:03:15] fault F1R 60s dan keyin yuboriladi
+[17:03:15] k6 yuklamasi boshlandi
+[fault 17:04:15] SIGKILL ilovaga: 4120622
+[fault 17:04:26] ilova qayta ishga tushirilmoqda (mode=results/WRAPPER_B3-P1-r91-20260903164920/run.log:WRAPPER_B3)
+[fault 17:04:26] F1R tugadi
+[17:06:16] k6 nolga teng bo'lmagan kod bilan tugadi (natija baribir tahlil qilinadi)
+[17:06:16] k6 iteratsiyalari: 9001
+[17:06:16] ilova ishlamayapti (fault=F1R) — drenaj uchun qayta ishga tushirilmoqda
+[17:06:32] ilova qayta tiklandi (9x2s)
+[17:06:32] pipeline bo'shashi kutilmoqda (maks 120s)
+[17:07:19] pipeline bo'sh (15s, sink=8973 xabar)
+[17:07:30] ground truth eksport qilinmoqda
+[17:07:30] Kafka topigi eksport qilinmoqda
+[17:07:58] tahlil
+{
+  "mode": "CDC",
+  "profile": "P1",
+  "rep": "1",
+  "fault": "F1R",
+  "ground_truth_transitions": 8973,
+  "delivered_distinct": 8973,
+  "delivered_total": 8973,
+  "matched": 8973,
+  "missing": 0,
+  "phantom": 0,
+  "malformed": 0,
+  "loss_rate": 0.0,
+  "loss_rate_ppm": 0.0,
+  "duplicate_rate": 0.0,
+  "ordering_violation_rate": 0.0,
+  "txns_split_across_partitions": 0,
+  "latency_ms_p50": 2912,
+  "latency_ms_p95": 5164,
+  "latency_ms_p99": 6161,
+  "latency_ms_max": 6461,
+  "latency_ms_mean": 2974.1,
+  "latency_samples": 8973,
+  "latency_negative_samples": 0,
+  "loss_rate_upper_bound_95_ppm": 334.34
+}
+[17:07:58] ilova va konnektor to'xtatilmoqda
+connector o'chirilmoqda: a1-cdc-obsv_cdc_p1_r1_f1r_20260909170231
+[17:08:09] === TUGADI: results/CDC-P1-r1-F1R-20260909170231 ===

@@ -1,0 +1,52 @@
+[20:25:45] === RUN CDC-C2N0ON-r1-20260909202544 ===
+[20:25:45] mode=CDC profile=C2N0ON rep=1 tps=50 duration=180s fault=none
+[20:25:45] jar: target/master-thesis-observability-0.0.1-SNAPSHOT.jar
+[20:25:45] arxiv redo tozalanmoqda
+[20:25:45] workload tozalanmoqda (reference saqlanadi)
+workload reset; reference data preserved
+AQ backlog purged: 0 -> 0
+[20:25:46] Kafka topigi qayta yaratilmoqda
+[20:25:55] ilova ishga tushirilmoqda (mode=CDC)
+[20:26:09] ilova tayyor (pid 2302113)
+[20:26:09] Debezium konnektori ro'yxatdan o'tkazilmoqda (CDC, prefix=obsv_cdc_c2n0on_r1_20260909202544)
+konnektor ro'yxatdan o'tkazilmoqda: a1-cdc-obsv_cdc_c2n0on_r1_20260909202544 (prefix=obsv_cdc_c2n0on_r1_20260909202544)
+konnektor RUNNING (2s)
+streaming tasdiqlanmoqda (heartbeat topigi: __debezium-heartbeat.obsv_cdc_c2n0on_r1_20260909202544)
+streaming tasdiqlandi (1 urinish)
+[20:26:17] k6 yuklamasi boshlandi
+[20:29:17] k6 iteratsiyalari: 9000
+[20:29:17] qat'iy settle: 45s (o'lchov oynasi ikkala qo'lda bir xil)
+[20:30:03] pipeline bo'shashi kutilmoqda (maks 120s)
+[20:30:24] pipeline bo'sh (15s, sink=27000 xabar)
+[20:30:34] ground truth eksport qilinmoqda
+[20:30:35] Kafka topigi eksport qilinmoqda
+[20:30:53] tahlil
+{
+  "mode": "CDC",
+  "profile": "C2N0ON",
+  "rep": "1",
+  "fault": "none",
+  "ground_truth_transitions": 27000,
+  "delivered_distinct": 27000,
+  "delivered_total": 27000,
+  "matched": 27000,
+  "missing": 0,
+  "phantom": 0,
+  "malformed": 0,
+  "loss_rate": 0.0,
+  "loss_rate_ppm": 0.0,
+  "duplicate_rate": 0.0,
+  "ordering_violation_rate": 0.0,
+  "txns_split_across_partitions": 0,
+  "latency_ms_p50": 3331,
+  "latency_ms_p95": 5416,
+  "latency_ms_p99": 5949,
+  "latency_ms_max": 6421,
+  "latency_ms_mean": 3329.6,
+  "latency_samples": 27000,
+  "latency_negative_samples": 0,
+  "loss_rate_upper_bound_95_ppm": 111.11
+}
+[20:30:53] ilova va konnektor to'xtatilmoqda
+connector o'chirilmoqda: a1-cdc-obsv_cdc_c2n0on_r1_20260909202544
+[20:31:04] === TUGADI: results/CDC-C2N0ON-r1-20260909202544 ===

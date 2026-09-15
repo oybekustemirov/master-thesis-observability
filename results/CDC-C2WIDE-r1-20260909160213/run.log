@@ -1,0 +1,51 @@
+[16:02:13] === RUN CDC-C2WIDE-r1-20260909160213 ===
+[16:02:13] mode=CDC profile=C2WIDE rep=1 tps=50 duration=180s fault=none
+[16:02:13] jar: target/master-thesis-observability-0.0.1-SNAPSHOT.jar
+[16:02:13] arxiv redo tozalanmoqda
+[16:02:14] workload tozalanmoqda (reference saqlanadi)
+workload reset; reference data preserved
+AQ backlog purged: 0 -> 0
+[16:02:16] Kafka topigi qayta yaratilmoqda
+[16:02:25] ilova ishga tushirilmoqda (mode=CDC)
+[16:02:40] ilova tayyor (pid 3290778)
+[16:02:40] Debezium konnektori ro'yxatdan o'tkazilmoqda (CDC, prefix=obsv_cdc_c2wide_r1_20260909160213)
+C2 shabloni ishlatilmoqda: docker/connect/connectors/cdc-wide.json.tmpl
+konnektor ro'yxatdan o'tkazilmoqda: a1-cdc-obsv_cdc_c2wide_r1_20260909160213 (prefix=obsv_cdc_c2wide_r1_20260909160213)
+konnektor RUNNING (2s)
+streaming tasdiqlanmoqda (heartbeat topigi: __debezium-heartbeat.obsv_cdc_c2wide_r1_20260909160213)
+streaming tasdiqlandi (1 urinish)
+[16:02:49] k6 yuklamasi boshlandi
+[16:05:52] k6 iteratsiyalari: 7507
+[16:05:52] pipeline bo'shashi kutilmoqda (maks 120s)
+[16:06:34] pipeline bo'sh (15s, sink=12591 xabar)
+[16:06:45] ground truth eksport qilinmoqda
+[16:06:45] Kafka topigi eksport qilinmoqda
+[16:07:12] tahlil
+{
+  "mode": "CDC",
+  "profile": "C2WIDE",
+  "rep": "1",
+  "fault": "none",
+  "ground_truth_transitions": 22521,
+  "delivered_distinct": 12591,
+  "delivered_total": 12591,
+  "matched": 12591,
+  "missing": 9930,
+  "phantom": 0,
+  "malformed": 0,
+  "loss_rate": 0.44092181,
+  "loss_rate_ppm": 440921.81,
+  "duplicate_rate": 0.0,
+  "ordering_violation_rate": 0.0,
+  "txns_split_across_partitions": 0,
+  "latency_ms_p50": 12650,
+  "latency_ms_p95": 25365,
+  "latency_ms_p99": 25635,
+  "latency_ms_max": 27357,
+  "latency_ms_mean": 13411.4,
+  "latency_samples": 12591,
+  "latency_negative_samples": 0
+}
+[16:07:13] ilova va konnektor to'xtatilmoqda
+connector o'chirilmoqda: a1-cdc-obsv_cdc_c2wide_r1_20260909160213
+[16:07:26] === TUGADI: results/CDC-C2WIDE-r1-20260909160213 ===

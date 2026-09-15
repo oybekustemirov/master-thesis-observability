@@ -1,0 +1,98 @@
+server:
+  port: 8095                     # 8080 is taken by an unrelated local stack
+
+spring:
+  application:
+    name: a1-observability
+  datasource:
+    url: jdbc:oracle:thin:@//localhost:1521/OBSVPDB
+    username: obsv
+    password: Obsv_2026
+    driver-class-name: oracle.jdbc.OracleDriver
+    hikari:
+      maximum-pool-size: 32
+      minimum-idle: 8
+      pool-name: a1-oltp
+      auto-commit: false
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate         # Flyway owns the schema; JPA only validates against it
+    properties:
+      # All timestamps are stored and read as UTC in plain TIMESTAMP(6) columns. Without
+      # this, Hibernate maps Instant onto TIMESTAMP WITH TIME ZONE and Oracle raises
+      # ORA-18716 on read. UTC storage is also what makes event ordering directly
+      # comparable across the application, the database and Kafka.
+      hibernate.timezone.default_storage: NORMALIZE_UTC
+      hibernate.jdbc.time_zone: UTC
+      hibernate.jdbc.batch_size: 50
+      hibernate.order_inserts: true
+      hibernate.order_updates: true
+  flyway:
+    enabled: true
+    schemas: OBSV
+    default-schema: OBSV
+    baseline-on-migrate: true
+    locations: classpath:db/migration
+  kafka:
+    bootstrap-servers: localhost:19092,localhost:29092,localhost:39092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      acks: all
+      properties:
+        enable.idempotence: true
+        max.in.flight.requests.per.connection: 5
+        delivery.timeout.ms: 120000
+        compression.type: lz4
+        linger.ms: 5
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, prometheus, metrics
+  metrics:
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true
+        a1.transition: true
+      percentiles:
+        a1.transition: 0.5, 0.95, 0.99
+  observations:
+    key-values:
+      mode: ${observability.mode}
+
+# ---------------------------------------------------------------------------
+# THE EXPERIMENT SWITCH
+# ---------------------------------------------------------------------------
+# OFF          true zero-instrumentation baseline (no ground truth, no events)
+# BASELINE_GT  ground-truth trigger only — measures the cost of the measuring apparatus
+# AQ           Approach 1: compound trigger -> PKG_A1_EVENT -> DBMS_AQ -> JMS bridge
+# WRAPPER_B1   Approach 2 naive: @AfterReturning -> KafkaTemplate (dual write; refuted)
+# WRAPPER_B2   Approach 2: @TransactionalEventListener(AFTER_COMMIT) (refuted)
+# WRAPPER_B3   Approach 2: AOP -> transactional outbox -> polling relay
+# CDC          Approach 3: Debezium mines TXN_A1 directly
+# HYBRID       Recommended: outbox written in-transaction, relayed by Debezium
+# ---------------------------------------------------------------------------
+observability:
+  mode: OFF
+  outbox:
+    # Relaxed binding maps this onto Outbox.pollInterval; the earlier `poll-interval-ms`
+    # spelling bound to nothing and silently left the 200ms default in force.
+    poll-interval: 200ms
+    batch-size: 500
+  aq:
+    queue: A1_EVT_Q
+    queue-owner: OBSV
+    subscriber: OBSERVABILITY_BRIDGE   # must equal the AQ agent created in migration V4
+    batch-size: 500                    # same as the outbox relay, so the two are comparable
+    receive-timeout: 500ms
+  topic:
+    events: bank.a1.transaction.events
+    credit: bank.credit.application.events
+
+logging:
+  level:
+    itpu.uz.masterthesisobservability: INFO
+    org.springframework.orm.jpa: WARN

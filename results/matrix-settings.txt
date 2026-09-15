@@ -1,0 +1,1 @@
+reps=5 tps=50 duration=120s fault_reps=3 fault_duration=180s fault_at=60

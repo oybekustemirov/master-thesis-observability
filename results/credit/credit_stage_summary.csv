@@ -1,0 +1,14 @@
+stage,stage_name,stage_type,seq,transitions,median_queue_h,p90_queue_h,median_work_h,p90_work_h,median_total_h,p90_total_h,total_hours,rework_share
+ARIZA_KIRITISH,Ariza kiritish,HUMAN,1,5000,9.496,48.037,.279,.584,9.797,48.272,81822.7,0
+HUJJAT_KUTISH,Hujjatlar mijozdan kutilmoqda,CUSTOMER,2,6223,0,0,19.204,81.799,19.204,81.799,226705.2,19.7
+TASHQI_TEKSHIRUV,Skoring / KBI / MIB / Soliq tekshiruvi,AUTOMATED,3,5000,0,0,.086,.238,.086,.238,5350.9,0
+GAROV_BAHOLASH,Garov mulkini baholash,EXTERNAL,4,2501,0,0,68.077,156.298,68.077,156.298,204364.3,0
+ANDERRAYTER,Anderrayter tekshiruvi,HUMAN,5,4310,25.532,121.481,1.924,9.212,31.102,128.805,237332.1,0
+QOMITA_KUTISH,Kredit qo'mitasi yig'ilishini kutish,COMMITTEE,6,2771,0,0,41.792,114.644,41.792,114.644,150081.9,16.3
+QOMITA_QARORI,Kredit qo'mitasi qarori,HUMAN,7,2771,0,0,.398,.764,.398,.764,1251.8,16.3
+SUGURTA_NOTARIUS,Sug'urta va notarial taqiq,EXTERNAL,8,2318,0,0,21.955,46.634,21.955,46.634,62637,0
+SHARTNOMA,Shartnoma va kafillik imzolash,CUSTOMER,9,3780,0,0,8.948,28.572,8.948,28.572,50597.4,0
+AJRATISH,Kredit mablag'ini ajratish,HUMAN,10,3780,15.184,62.991,.448,.97,15.697,63.531,93246.2,0
+RAD_ETILDI,Rad etildi,AUTOMATED,97,1026,0,0,.062,.122,.062,.122,73.3,0
+QAYTARILDI,Qo'mita qayta ko'rib chiqishga qaytardi,HUMAN,98,453,0,0,20.732,90.947,20.732,90.947,13286.5,100
+BEKOR_QILINDI,Mijoz voz kechdi,CUSTOMER,99,194,0,0,29.998,132.841,29.998,132.841,12482.8,0

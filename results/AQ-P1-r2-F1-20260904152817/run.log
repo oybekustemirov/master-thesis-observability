@@ -1,0 +1,47 @@
+[15:28:17] === RUN AQ-P1-r2-F1-20260904152817 ===
+[15:28:17] mode=AQ profile=P1 rep=2 tps=50 duration=180s fault=F1
+[15:28:17] jar: target/master-thesis-observability-0.0.1-SNAPSHOT.jar
+[15:28:17] workload tozalanmoqda (reference saqlanadi)
+workload reset; reference data preserved
+AQ backlog purged: 0 -> 0
+[15:28:18] Kafka topigi qayta yaratilmoqda
+[15:28:30] ilova ishga tushirilmoqda (mode=AQ)
+[15:28:42] ilova tayyor (pid 2441600)
+[15:28:45] fault F1 60s dan keyin yuboriladi
+[15:28:45] k6 yuklamasi boshlandi
+[fault 15:29:51] SIGKILL ilovaga: 2441600
+[fault 15:30:01] ilova qayta ishga tushirilmoqda (mode=results/WRAPPER_B3-P1-r91-20260903164920/run.log:WRAPPER_B3)
+[fault 15:30:01] F1 tugadi
+[15:32:04] k6 nolga teng bo'lmagan kod bilan tugadi (natija baribir tahlil qilinadi)
+[15:32:04] pipeline bo'shashi kutilmoqda (maks 120s)
+[15:37:51] OGOHLANTIRISH: pipeline 120s ichida bo'shamadi (db_pending=2 sink=8977) - LOSS raqamlari ishonchsiz
+[15:38:02] ground truth eksport qilinmoqda
+[15:38:02] Kafka topigi eksport qilinmoqda
+[15:38:29] tahlil
+{
+  "mode": "AQ",
+  "profile": "P1",
+  "rep": "2",
+  "fault": "F1",
+  "ground_truth_transitions": 8979,
+  "delivered_distinct": 8977,
+  "delivered_total": 8977,
+  "matched": 8977,
+  "missing": 2,
+  "phantom": 0,
+  "malformed": 0,
+  "loss_rate": 0.00022274,
+  "loss_rate_ppm": 222.74,
+  "duplicate_rate": 0.0,
+  "ordering_violation_rate": 0.0,
+  "txns_split_across_partitions": 0,
+  "latency_ms_p50": 5,
+  "latency_ms_p95": 12,
+  "latency_ms_p99": 1048,
+  "latency_ms_max": 2938,
+  "latency_ms_mean": 27.4,
+  "latency_samples": 8977,
+  "latency_negative_samples": 0
+}
+[15:38:29] ilova va konnektor to'xtatilmoqda
+[15:38:32] === TUGADI: results/AQ-P1-r2-F1-20260904152817 ===

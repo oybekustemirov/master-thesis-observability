@@ -1,0 +1,14 @@
+user commits,970634
+user rollbacks,38797
+session logical reads,189884595
+CPU used by this session,248387
+DB time,4837955
+db block changes,35042294
+physical writes,865547
+redo entries,19383578
+redo size,7228904916
+execute count,11685053
+wait_buffer_busy_waits,21343259
+wait_log_file_parallel_write,865260090
+wait_log_file_sync,1954072223
+wait_db_file_sequential_read,52783613

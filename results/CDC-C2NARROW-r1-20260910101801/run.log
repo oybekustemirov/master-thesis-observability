@@ -1,0 +1,53 @@
+[10:18:01] === RUN CDC-C2NARROW-r1-20260910101801 ===
+[10:18:01] mode=CDC profile=C2NARROW rep=1 tps=50 duration=180s fault=none
+[10:18:01] jar: target/master-thesis-observability-0.0.1-SNAPSHOT.jar
+[10:18:01] arxiv redo tozalanmoqda
+[10:18:01] workload tozalanmoqda (reference saqlanadi)
+workload reset; reference data preserved
+AQ backlog purged: 0 -> 0
+[10:18:04] Kafka topigi qayta yaratilmoqda
+[10:18:14] ilova ishga tushirilmoqda (mode=CDC)
+[10:18:28] ilova tayyor (pid 751105)
+[10:18:28] Debezium konnektori ro'yxatdan o'tkazilmoqda (CDC, prefix=obsv_cdc_c2narrow_r1_20260910101801)
+C2 shabloni ishlatilmoqda: docker/connect/connectors/cdc.json.tmpl
+konnektor ro'yxatdan o'tkazilmoqda: a1-cdc-obsv_cdc_c2narrow_r1_20260910101801 (prefix=obsv_cdc_c2narrow_r1_20260910101801)
+konnektor RUNNING (2s)
+streaming tasdiqlanmoqda (heartbeat topigi: __debezium-heartbeat.obsv_cdc_c2narrow_r1_20260910101801)
+streaming tasdiqlandi (1 urinish)
+[10:18:36] k6 yuklamasi boshlandi
+[10:21:40] k6 iteratsiyalari: 8839
+[10:21:40] qat'iy settle: 45s (o'lchov oynasi ikkala qo'lda bir xil)
+[10:22:26] pipeline bo'shashi kutilmoqda (maks 120s)
+[10:22:48] pipeline bo'sh (15s, sink=26517 / gt=26517)
+[10:22:58] ground truth eksport qilinmoqda
+[10:22:59] Kafka topigi eksport qilinmoqda
+[10:23:10] tahlil
+{
+  "mode": "CDC",
+  "profile": "C2NARROW",
+  "rep": "1",
+  "fault": "none",
+  "ground_truth_transitions": 26517,
+  "delivered_distinct": 26517,
+  "delivered_total": 26517,
+  "matched": 26517,
+  "missing": 0,
+  "phantom": 0,
+  "malformed": 0,
+  "loss_rate": 0.0,
+  "loss_rate_ppm": 0.0,
+  "duplicate_rate": 0.0,
+  "ordering_violation_rate": 0.0,
+  "txns_split_across_partitions": 0,
+  "latency_ms_p50": 8274,
+  "latency_ms_p95": 19638,
+  "latency_ms_p99": 21802,
+  "latency_ms_max": 23658,
+  "latency_ms_mean": 9285.6,
+  "latency_samples": 26517,
+  "latency_negative_samples": 0,
+  "loss_rate_upper_bound_95_ppm": 113.13
+}
+[10:23:11] ilova va konnektor to'xtatilmoqda
+connector o'chirilmoqda: a1-cdc-obsv_cdc_c2narrow_r1_20260910101801
+[10:23:21] === TUGADI: results/CDC-C2NARROW-r1-20260910101801 ===

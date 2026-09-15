@@ -1,0 +1,18 @@
+[21:58:56] === RUN CDC-C2N4ON-r2-20260909215856 ===
+[21:58:56] mode=CDC profile=C2N4ON rep=2 tps=50 duration=180s fault=none
+[21:58:56] jar: target/master-thesis-observability-0.0.1-SNAPSHOT.jar
+[21:58:56] arxiv redo tozalanmoqda
+[21:58:56] workload tozalanmoqda (reference saqlanadi)
+workload reset; reference data preserved
+AQ backlog purged: 0 -> 0
+[21:58:58] Kafka topigi qayta yaratilmoqda
+[21:59:08] ilova ishga tushirilmoqda (mode=CDC)
+[21:59:22] ilova tayyor (pid 3346508)
+[21:59:22] Debezium konnektori ro'yxatdan o'tkazilmoqda (CDC, prefix=obsv_cdc_c2n4on_r2_20260909215856)
+konnektor ro'yxatdan o'tkazilmoqda: a1-cdc-obsv_cdc_c2n4on_r2_20260909215856 (prefix=obsv_cdc_c2n4on_r2_20260909215856)
+konnektor RUNNING (2s)
+streaming tasdiqlanmoqda (heartbeat topigi: __debezium-heartbeat.obsv_cdc_c2n4on_r2_20260909215856)
+streaming tasdiqlandi (1 urinish)
+[21:59:29] k6 yuklamasi boshlandi
+[22:02:31] k6 iteratsiyalari: 8881
+[22:02:31] qat'iy settle: 45s (o'lchov oynasi ikkala qo'lda bir xil)

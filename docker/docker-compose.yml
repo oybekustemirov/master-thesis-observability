@@ -1,0 +1,196 @@
+# Experiment stack for "Event-Based Observability of Transaction Processing in Bank Operations".
+# Brought up by scripts/stack-up.sh, which also runs the Oracle setup that requires a restart.
+name: thesis-observability
+
+x-kafka-common: &kafka-common
+  image: apache/kafka:4.1.0
+  healthcheck:
+    test: ["CMD-SHELL", "/opt/kafka/bin/kafka-broker-api-versions.sh --bootstrap-server localhost:9092 >/dev/null 2>&1"]
+    interval: 10s
+    timeout: 10s
+    retries: 30
+    start_period: 30s
+  networks: [obsv]
+
+x-kafka-env: &kafka-env
+  KAFKA_PROCESS_ROLES: broker,controller
+  KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+  KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka-1:9093,2@kafka-2:9093,3@kafka-3:9093
+  KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,CONTROLLER:PLAINTEXT,EXTERNAL:PLAINTEXT
+  KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+  CLUSTER_ID: &cluster_id 4L6g3nShT-eMCtK--X86sw
+  KAFKA_CLUSTER_ID: *cluster_id
+  # Banking-grade durability defaults — these are thesis-relevant settings, not incidental.
+  KAFKA_DEFAULT_REPLICATION_FACTOR: 3
+  KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
+  KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 3
+  KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 2
+  KAFKA_MIN_INSYNC_REPLICAS: 2
+  KAFKA_UNCLEAN_LEADER_ELECTION_ENABLE: "false"
+  KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+  KAFKA_NUM_PARTITIONS: 6
+  KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+  KAFKA_LOG_RETENTION_HOURS: 168
+
+services:
+
+  # ---------------------------------------------------------------- Oracle ----
+  oracle:
+    image: gvenzl/oracle-free:23-slim-faststart
+    container_name: obsv-oracle
+    shm_size: 2gb
+    environment:
+      ORACLE_PASSWORD: ${ORACLE_SYS_PASSWORD:-Th3sis_Sys_2026}
+      ORACLE_DATABASE: OBSVPDB
+      APP_USER: obsv
+      APP_USER_PASSWORD: ${ORACLE_APP_PASSWORD:-Obsv_2026}
+    ports: ["1521:1521"]
+    volumes:
+      - oracle-data:/opt/oracle/oradata
+      - ./oracle/init:/opt/obsv/init:ro
+    healthcheck:
+      test: ["CMD-SHELL", "healthcheck.sh"]
+      interval: 10s
+      timeout: 10s
+      retries: 60
+      start_period: 60s
+    networks: [obsv]
+
+  # ----------------------------------------------------------------- Kafka ----
+  kafka-1:
+    <<: *kafka-common
+    container_name: obsv-kafka-1
+    environment:
+      <<: *kafka-env
+      KAFKA_NODE_ID: 1
+      KAFKA_LISTENERS: INTERNAL://:9092,CONTROLLER://:9093,EXTERNAL://:19092
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka-1:9092,EXTERNAL://localhost:19092
+    ports: ["19092:19092"]
+    volumes: [kafka-1-data:/var/lib/kafka/data]
+
+  kafka-2:
+    <<: *kafka-common
+    container_name: obsv-kafka-2
+    environment:
+      <<: *kafka-env
+      KAFKA_NODE_ID: 2
+      KAFKA_LISTENERS: INTERNAL://:9092,CONTROLLER://:9093,EXTERNAL://:29092
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka-2:9092,EXTERNAL://localhost:29092
+    ports: ["29092:29092"]
+    volumes: [kafka-2-data:/var/lib/kafka/data]
+
+  kafka-3:
+    <<: *kafka-common
+    container_name: obsv-kafka-3
+    environment:
+      <<: *kafka-env
+      KAFKA_NODE_ID: 3
+      KAFKA_LISTENERS: INTERNAL://:9092,CONTROLLER://:9093,EXTERNAL://:39092
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka-3:9092,EXTERNAL://localhost:39092
+    ports: ["39092:39092"]
+    volumes: [kafka-3-data:/var/lib/kafka/data]
+
+  # --------------------------------------------------------- Kafka Connect ----
+  connect:
+    build: ./connect
+    image: obsv/debezium-connect:local
+    container_name: obsv-connect
+    depends_on:
+      kafka-1: {condition: service_healthy}
+      kafka-2: {condition: service_healthy}
+      kafka-3: {condition: service_healthy}
+    environment:
+      BOOTSTRAP_SERVERS: kafka-1:9092,kafka-2:9092,kafka-3:9092
+      GROUP_ID: obsv-connect-cluster
+      CONFIG_STORAGE_TOPIC: _connect_configs
+      OFFSET_STORAGE_TOPIC: _connect_offsets
+      STATUS_STORAGE_TOPIC: _connect_status
+      CONFIG_STORAGE_REPLICATION_FACTOR: 3
+      OFFSET_STORAGE_REPLICATION_FACTOR: 3
+      STATUS_STORAGE_REPLICATION_FACTOR: 3
+      KEY_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      CONNECT_KEY_CONVERTER_SCHEMAS_ENABLE: "false"
+      CONNECT_VALUE_CONVERTER_SCHEMAS_ENABLE: "false"
+      # Offset flush interval bounds the duplicate window on restart (thesis metric DR)
+      OFFSET_FLUSH_INTERVAL_MS: 10000
+      # Prometheus scrape endpoint for MilliSecondsBehindSource, CurrentScn, etc.
+      KAFKA_OPTS: -javaagent:/kafka/jmx/jmx_prometheus_javaagent.jar=9404:/kafka/jmx/connect.yml
+    ports: ["8083:8083", "9404:9404"]
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:8083/ >/dev/null"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 40s
+    networks: [obsv]
+
+  # ------------------------------------------------------- Schema Registry ----
+  # Apicurio rather than Confluent: Apache-2.0 licensed, so the thesis artefact is
+  # redistributable without a commercial-licence caveat.
+  registry:
+    image: apicurio/apicurio-registry-mem:2.6.2.Final
+    container_name: obsv-registry
+    depends_on:
+      kafka-1: {condition: service_healthy}
+    environment:
+      QUARKUS_HTTP_PORT: 8080
+      REGISTRY_RULES_GLOBAL_COMPATIBILITY: BACKWARD_TRANSITIVE
+    ports: ["8081:8080"]
+    networks: [obsv]
+
+  # -------------------------------------------------------------- Observ. -----
+  prometheus:
+    image: prom/prometheus:v3.1.0
+    container_name: obsv-prometheus
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.retention.time=30d
+      - --web.enable-lifecycle
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    ports: ["9091:9090"]
+    extra_hosts: ["host.docker.internal:host-gateway"]
+    networks: [obsv]
+
+  grafana:
+    image: grafana/grafana:11.6.0
+    container_name: obsv-grafana
+    depends_on: [prometheus]
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: admin
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Admin
+      GF_USERS_DEFAULT_THEME: light
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+      - grafana-data:/var/lib/grafana
+    ports: ["3000:3000"]
+    networks: [obsv]
+
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    container_name: obsv-kafka-ui
+    depends_on:
+      kafka-1: {condition: service_healthy}
+    environment:
+      KAFKA_CLUSTERS_0_NAME: obsv
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka-1:9092,kafka-2:9092,kafka-3:9092
+      KAFKA_CLUSTERS_0_KAFKACONNECT_0_NAME: connect
+      KAFKA_CLUSTERS_0_KAFKACONNECT_0_ADDRESS: http://connect:8083
+      DYNAMIC_CONFIG_ENABLED: "true"
+    ports: ["8090:8080"]
+    networks: [obsv]
+
+networks:
+  obsv:
+    name: obsv-net
+
+volumes:
+  oracle-data:
+  kafka-1-data:
+  kafka-2-data:
+  kafka-3-data:
+  prometheus-data:
+  grafana-data:

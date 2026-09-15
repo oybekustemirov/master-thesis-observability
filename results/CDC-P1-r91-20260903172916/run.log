@@ -1,0 +1,48 @@
+[17:29:16] === RUN CDC-P1-r91-20260903172916 ===
+[17:29:16] mode=CDC profile=P1 rep=91 tps=50 duration=60s fault=none
+[17:29:16] jar: target/master-thesis-observability-0.0.1-SNAPSHOT.jar
+[17:29:16] workload tozalanmoqda (reference saqlanadi)
+workload reset; reference data preserved
+AQ backlog purged: 0 -> 0
+[17:29:16] Kafka topigi qayta yaratilmoqda
+[17:29:26] Debezium konnektori ro'yxatdan o'tkazilmoqda (CDC, prefix=obsv_cdc_p1_r91_20260903172916)
+connector o'chirilmoqda: a1-cdc-obsv_cdc_p1_r91_20260903172643
+konnektor ro'yxatdan o'tkazilmoqda: a1-cdc-obsv_cdc_p1_r91_20260903172916 (prefix=obsv_cdc_p1_r91_20260903172916)
+konnektor RUNNING (2s)
+streaming tasdiqlanmoqda (heartbeat topigi: __debezium-heartbeat.obsv_cdc_p1_r91_20260903172916)
+streaming tasdiqlandi (15 urinish)
+[17:30:31] ilova ishga tushirilmoqda (mode=CDC)
+[17:30:45] ilova tayyor (pid 2011230)
+[17:30:46] k6 yuklamasi boshlandi
+[17:31:53] pipeline bo'shashi kutilmoqda (maks 120s)
+[17:38:03] OGOHLANTIRISH: pipeline 120s ichida bo'shamadi (db_pending=Entervaluefor1:SP2-0546:UserrequestedInterruptorEOFdetected.Help:https://docs.oracle.com/error-help/db/sp2-0546/ sink=9003) - LOSS raqamlari ishonchsiz
+[17:38:13] ground truth eksport qilinmoqda
+[17:38:14] Kafka topigi eksport qilinmoqda
+[17:38:41] tahlil
+{
+  "mode": "CDC",
+  "profile": "P1",
+  "rep": "91",
+  "fault": "none",
+  "ground_truth_transitions": 9003,
+  "delivered_distinct": 3004,
+  "delivered_total": 9003,
+  "matched": 3001,
+  "missing": 6002,
+  "phantom": 3,
+  "malformed": 0,
+  "loss_rate": 0.66666667,
+  "loss_rate_ppm": 666666.67,
+  "duplicate_rate": 1.99700399,
+  "ordering_violation_rate": 0.00033311,
+  "txns_split_across_partitions": 0,
+  "latency_ms_p50": 4164,
+  "latency_ms_p95": 7604,
+  "latency_ms_p99": 8698,
+  "latency_ms_max": 8998,
+  "latency_ms_mean": 4329.3,
+  "latency_samples": 3001
+}
+[17:38:41] ilova va konnektor to'xtatilmoqda
+connector o'chirilmoqda: a1-cdc-obsv_cdc_p1_r91_20260903172916
+[17:38:45] === TUGADI: results/CDC-P1-r91-20260903172916 ===

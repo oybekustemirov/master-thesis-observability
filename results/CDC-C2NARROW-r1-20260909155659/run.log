@@ -1,0 +1,51 @@
+[15:56:59] === RUN CDC-C2NARROW-r1-20260909155659 ===
+[15:56:59] mode=CDC profile=C2NARROW rep=1 tps=50 duration=180s fault=none
+[15:56:59] jar: target/master-thesis-observability-0.0.1-SNAPSHOT.jar
+[15:56:59] arxiv redo tozalanmoqda
+[15:57:00] workload tozalanmoqda (reference saqlanadi)
+workload reset; reference data preserved
+AQ backlog purged: 0 -> 0
+[15:57:06] Kafka topigi qayta yaratilmoqda
+[15:57:15] ilova ishga tushirilmoqda (mode=CDC)
+[15:57:30] ilova tayyor (pid 3225225)
+[15:57:30] Debezium konnektori ro'yxatdan o'tkazilmoqda (CDC, prefix=obsv_cdc_c2narrow_r1_20260909155659)
+C2 shabloni ishlatilmoqda: docker/connect/connectors/cdc.json.tmpl
+konnektor ro'yxatdan o'tkazilmoqda: a1-cdc-obsv_cdc_c2narrow_r1_20260909155659 (prefix=obsv_cdc_c2narrow_r1_20260909155659)
+konnektor RUNNING (2s)
+streaming tasdiqlanmoqda (heartbeat topigi: __debezium-heartbeat.obsv_cdc_c2narrow_r1_20260909155659)
+streaming tasdiqlandi (1 urinish)
+[15:57:38] k6 yuklamasi boshlandi
+[16:00:41] k6 iteratsiyalari: 8701
+[16:00:41] pipeline bo'shashi kutilmoqda (maks 120s)
+[16:01:23] pipeline bo'sh (15s, sink=9577 xabar)
+[16:01:34] ground truth eksport qilinmoqda
+[16:01:34] Kafka topigi eksport qilinmoqda
+[16:02:02] tahlil
+{
+  "mode": "CDC",
+  "profile": "C2NARROW",
+  "rep": "1",
+  "fault": "none",
+  "ground_truth_transitions": 26103,
+  "delivered_distinct": 9577,
+  "delivered_total": 9577,
+  "matched": 9577,
+  "missing": 16526,
+  "phantom": 0,
+  "malformed": 0,
+  "loss_rate": 0.63310731,
+  "loss_rate_ppm": 633107.31,
+  "duplicate_rate": 0.0,
+  "ordering_violation_rate": 0.0,
+  "txns_split_across_partitions": 0,
+  "latency_ms_p50": 5430,
+  "latency_ms_p95": 8563,
+  "latency_ms_p99": 9375,
+  "latency_ms_max": 12931,
+  "latency_ms_mean": 5455.6,
+  "latency_samples": 9577,
+  "latency_negative_samples": 0
+}
+[16:02:02] ilova va konnektor to'xtatilmoqda
+connector o'chirilmoqda: a1-cdc-obsv_cdc_c2narrow_r1_20260909155659
+[16:02:12] === TUGADI: results/CDC-C2NARROW-r1-20260909155659 ===

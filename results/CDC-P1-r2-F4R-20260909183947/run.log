@@ -1,0 +1,57 @@
+[18:39:47] === RUN CDC-P1-r2-F4R-20260909183947 ===
+[18:39:47] mode=CDC profile=P1 rep=2 tps=50 duration=300s fault=F4R
+[18:39:47] jar: target/master-thesis-observability-0.0.1-SNAPSHOT.jar
+[18:39:47] arxiv redo tozalanmoqda
+[18:39:47] workload tozalanmoqda (reference saqlanadi)
+workload reset; reference data preserved
+AQ backlog purged: 0 -> 0
+[18:39:54] Kafka topigi qayta yaratilmoqda
+[18:40:04] ilova ishga tushirilmoqda (mode=CDC)
+[18:40:25] ilova tayyor (pid 1101006)
+[18:40:25] Debezium konnektori ro'yxatdan o'tkazilmoqda (CDC, prefix=obsv_cdc_p1_r2_f4r_20260909183947)
+konnektor ro'yxatdan o'tkazilmoqda: a1-cdc-obsv_cdc_p1_r2_f4r_20260909183947 (prefix=obsv_cdc_p1_r2_f4r_20260909183947)
+konnektor RUNNING (2s)
+streaming tasdiqlanmoqda (heartbeat topigi: __debezium-heartbeat.obsv_cdc_p1_r2_f4r_20260909183947)
+streaming tasdiqlandi (1 urinish)
+[18:40:32] fault F4R 60s dan keyin yuboriladi
+[18:40:32] k6 yuklamasi boshlandi
+[fault 18:41:32] Connect to'xtatilmoqda; 10 marta log almashtiriladi, so'ng archive'lar o'chiriladi
+[fault 18:42:09] RMAN: barcha archive log'lar o'chirilmoqda
+bash: rman: command not found
+[fault 18:42:31] Connect qaytarildi — endi ORA-01291 kutilmoqda
+[fault 18:42:31] F4R tugadi
+[18:45:33] k6 iteratsiyalari: 15001
+[18:45:33] pipeline bo'shashi kutilmoqda (maks 120s)
+[18:45:58] pipeline bo'sh (15s, sink=45003 xabar)
+[18:46:08] ground truth eksport qilinmoqda
+[18:46:09] Kafka topigi eksport qilinmoqda
+[18:46:28] tahlil
+{
+  "mode": "CDC",
+  "profile": "P1",
+  "rep": "2",
+  "fault": "F4R",
+  "ground_truth_transitions": 45003,
+  "delivered_distinct": 45003,
+  "delivered_total": 45003,
+  "matched": 45003,
+  "missing": 0,
+  "phantom": 0,
+  "malformed": 0,
+  "loss_rate": 0.0,
+  "loss_rate_ppm": 0.0,
+  "duplicate_rate": 0.0,
+  "ordering_violation_rate": 0.0,
+  "txns_split_across_partitions": 0,
+  "latency_ms_p50": 3918,
+  "latency_ms_p95": 66791,
+  "latency_ms_p99": 78317,
+  "latency_ms_max": 81183,
+  "latency_ms_mean": 14051.5,
+  "latency_samples": 45003,
+  "latency_negative_samples": 0,
+  "loss_rate_upper_bound_95_ppm": 66.66
+}
+[18:46:29] ilova va konnektor to'xtatilmoqda
+connector o'chirilmoqda: a1-cdc-obsv_cdc_p1_r2_f4r_20260909183947
+[18:46:40] === TUGADI: results/CDC-P1-r2-F4R-20260909183947 ===

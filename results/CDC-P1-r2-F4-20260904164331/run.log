@@ -1,0 +1,55 @@
+[16:43:31] === RUN CDC-P1-r2-F4-20260904164331 ===
+[16:43:31] mode=CDC profile=P1 rep=2 tps=50 duration=180s fault=F4
+[16:43:31] jar: target/master-thesis-observability-0.0.1-SNAPSHOT.jar
+[16:43:31] workload tozalanmoqda (reference saqlanadi)
+workload reset; reference data preserved
+AQ backlog purged: 0 -> 0
+[16:43:34] Kafka topigi qayta yaratilmoqda
+[16:43:42] ilova ishga tushirilmoqda (mode=CDC)
+[16:43:55] ilova tayyor (pid 3244084)
+[16:43:55] Debezium konnektori ro'yxatdan o'tkazilmoqda (CDC, prefix=obsv_cdc_p1_r2_f4_20260904164331)
+konnektor ro'yxatdan o'tkazilmoqda: a1-cdc-obsv_cdc_p1_r2_f4_20260904164331 (prefix=obsv_cdc_p1_r2_f4_20260904164331)
+konnektor RUNNING (2s)
+streaming tasdiqlanmoqda (heartbeat topigi: __debezium-heartbeat.obsv_cdc_p1_r2_f4_20260904164331)
+streaming tasdiqlandi (1 urinish)
+[16:44:02] fault F4 60s dan keyin yuboriladi
+[16:44:02] k6 yuklamasi boshlandi
+[fault 16:45:08] Connect to'xtatilmoqda, so'ng archive log'lar o'chirilmoqda
+[fault 16:45:46] RMAN: barcha archive log'lar o'chirilmoqda
+bash: rman: command not found
+[fault 16:46:20] Connect qaytarildi — endi ORA-01291 kutilmoqda
+[fault 16:46:20] F4 tugadi
+[16:47:17] pipeline bo'shashi kutilmoqda (maks 120s)
+[16:47:32] pipeline bo'sh (5s, sink=27003 xabar)
+[16:47:42] ground truth eksport qilinmoqda
+[16:47:43] Kafka topigi eksport qilinmoqda
+[16:48:10] tahlil
+{
+  "mode": "CDC",
+  "profile": "P1",
+  "rep": "2",
+  "fault": "F4",
+  "ground_truth_transitions": 27003,
+  "delivered_distinct": 27003,
+  "delivered_total": 27003,
+  "matched": 27003,
+  "missing": 0,
+  "phantom": 0,
+  "malformed": 0,
+  "loss_rate": 0.0,
+  "loss_rate_ppm": 0.0,
+  "duplicate_rate": 0.0,
+  "ordering_violation_rate": 0.0,
+  "txns_split_across_partitions": 0,
+  "latency_ms_p50": 6071,
+  "latency_ms_p95": 82352,
+  "latency_ms_p99": 89446,
+  "latency_ms_max": 90949,
+  "latency_ms_mean": 24491.7,
+  "latency_samples": 27003,
+  "latency_negative_samples": 0,
+  "loss_rate_upper_bound_95_ppm": 111.1
+}
+[16:48:11] ilova va konnektor to'xtatilmoqda
+connector o'chirilmoqda: a1-cdc-obsv_cdc_p1_r2_f4_20260904164331
+[16:48:15] === TUGADI: results/CDC-P1-r2-F4-20260904164331 ===

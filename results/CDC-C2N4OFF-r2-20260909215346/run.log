@@ -1,0 +1,46 @@
+[21:53:46] === RUN CDC-C2N4OFF-r2-20260909215346 ===
+[21:53:46] mode=CDC profile=C2N4OFF rep=2 tps=50 duration=180s fault=none
+[21:53:46] jar: target/master-thesis-observability-0.0.1-SNAPSHOT.jar
+[21:53:46] arxiv redo tozalanmoqda
+[21:53:46] workload tozalanmoqda (reference saqlanadi)
+workload reset; reference data preserved
+AQ backlog purged: 0 -> 0
+[21:53:47] Kafka topigi qayta yaratilmoqda
+[21:53:56] ilova ishga tushirilmoqda (mode=CDC)
+[21:54:13] ilova tayyor (pid 3289426)
+[21:54:13] --no-connector: konnektorsiz ishlatilmoqda (C2 bazaviy sharti)
+[21:54:16] k6 yuklamasi boshlandi
+[21:57:19] k6 iteratsiyalari: 8863
+[21:57:19] qat'iy settle: 45s (o'lchov oynasi ikkala qo'lda bir xil)
+[21:58:04] pipeline bo'shashi kutilmoqda (maks 120s)
+[21:58:28] pipeline bo'sh (15s, sink=0 xabar)
+[21:58:38] ground truth eksport qilinmoqda
+[21:58:39] Kafka topigi eksport qilinmoqda
+[21:58:49] tahlil
+{
+  "mode": "CDC",
+  "profile": "C2N4OFF",
+  "rep": "2",
+  "fault": "none",
+  "ground_truth_transitions": 26589,
+  "delivered_distinct": 0,
+  "delivered_total": 0,
+  "matched": 0,
+  "missing": 26589,
+  "phantom": 0,
+  "malformed": 0,
+  "loss_rate": 1.0,
+  "loss_rate_ppm": 1000000.0,
+  "duplicate_rate": 0.0,
+  "ordering_violation_rate": 0.0,
+  "txns_split_across_partitions": 0,
+  "latency_ms_p50": null,
+  "latency_ms_p95": null,
+  "latency_ms_p99": null,
+  "latency_ms_max": null,
+  "latency_ms_mean": null,
+  "latency_samples": 0,
+  "latency_negative_samples": 0
+}
+[21:58:49] ilova va konnektor to'xtatilmoqda
+[21:58:55] === TUGADI: results/CDC-C2N4OFF-r2-20260909215346 ===

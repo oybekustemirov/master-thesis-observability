@@ -1,0 +1,244 @@
+
+         /\      Grafana   /‾‾/  
+    /\  /  \     |\  __   /  /   
+   /  \/    \    | |/ /  /   ‾‾\ 
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/ 
+
+
+     execution: local
+        script: harness/k6/a1-workload.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 600 max VUs, 1m30s max duration (incl. graceful stop):
+              * a1: 50.00 iterations/s for 1m0s (maxVUs: 100-600, gracefulStop: 30s)
+
+
+running (0m00.7s), 038/100 VUs, 0 complete and 0 interrupted iterations
+a1     [   1% ] 038/100 VUs  0m00.7s/1m0s  50.00 iters/s
+
+running (0m01.8s), 085/100 VUs, 0 complete and 0 interrupted iterations
+a1     [   3% ] 085/100 VUs  0m01.8s/1m0s  50.00 iters/s
+
+running (0m02.7s), 105/105 VUs, 0 complete and 0 interrupted iterations
+a1     [   5% ] 105/105 VUs  0m02.7s/1m0s  50.00 iters/s
+
+running (0m03.8s), 114/115 VUs, 0 complete and 0 interrupted iterations
+a1     [   6% ] 114/115 VUs  0m03.8s/1m0s  50.00 iters/s
+
+running (0m04.9s), 117/117 VUs, 0 complete and 0 interrupted iterations
+a1     [   8% ] 117/117 VUs  0m04.9s/1m0s  50.00 iters/s
+
+running (0m05.8s), 120/120 VUs, 0 complete and 0 interrupted iterations
+a1     [  10% ] 120/120 VUs  0m05.8s/1m0s  50.00 iters/s
+
+running (0m06.9s), 130/131 VUs, 0 complete and 0 interrupted iterations
+a1     [  11% ] 130/131 VUs  0m06.9s/1m0s  50.00 iters/s
+
+running (0m07.7s), 148/149 VUs, 0 complete and 0 interrupted iterations
+a1     [  13% ] 148/149 VUs  0m07.7s/1m0s  50.00 iters/s
+
+running (0m08.7s), 154/154 VUs, 0 complete and 0 interrupted iterations
+a1     [  15% ] 154/154 VUs  0m08.7s/1m0s  50.00 iters/s
+
+running (0m09.7s), 160/161 VUs, 0 complete and 0 interrupted iterations
+a1     [  16% ] 160/161 VUs  0m09.7s/1m0s  50.00 iters/s
+
+running (0m10.8s), 163/163 VUs, 0 complete and 0 interrupted iterations
+a1     [  18% ] 163/163 VUs  0m10.8s/1m0s  50.00 iters/s
+
+running (0m11.7s), 166/166 VUs, 0 complete and 0 interrupted iterations
+a1     [  20% ] 166/166 VUs  0m11.7s/1m0s  50.00 iters/s
+
+running (0m12.8s), 169/170 VUs, 0 complete and 0 interrupted iterations
+a1     [  21% ] 169/170 VUs  0m12.8s/1m0s  50.00 iters/s
+
+running (0m13.8s), 174/174 VUs, 0 complete and 0 interrupted iterations
+a1     [  23% ] 174/174 VUs  0m13.8s/1m0s  50.00 iters/s
+
+running (0m14.8s), 174/174 VUs, 0 complete and 0 interrupted iterations
+a1     [  25% ] 174/174 VUs  0m14.9s/1m0s  50.00 iters/s
+
+running (0m15.7s), 174/175 VUs, 0 complete and 0 interrupted iterations
+a1     [  26% ] 174/175 VUs  0m15.7s/1m0s  50.00 iters/s
+
+running (0m16.7s), 190/190 VUs, 0 complete and 0 interrupted iterations
+a1     [  28% ] 190/190 VUs  0m16.7s/1m0s  50.00 iters/s
+
+running (0m17.7s), 206/206 VUs, 0 complete and 0 interrupted iterations
+a1     [  30% ] 206/206 VUs  0m17.7s/1m0s  50.00 iters/s
+
+running (0m18.7s), 217/217 VUs, 0 complete and 0 interrupted iterations
+a1     [  31% ] 217/217 VUs  0m18.7s/1m0s  50.00 iters/s
+
+running (0m19.7s), 227/227 VUs, 0 complete and 0 interrupted iterations
+a1     [  33% ] 227/227 VUs  0m19.7s/1m0s  50.00 iters/s
+
+running (0m20.7s), 025/233 VUs, 245 complete and 0 interrupted iterations
+a1     [  35% ] 025/233 VUs  0m20.7s/1m0s  50.00 iters/s
+
+running (0m21.7s), 001/233 VUs, 319 complete and 0 interrupted iterations
+a1     [  36% ] 001/233 VUs  0m21.7s/1m0s  50.00 iters/s
+
+running (0m22.7s), 000/233 VUs, 370 complete and 0 interrupted iterations
+a1     [  38% ] 000/233 VUs  0m22.7s/1m0s  50.00 iters/s
+
+running (0m23.7s), 022/233 VUs, 398 complete and 0 interrupted iterations
+a1     [  40% ] 022/233 VUs  0m23.7s/1m0s  50.00 iters/s
+
+running (0m24.7s), 000/233 VUs, 470 complete and 0 interrupted iterations
+a1     [  41% ] 000/233 VUs  0m24.7s/1m0s  50.00 iters/s
+
+running (0m25.7s), 000/233 VUs, 520 complete and 0 interrupted iterations
+a1     [  43% ] 000/233 VUs  0m25.7s/1m0s  50.00 iters/s
+
+running (0m26.7s), 000/233 VUs, 570 complete and 0 interrupted iterations
+a1     [  45% ] 000/233 VUs  0m26.7s/1m0s  50.00 iters/s
+
+running (0m30.7s), 000/233 VUs, 620 complete and 0 interrupted iterations
+a1     [  46% ] 000/233 VUs  0m27.7s/1m0s  50.00 iters/s
+
+running (0m31.7s), 000/233 VUs, 670 complete and 0 interrupted iterations
+a1     [  48% ] 000/233 VUs  0m28.7s/1m0s  50.00 iters/s
+
+running (0m32.7s), 003/233 VUs, 717 complete and 0 interrupted iterations
+a1     [  50% ] 003/233 VUs  0m29.7s/1m0s  50.00 iters/s
+
+running (0m33.7s), 000/233 VUs, 770 complete and 0 interrupted iterations
+a1     [  51% ] 000/233 VUs  0m30.7s/1m0s  50.00 iters/s
+
+running (0m34.7s), 000/233 VUs, 820 complete and 0 interrupted iterations
+a1     [  53% ] 000/233 VUs  0m31.7s/1m0s  50.00 iters/s
+
+running (0m35.7s), 008/233 VUs, 862 complete and 0 interrupted iterations
+a1     [  55% ] 008/233 VUs  0m32.7s/1m0s  50.00 iters/s
+
+running (0m36.7s), 000/233 VUs, 920 complete and 0 interrupted iterations
+a1     [  56% ] 000/233 VUs  0m33.7s/1m0s  50.00 iters/s
+
+running (0m37.7s), 000/233 VUs, 970 complete and 0 interrupted iterations
+a1     [  58% ] 000/233 VUs  0m34.7s/1m0s  50.00 iters/s
+
+running (0m38.7s), 011/233 VUs, 1009 complete and 0 interrupted iterations
+a1     [  60% ] 011/233 VUs  0m35.7s/1m0s  50.00 iters/s
+
+running (0m39.7s), 000/233 VUs, 1070 complete and 0 interrupted iterations
+a1     [  61% ] 000/233 VUs  0m36.7s/1m0s  50.00 iters/s
+
+running (0m40.7s), 000/233 VUs, 1120 complete and 0 interrupted iterations
+a1     [  63% ] 000/233 VUs  0m37.7s/1m0s  50.00 iters/s
+
+running (0m41.7s), 000/233 VUs, 1170 complete and 0 interrupted iterations
+a1     [  65% ] 000/233 VUs  0m38.7s/1m0s  50.00 iters/s
+
+running (0m42.7s), 000/233 VUs, 1220 complete and 0 interrupted iterations
+a1     [  66% ] 000/233 VUs  0m39.7s/1m0s  50.00 iters/s
+
+running (0m43.7s), 001/233 VUs, 1270 complete and 0 interrupted iterations
+a1     [  68% ] 001/233 VUs  0m40.7s/1m0s  50.00 iters/s
+
+running (0m44.7s), 000/233 VUs, 1320 complete and 0 interrupted iterations
+a1     [  70% ] 000/233 VUs  0m41.7s/1m0s  50.00 iters/s
+
+running (0m45.7s), 000/233 VUs, 1370 complete and 0 interrupted iterations
+a1     [  71% ] 000/233 VUs  0m42.7s/1m0s  50.00 iters/s
+
+running (0m46.7s), 000/233 VUs, 1420 complete and 0 interrupted iterations
+a1     [  73% ] 000/233 VUs  0m43.7s/1m0s  50.00 iters/s
+
+running (0m47.7s), 018/233 VUs, 1452 complete and 0 interrupted iterations
+a1     [  75% ] 019/233 VUs  0m44.8s/1m0s  50.00 iters/s
+
+running (0m48.7s), 001/233 VUs, 1520 complete and 0 interrupted iterations
+a1     [  76% ] 001/233 VUs  0m45.7s/1m0s  50.00 iters/s
+
+running (0m49.7s), 000/233 VUs, 1570 complete and 0 interrupted iterations
+a1     [  78% ] 000/233 VUs  0m46.7s/1m0s  50.00 iters/s
+
+running (0m50.7s), 001/233 VUs, 1620 complete and 0 interrupted iterations
+a1     [  80% ] 001/233 VUs  0m47.7s/1m0s  50.00 iters/s
+
+running (0m51.7s), 000/233 VUs, 1670 complete and 0 interrupted iterations
+a1     [  81% ] 000/233 VUs  0m48.7s/1m0s  50.00 iters/s
+
+running (0m52.7s), 000/233 VUs, 1720 complete and 0 interrupted iterations
+a1     [  83% ] 000/233 VUs  0m49.7s/1m0s  50.00 iters/s
+
+running (0m53.7s), 003/233 VUs, 1767 complete and 0 interrupted iterations
+a1     [  85% ] 003/233 VUs  0m50.7s/1m0s  50.00 iters/s
+
+running (0m54.7s), 000/233 VUs, 1820 complete and 0 interrupted iterations
+a1     [  86% ] 000/233 VUs  0m51.7s/1m0s  50.00 iters/s
+
+running (0m55.7s), 001/233 VUs, 1870 complete and 0 interrupted iterations
+a1     [  88% ] 001/233 VUs  0m52.7s/1m0s  50.00 iters/s
+
+running (0m56.7s), 001/233 VUs, 1920 complete and 0 interrupted iterations
+a1     [  90% ] 001/233 VUs  0m53.7s/1m0s  50.00 iters/s
+
+running (0m57.7s), 000/233 VUs, 1970 complete and 0 interrupted iterations
+a1     [  91% ] 000/233 VUs  0m54.7s/1m0s  50.00 iters/s
+
+running (0m58.7s), 001/233 VUs, 2020 complete and 0 interrupted iterations
+a1     [  93% ] 001/233 VUs  0m55.7s/1m0s  50.00 iters/s
+
+running (0m59.7s), 004/233 VUs, 2066 complete and 0 interrupted iterations
+a1     [  95% ] 004/233 VUs  0m56.7s/1m0s  50.00 iters/s
+
+running (1m00.7s), 000/233 VUs, 2120 complete and 0 interrupted iterations
+a1     [  96% ] 000/233 VUs  0m57.7s/1m0s  50.00 iters/s
+
+running (1m01.7s), 001/233 VUs, 2170 complete and 0 interrupted iterations
+a1     [  98% ] 001/233 VUs  0m58.7s/1m0s  50.00 iters/s
+
+running (1m02.7s), 000/233 VUs, 2220 complete and 0 interrupted iterations
+a1     [ 100% ] 000/233 VUs  0m59.7s/1m0s  50.00 iters/s
+
+
+  █ THRESHOLDS 
+
+    http_req_failed
+    ✗ 'rate<0.05' rate=55.90%
+
+
+  █ TOTAL RESULTS 
+
+    checks_total.......: 3279   49.778988/s
+    checks_succeeded...: 44.09% 1446 out of 3279
+    checks_failed......: 55.90% 1833 out of 3279
+
+    ✗ initiated
+      ↳  27% — ✓ 604 / ✗ 1630
+    ✗ validated
+      ↳  73% — ✓ 441 / ✗ 163
+    ✗ terminal
+      ↳  90% — ✓ 401 / ✗ 40
+
+    CUSTOM
+    a1_lifecycle_duration..........: avg=190.93ms min=92ms    med=155ms   p(95)=410ms  p(99)=782ms  max=957ms 
+    a1_lifecycles_completed........: 401    6.087641/s
+    a1_transitions_committed.......: 1446   21.951942/s
+
+    HTTP
+    http_req_duration..............: avg=968.89ms min=4.02ms  med=34.99ms p(95)=8.46s  p(99)=19.63s max=21.38s
+      { expected_response:true }...: avg=1.34s    min=27.31ms med=53.04ms p(95)=18.28s p(99)=20.46s max=21.38s
+    http_req_failed................: 55.90% 1833 out of 3279
+    http_reqs......................: 3279   49.778988/s
+
+    EXECUTION
+    dropped_iterations.............: 767    11.643941/s
+    iteration_duration.............: avg=1.42s    min=4.2ms   med=7.47ms  p(95)=16.96s p(99)=20.14s max=21.48s
+    iterations.....................: 2234   33.914687/s
+    vus............................: 0      min=0            max=227
+    vus_max........................: 233    min=100          max=233
+
+    NETWORK
+    data_received..................: 999 kB 15 kB/s
+    data_sent......................: 841 kB 13 kB/s
+
+
+
+
+running (1m05.9s), 000/233 VUs, 2234 complete and 0 interrupted iterations
+a1   ✓ [ 100% ] 000/233 VUs  1m0s  50.00 iters/s
+time="2026-09-03T16:38:45+05:00" level=error msg="thresholds on metrics 'http_req_failed' have been crossed"

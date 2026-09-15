@@ -1,0 +1,52 @@
+[16:33:50] === RUN CDC-C2WIDE-r3-20260909163350 ===
+[16:33:50] mode=CDC profile=C2WIDE rep=3 tps=50 duration=180s fault=none
+[16:33:50] jar: target/master-thesis-observability-0.0.1-SNAPSHOT.jar
+[16:33:50] arxiv redo tozalanmoqda
+[16:33:50] workload tozalanmoqda (reference saqlanadi)
+workload reset; reference data preserved
+AQ backlog purged: 0 -> 0
+[16:33:52] Kafka topigi qayta yaratilmoqda
+[16:34:02] ilova ishga tushirilmoqda (mode=CDC)
+[16:34:21] ilova tayyor (pid 3769172)
+[16:34:21] Debezium konnektori ro'yxatdan o'tkazilmoqda (CDC, prefix=obsv_cdc_c2wide_r3_20260909163350)
+C2 shabloni ishlatilmoqda: docker/connect/connectors/cdc-wide.json.tmpl
+konnektor ro'yxatdan o'tkazilmoqda: a1-cdc-obsv_cdc_c2wide_r3_20260909163350 (prefix=obsv_cdc_c2wide_r3_20260909163350)
+konnektor RUNNING (2s)
+streaming tasdiqlanmoqda (heartbeat topigi: __debezium-heartbeat.obsv_cdc_c2wide_r3_20260909163350)
+streaming tasdiqlandi (1 urinish)
+[16:34:28] k6 yuklamasi boshlandi
+[16:37:38] k6 iteratsiyalari: 6030
+[16:37:38] pipeline bo'shashi kutilmoqda (maks 120s)
+[16:38:39] pipeline bo'sh (15s, sink=18073 xabar)
+[16:38:50] ground truth eksport qilinmoqda
+[16:38:51] Kafka topigi eksport qilinmoqda
+[16:39:21] tahlil
+{
+  "mode": "CDC",
+  "profile": "C2WIDE",
+  "rep": "3",
+  "fault": "none",
+  "ground_truth_transitions": 18073,
+  "delivered_distinct": 18073,
+  "delivered_total": 18073,
+  "matched": 18073,
+  "missing": 0,
+  "phantom": 0,
+  "malformed": 0,
+  "loss_rate": 0.0,
+  "loss_rate_ppm": 0.0,
+  "duplicate_rate": 0.0,
+  "ordering_violation_rate": 0.0,
+  "txns_split_across_partitions": 0,
+  "latency_ms_p50": 33000,
+  "latency_ms_p95": 44211,
+  "latency_ms_p99": 45274,
+  "latency_ms_max": 47536,
+  "latency_ms_mean": 28168.1,
+  "latency_samples": 18073,
+  "latency_negative_samples": 0,
+  "loss_rate_upper_bound_95_ppm": 165.99
+}
+[16:39:21] ilova va konnektor to'xtatilmoqda
+connector o'chirilmoqda: a1-cdc-obsv_cdc_c2wide_r3_20260909163350
+[16:39:35] === TUGADI: results/CDC-C2WIDE-r3-20260909163350 ===

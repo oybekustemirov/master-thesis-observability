@@ -1,0 +1,8 @@
+[10:51:40] === RUN CDC-C2WIDE-r3-20260909105140 ===
+[10:51:40] mode=CDC profile=C2WIDE rep=3 tps=50 duration=180s fault=none
+[10:51:40] jar: target/master-thesis-observability-0.0.1-SNAPSHOT.jar
+[10:51:40] workload tozalanmoqda (reference saqlanadi)
+workload reset; reference data preserved
+AQ backlog purged: 0 -> 0
+[10:51:44] Kafka topigi qayta yaratilmoqda
+[10:51:53] ilova ishga tushirilmoqda (mode=CDC)

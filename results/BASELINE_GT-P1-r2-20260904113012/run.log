@@ -1,0 +1,43 @@
+[11:30:12] === RUN BASELINE_GT-P1-r2-20260904113012 ===
+[11:30:12] mode=BASELINE_GT profile=P1 rep=2 tps=50 duration=120s fault=none
+[11:30:12] jar: target/master-thesis-observability-0.0.1-SNAPSHOT.jar
+[11:30:12] workload tozalanmoqda (reference saqlanadi)
+workload reset; reference data preserved
+AQ backlog purged: 0 -> 0
+[11:30:13] Kafka topigi qayta yaratilmoqda
+[11:30:22] ilova ishga tushirilmoqda (mode=BASELINE_GT)
+[11:30:34] ilova tayyor (pid 3987487)
+[11:30:37] k6 yuklamasi boshlandi
+[11:32:50] pipeline bo'shashi kutilmoqda (maks 120s)
+[11:32:59] pipeline bo'sh (4s, sink=0 xabar)
+[11:33:12] ground truth eksport qilinmoqda
+[11:33:13] Kafka topigi eksport qilinmoqda
+[11:33:39] tahlil
+{
+  "mode": "BASELINE_GT",
+  "profile": "P1",
+  "rep": "2",
+  "fault": "none",
+  "ground_truth_transitions": 18003,
+  "delivered_distinct": 0,
+  "delivered_total": 0,
+  "matched": 0,
+  "missing": 18003,
+  "phantom": null,
+  "malformed": 0,
+  "loss_rate": null,
+  "loss_rate_ppm": null,
+  "duplicate_rate": null,
+  "ordering_violation_rate": null,
+  "txns_split_across_partitions": 0,
+  "latency_ms_p50": null,
+  "latency_ms_p95": null,
+  "latency_ms_p99": null,
+  "latency_ms_max": null,
+  "latency_ms_mean": null,
+  "latency_samples": 0,
+  "latency_negative_samples": 0,
+  "pipeline": "none (baseline mode)"
+}
+[11:33:39] ilova va konnektor to'xtatilmoqda
+[11:33:43] === TUGADI: results/BASELINE_GT-P1-r2-20260904113012 ===

@@ -1,0 +1,291 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.1)
+
+2026-09-04T16:03:03.921+05:00  INFO 2838539 --- [a1-observability] [           main] u.m.MasterThesisObservabilityApplication : Starting MasterThesisObservabilityApplication v0.0.1-SNAPSHOT using Java 21.0.12 with PID 2838539 (/mnt/c/Users/O.Ustemirov/IdeaProjects/master-thesis-observability/target/master-thesis-observability-0.0.1-SNAPSHOT.jar started by stemirovustemirov in /mnt/c/Users/O.Ustemirov/IdeaProjects/master-thesis-observability)
+2026-09-04T16:03:03.930+05:00  INFO 2838539 --- [a1-observability] [           main] u.m.MasterThesisObservabilityApplication : No active profile set, falling back to 1 default profile: "default"
+2026-09-04T16:03:05.262+05:00  INFO 2838539 --- [a1-observability] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-09-04T16:03:05.322+05:00  INFO 2838539 --- [a1-observability] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 43 ms. Found 2 JPA repository interfaces.
+2026-09-04T16:03:06.375+05:00  INFO 2838539 --- [a1-observability] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8095 (http)
+2026-09-04T16:03:06.393+05:00  INFO 2838539 --- [a1-observability] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-09-04T16:03:06.394+05:00  INFO 2838539 --- [a1-observability] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.24]
+2026-09-04T16:03:06.428+05:00  INFO 2838539 --- [a1-observability] [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 2401 ms
+2026-09-04T16:03:07.062+05:00  INFO 2838539 --- [a1-observability] [           main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-09-04T16:03:07.198+05:00  INFO 2838539 --- [a1-observability] [           main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.4.5.Final
+2026-09-04T16:03:07.953+05:00  INFO 2838539 --- [a1-observability] [           main] com.zaxxer.hikari.HikariDataSource       : a1-oltp - Starting...
+2026-09-04T16:03:08.423+05:00  INFO 2838539 --- [a1-observability] [           main] com.zaxxer.hikari.pool.HikariPool        : a1-oltp - Added connection oracle.jdbc.driver.T4CConnection@42e4431
+2026-09-04T16:03:08.429+05:00  INFO 2838539 --- [a1-observability] [           main] com.zaxxer.hikari.HikariDataSource       : a1-oltp - Start completed.
+2026-09-04T16:03:09.140+05:00  WARN 2838539 --- [a1-observability] [           main] org.hibernate.orm.jdbc                   : HHH100123: Low default JDBC fetch size: 10 (consider setting 'hibernate.jdbc.fetch_size')
+2026-09-04T16:03:09.153+05:00  INFO 2838539 --- [a1-observability] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:oracle:thin:@//localhost:1521/OBSVPDB]
+	Database driver: Oracle JDBC driver
+	Database dialect: OracleDialect
+	Database version: 23.26.3
+	Default catalog/schema: undefined/OBSV
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: 10
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-09-04T16:03:10.457+05:00  INFO 2838539 --- [a1-observability] [           main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-09-04T16:03:10.464+05:00  INFO 2838539 --- [a1-observability] [           main] org.hibernate.orm.jdbc.batch             : HHH100501: Automatic JDBC statement batching enabled (maximum batch size 50)
+2026-09-04T16:03:10.817+05:00  INFO 2838539 --- [a1-observability] [           main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-09-04T16:03:11.713+05:00  INFO 2838539 --- [a1-observability] [           main] i.u.m.aq.AqJmsConfiguration              : AQ JMS connection factory bound to OBSV.A1_EVT_Q as durable subscriber OBSERVABILITY_BRIDGE
+2026-09-04T16:03:11.896+05:00  INFO 2838539 --- [a1-observability] [           main] i.u.m.config.EventEmitterConfiguration   : observability.mode=AQ -> emitter=NoOpEventEmitter
+2026-09-04T16:03:12.433+05:00  INFO 2838539 --- [a1-observability] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 4 endpoints beneath base path '/actuator'
+2026-09-04T16:03:12.504+05:00  INFO 2838539 --- [a1-observability] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8095 (http) with context path '/'
+2026-09-04T16:03:12.584+05:00  INFO 2838539 --- [a1-observability] [           main] i.u.m.aq.AqToKafkaBridge                 : AQ bridge started: OBSV.A1_EVT_Q -> topic bank.a1.transaction.events
+2026-09-04T16:03:12.596+05:00  INFO 2838539 --- [a1-observability] [           main] u.m.MasterThesisObservabilityApplication : Started MasterThesisObservabilityApplication in 9.358 seconds (process running for 10.066)
+2026-09-04T16:03:12.606+05:00  INFO 2838539 --- [a1-observability] [           main] i.u.m.harness.EnvironmentAssertions      : environment ok: mode=AQ oltpPool=a1-oltp maxSize=32
+2026-09-04T16:03:12.637+05:00  INFO 2838539 --- [a1-observability] [           main] i.u.m.harness.ModeActivator              : mode=AQ activated: groundTruth=true aqCapture=true supplementalLogging=none
+2026-09-04T16:03:12.643+05:00  INFO 2838539 --- [a1-observability] [nio-8095-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-09-04T16:03:12.643+05:00  INFO 2838539 --- [a1-observability] [nio-8095-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-09-04T16:03:12.645+05:00  INFO 2838539 --- [a1-observability] [nio-8095-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-09-04T16:03:16.822+05:00  INFO 2838539 --- [a1-observability] [aq-kafka-bridge] o.a.kafka.common.config.AbstractConfig   : ProducerConfig values: 
+	acks = -1
+	batch.size = 16384
+	bootstrap.servers = [localhost:19092, localhost:29092, localhost:39092]
+	buffer.memory = 33554432
+	client.dns.lookup = use_all_dns_ips
+	client.id = a1-observability-producer-1
+	compression.gzip.level = -1
+	compression.lz4.level = 9
+	compression.type = lz4
+	compression.zstd.level = 3
+	config.providers = []
+	connections.max.idle.ms = 540000
+	delivery.timeout.ms = 120000
+	enable.idempotence = true
+	enable.metrics.push = true
+	interceptor.classes = []
+	key.serializer = class org.apache.kafka.common.serialization.StringSerializer
+	linger.ms = 5
+	max.block.ms = 60000
+	max.in.flight.requests.per.connection = 5
+	max.request.size = 1048576
+	metadata.max.age.ms = 300000
+	metadata.max.idle.ms = 300000
+	metadata.recovery.rebootstrap.trigger.ms = 300000
+	metadata.recovery.strategy = rebootstrap
+	metric.reporters = [org.apache.kafka.common.metrics.JmxReporter]
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partitioner.adaptive.partitioning.enable = true
+	partitioner.availability.timeout.ms = 0
+	partitioner.class = null
+	partitioner.ignore.keys = false
+	receive.buffer.bytes = 32768
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 30000
+	retries = 2147483647
+	retry.backoff.max.ms = 1000
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.connect.timeout.ms = null
+	sasl.login.read.timeout.ms = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.login.retry.backoff.max.ms = 10000
+	sasl.login.retry.backoff.ms = 100
+	sasl.mechanism = GSSAPI
+	sasl.oauthbearer.assertion.algorithm = RS256
+	sasl.oauthbearer.assertion.claim.aud = null
+	sasl.oauthbearer.assertion.claim.exp.seconds = 300
+	sasl.oauthbearer.assertion.claim.iss = null
+	sasl.oauthbearer.assertion.claim.jti.include = false
+	sasl.oauthbearer.assertion.claim.nbf.seconds = 60
+	sasl.oauthbearer.assertion.claim.sub = null
+	sasl.oauthbearer.assertion.file = null
+	sasl.oauthbearer.assertion.private.key.file = null
+	sasl.oauthbearer.assertion.private.key.passphrase = null
+	sasl.oauthbearer.assertion.template.file = null
+	sasl.oauthbearer.client.credentials.client.id = null
+	sasl.oauthbearer.client.credentials.client.secret = null
+	sasl.oauthbearer.clock.skew.seconds = 30
+	sasl.oauthbearer.expected.audience = []
+	sasl.oauthbearer.expected.issuer = null
+	sasl.oauthbearer.header.urlencode = false
+	sasl.oauthbearer.jwks.endpoint.refresh.ms = 3600000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.max.ms = 10000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.ms = 100
+	sasl.oauthbearer.jwks.endpoint.url = null
+	sasl.oauthbearer.jwt.retriever.class = class org.apache.kafka.common.security.oauthbearer.DefaultJwtRetriever
+	sasl.oauthbearer.jwt.validator.class = class org.apache.kafka.common.security.oauthbearer.DefaultJwtValidator
+	sasl.oauthbearer.scope = null
+	sasl.oauthbearer.scope.claim.name = scope
+	sasl.oauthbearer.sub.claim.name = sub
+	sasl.oauthbearer.token.endpoint.url = null
+	security.protocol = PLAINTEXT
+	security.providers = null
+	send.buffer.bytes = 131072
+	socket.connection.setup.timeout.max.ms = 30000
+	socket.connection.setup.timeout.ms = 10000
+	ssl.cipher.suites = []
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.3]
+	ssl.endpoint.identification.algorithm = https
+	ssl.engine.factory.class = null
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.certificate.chain = null
+	ssl.keystore.key = null
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLSv1.3
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.certificates = null
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	transaction.timeout.ms = 60000
+	transaction.two.phase.commit.enable = false
+	transactional.id = null
+	value.serializer = class org.apache.kafka.common.serialization.StringSerializer
+
+2026-09-04T16:03:16.901+05:00  INFO 2838539 --- [a1-observability] [aq-kafka-bridge] o.a.k.c.t.i.KafkaMetricsCollector        : initializing Kafka metrics collector
+2026-09-04T16:03:16.976+05:00  INFO 2838539 --- [a1-observability] [aq-kafka-bridge] o.a.k.clients.producer.KafkaProducer     : [Producer clientId=a1-observability-producer-1] Instantiated an idempotent producer.
+2026-09-04T16:03:17.056+05:00  INFO 2838539 --- [a1-observability] [aq-kafka-bridge] o.a.kafka.common.utils.AppInfoParser     : Kafka version: 4.2.1
+2026-09-04T16:03:17.057+05:00  INFO 2838539 --- [a1-observability] [aq-kafka-bridge] o.a.kafka.common.utils.AppInfoParser     : Kafka commitId: 92f61c44867f39dc
+2026-09-04T16:03:17.057+05:00  INFO 2838539 --- [a1-observability] [aq-kafka-bridge] o.a.kafka.common.utils.AppInfoParser     : Kafka startTimeMs: 1788519797051
+2026-09-04T16:03:17.718+05:00  INFO 2838539 --- [a1-observability] [lity-producer-1] org.apache.kafka.clients.Metadata        : [Producer clientId=a1-observability-producer-1] Cluster ID: 4L6g3nShT-eMCtK--X86sw
+2026-09-04T16:03:17.724+05:00  INFO 2838539 --- [a1-observability] [lity-producer-1] o.a.k.c.p.internals.TransactionManager   : [Producer clientId=a1-observability-producer-1] ProducerId set to 3016 with epoch 0
+2026-09-04T16:04:22.246+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5798 on topic-partition bank.a1.transaction.events-1, retrying (2147483646 attempts left). Error: NOT_LEADER_OR_FOLLOWER
+2026-09-04T16:04:22.248+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Received invalid metadata error in produce request on partition bank.a1.transaction.events-1 due to org.apache.kafka.common.errors.NotLeaderOrFollowerException: For requests intended only for the leader, this error indicates that the broker is not the current leader. For requests intended for any replica, this error indicates that the broker is not a replica of the topic partition. Going to request metadata update now
+2026-09-04T16:04:22.255+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5800 on topic-partition bank.a1.transaction.events-1, retrying (2147483645 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:04:22.494+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5801 on topic-partition bank.a1.transaction.events-1, retrying (2147483644 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:04:22.902+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5802 on topic-partition bank.a1.transaction.events-1, retrying (2147483643 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:04:23.814+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5803 on topic-partition bank.a1.transaction.events-1, retrying (2147483642 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:04:24.319+05:00  INFO 2838539 --- [a1-observability] [lity-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=a1-observability-producer-1] Node 2 disconnected.
+2026-09-04T16:04:24.322+05:00  INFO 2838539 --- [a1-observability] [lity-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=a1-observability-producer-1] Node 3 disconnected.
+2026-09-04T16:04:24.323+05:00  INFO 2838539 --- [a1-observability] [lity-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=a1-observability-producer-1] Cancelled in-flight METADATA request with correlation id 5804 due to node 3 being disconnected (elapsed time since creation: 1ms, elapsed time since send: 1ms, throttle time: 0ms, request timeout: 30000ms)
+2026-09-04T16:04:24.325+05:00  INFO 2838539 --- [a1-observability] [lity-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=a1-observability-producer-1] Node -3 disconnected.
+2026-09-04T16:04:24.815+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5806 on topic-partition bank.a1.transaction.events-1, retrying (2147483641 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:04:25.817+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5807 on topic-partition bank.a1.transaction.events-1, retrying (2147483640 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:04:26.818+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5808 on topic-partition bank.a1.transaction.events-1, retrying (2147483639 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:04:27.819+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5809 on topic-partition bank.a1.transaction.events-1, retrying (2147483638 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:04:28.821+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5810 on topic-partition bank.a1.transaction.events-1, retrying (2147483637 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:04:29.823+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5811 on topic-partition bank.a1.transaction.events-1, retrying (2147483636 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:04:30.824+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5812 on topic-partition bank.a1.transaction.events-1, retrying (2147483635 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:04:34.593+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5813 on topic-partition bank.a1.transaction.events-1, retrying (2147483634 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:04:35.594+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5814 on topic-partition bank.a1.transaction.events-1, retrying (2147483633 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:04:36.595+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5815 on topic-partition bank.a1.transaction.events-1, retrying (2147483632 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:04:37.595+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5816 on topic-partition bank.a1.transaction.events-1, retrying (2147483631 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:04:38.596+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5817 on topic-partition bank.a1.transaction.events-1, retrying (2147483630 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:04:39.598+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5818 on topic-partition bank.a1.transaction.events-1, retrying (2147483629 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:04:40.599+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5819 on topic-partition bank.a1.transaction.events-1, retrying (2147483628 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:04:41.599+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5820 on topic-partition bank.a1.transaction.events-1, retrying (2147483627 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:04:42.600+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5821 on topic-partition bank.a1.transaction.events-1, retrying (2147483626 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:04:43.500+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5822 on topic-partition bank.a1.transaction.events-1, retrying (2147483625 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:04:44.501+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5823 on topic-partition bank.a1.transaction.events-1, retrying (2147483624 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:04:45.503+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5824 on topic-partition bank.a1.transaction.events-1, retrying (2147483623 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:04:46.504+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5825 on topic-partition bank.a1.transaction.events-1, retrying (2147483622 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:04:47.505+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5826 on topic-partition bank.a1.transaction.events-1, retrying (2147483621 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:04:48.475+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5827 on topic-partition bank.a1.transaction.events-1, retrying (2147483620 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:04:49.475+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5828 on topic-partition bank.a1.transaction.events-1, retrying (2147483619 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:04:50.476+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5829 on topic-partition bank.a1.transaction.events-1, retrying (2147483618 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:04:51.477+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5830 on topic-partition bank.a1.transaction.events-1, retrying (2147483617 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:04:52.358+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5831 on topic-partition bank.a1.transaction.events-1, retrying (2147483616 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:04:53.302+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5832 on topic-partition bank.a1.transaction.events-1, retrying (2147483615 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:04:54.303+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5833 on topic-partition bank.a1.transaction.events-1, retrying (2147483614 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:04:55.234+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5834 on topic-partition bank.a1.transaction.events-1, retrying (2147483613 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:04:56.235+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5835 on topic-partition bank.a1.transaction.events-1, retrying (2147483612 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:04:57.236+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5836 on topic-partition bank.a1.transaction.events-1, retrying (2147483611 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:04:58.236+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5837 on topic-partition bank.a1.transaction.events-1, retrying (2147483610 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:04:59.237+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5838 on topic-partition bank.a1.transaction.events-1, retrying (2147483609 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:05:00.238+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5839 on topic-partition bank.a1.transaction.events-1, retrying (2147483608 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:05:01.239+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5840 on topic-partition bank.a1.transaction.events-1, retrying (2147483607 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:05:02.240+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5841 on topic-partition bank.a1.transaction.events-1, retrying (2147483606 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:05:03.240+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5842 on topic-partition bank.a1.transaction.events-1, retrying (2147483605 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:05:04.240+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5843 on topic-partition bank.a1.transaction.events-1, retrying (2147483604 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:05:05.240+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5844 on topic-partition bank.a1.transaction.events-1, retrying (2147483603 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:05:06.242+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5845 on topic-partition bank.a1.transaction.events-1, retrying (2147483602 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:05:10.176+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5846 on topic-partition bank.a1.transaction.events-1, retrying (2147483601 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:05:11.178+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5847 on topic-partition bank.a1.transaction.events-1, retrying (2147483600 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:05:12.178+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5848 on topic-partition bank.a1.transaction.events-1, retrying (2147483599 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:05:13.179+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5849 on topic-partition bank.a1.transaction.events-1, retrying (2147483598 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:05:14.181+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5850 on topic-partition bank.a1.transaction.events-1, retrying (2147483597 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:05:15.182+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5851 on topic-partition bank.a1.transaction.events-1, retrying (2147483596 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:05:16.183+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5852 on topic-partition bank.a1.transaction.events-1, retrying (2147483595 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:05:17.185+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5853 on topic-partition bank.a1.transaction.events-1, retrying (2147483594 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:05:18.186+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5854 on topic-partition bank.a1.transaction.events-1, retrying (2147483593 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:05:19.187+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5855 on topic-partition bank.a1.transaction.events-1, retrying (2147483592 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:05:20.188+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5856 on topic-partition bank.a1.transaction.events-1, retrying (2147483591 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:05:21.189+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5857 on topic-partition bank.a1.transaction.events-1, retrying (2147483590 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:05:22.190+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5858 on topic-partition bank.a1.transaction.events-1, retrying (2147483589 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:05:23.191+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5859 on topic-partition bank.a1.transaction.events-1, retrying (2147483588 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:05:24.192+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5860 on topic-partition bank.a1.transaction.events-1, retrying (2147483587 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:05:25.194+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5861 on topic-partition bank.a1.transaction.events-1, retrying (2147483586 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:05:26.194+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5862 on topic-partition bank.a1.transaction.events-1, retrying (2147483585 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:05:27.188+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5863 on topic-partition bank.a1.transaction.events-1, retrying (2147483584 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:05:28.189+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5864 on topic-partition bank.a1.transaction.events-1, retrying (2147483583 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:05:29.190+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5865 on topic-partition bank.a1.transaction.events-1, retrying (2147483582 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:05:30.178+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5866 on topic-partition bank.a1.transaction.events-1, retrying (2147483581 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:05:31.179+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5867 on topic-partition bank.a1.transaction.events-1, retrying (2147483580 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:05:32.180+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5868 on topic-partition bank.a1.transaction.events-1, retrying (2147483579 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:05:33.181+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5869 on topic-partition bank.a1.transaction.events-1, retrying (2147483578 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:05:34.182+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5870 on topic-partition bank.a1.transaction.events-1, retrying (2147483577 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:05:35.183+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5871 on topic-partition bank.a1.transaction.events-1, retrying (2147483576 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:05:36.185+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5872 on topic-partition bank.a1.transaction.events-1, retrying (2147483575 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:05:37.187+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5873 on topic-partition bank.a1.transaction.events-1, retrying (2147483574 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:05:38.188+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5874 on topic-partition bank.a1.transaction.events-1, retrying (2147483573 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:05:39.189+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5875 on topic-partition bank.a1.transaction.events-1, retrying (2147483572 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:05:40.191+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5876 on topic-partition bank.a1.transaction.events-1, retrying (2147483571 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:05:41.192+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5877 on topic-partition bank.a1.transaction.events-1, retrying (2147483570 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:05:45.114+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5878 on topic-partition bank.a1.transaction.events-1, retrying (2147483569 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:05:46.115+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5879 on topic-partition bank.a1.transaction.events-1, retrying (2147483568 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:05:47.116+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5880 on topic-partition bank.a1.transaction.events-1, retrying (2147483567 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:05:48.118+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5881 on topic-partition bank.a1.transaction.events-1, retrying (2147483566 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:05:49.118+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5882 on topic-partition bank.a1.transaction.events-1, retrying (2147483565 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:05:50.120+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5883 on topic-partition bank.a1.transaction.events-1, retrying (2147483564 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:05:51.078+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5884 on topic-partition bank.a1.transaction.events-1, retrying (2147483563 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:05:52.079+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5885 on topic-partition bank.a1.transaction.events-1, retrying (2147483562 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:05:53.080+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5886 on topic-partition bank.a1.transaction.events-1, retrying (2147483561 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:05:54.075+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5887 on topic-partition bank.a1.transaction.events-1, retrying (2147483560 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:05:55.076+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5888 on topic-partition bank.a1.transaction.events-1, retrying (2147483559 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:05:56.077+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5889 on topic-partition bank.a1.transaction.events-1, retrying (2147483558 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:05:57.079+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5890 on topic-partition bank.a1.transaction.events-1, retrying (2147483557 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:05:58.072+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5891 on topic-partition bank.a1.transaction.events-1, retrying (2147483556 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:05:59.073+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5892 on topic-partition bank.a1.transaction.events-1, retrying (2147483555 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:06:00.075+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5893 on topic-partition bank.a1.transaction.events-1, retrying (2147483554 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:06:01.076+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5894 on topic-partition bank.a1.transaction.events-1, retrying (2147483553 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:06:02.077+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5895 on topic-partition bank.a1.transaction.events-1, retrying (2147483552 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:06:03.077+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5896 on topic-partition bank.a1.transaction.events-1, retrying (2147483551 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:06:04.078+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5897 on topic-partition bank.a1.transaction.events-1, retrying (2147483550 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:06:05.079+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5898 on topic-partition bank.a1.transaction.events-1, retrying (2147483549 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:06:06.081+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5899 on topic-partition bank.a1.transaction.events-1, retrying (2147483548 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:06:07.083+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5900 on topic-partition bank.a1.transaction.events-1, retrying (2147483547 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:06:08.085+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5901 on topic-partition bank.a1.transaction.events-1, retrying (2147483546 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:06:09.086+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5902 on topic-partition bank.a1.transaction.events-1, retrying (2147483545 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:06:10.088+05:00  WARN 2838539 --- [a1-observability] [lity-producer-1] o.a.k.clients.producer.internals.Sender  : [Producer clientId=a1-observability-producer-1] Got error produce response with correlation id 5903 on topic-partition bank.a1.transaction.events-1, retrying (2147483544 attempts left). Error: NOT_ENOUGH_REPLICAS
+2026-09-04T16:07:53.060+05:00  INFO 2838539 --- [a1-observability] [ionShutdownHook] i.u.m.aq.AqToKafkaBridge                 : AQ bridge stopped
+2026-09-04T16:07:53.062+05:00  INFO 2838539 --- [a1-observability] [ionShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-09-04T16:07:53.066+05:00  INFO 2838539 --- [a1-observability] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-09-04T16:07:53.070+05:00  INFO 2838539 --- [a1-observability] [ionShutdownHook] o.a.k.clients.producer.KafkaProducer     : [Producer clientId=a1-observability-producer-1] Closing the Kafka producer with timeoutMillis = 30000 ms.
+2026-09-04T16:07:53.076+05:00  INFO 2838539 --- [a1-observability] [ionShutdownHook] o.apache.kafka.common.metrics.Metrics    : Metrics scheduler closed
+2026-09-04T16:07:53.076+05:00  INFO 2838539 --- [a1-observability] [ionShutdownHook] o.apache.kafka.common.metrics.Metrics    : Closing reporter org.apache.kafka.common.metrics.JmxReporter
+2026-09-04T16:07:53.077+05:00  INFO 2838539 --- [a1-observability] [ionShutdownHook] o.apache.kafka.common.metrics.Metrics    : Closing reporter org.apache.kafka.common.telemetry.internals.ClientTelemetryReporter
+2026-09-04T16:07:53.077+05:00  INFO 2838539 --- [a1-observability] [ionShutdownHook] o.apache.kafka.common.metrics.Metrics    : Metrics reporters closed
+2026-09-04T16:07:53.079+05:00  INFO 2838539 --- [a1-observability] [ionShutdownHook] o.a.kafka.common.utils.AppInfoParser     : App info kafka.producer for a1-observability-producer-1 unregistered
+2026-09-04T16:07:53.088+05:00  INFO 2838539 --- [a1-observability] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : a1-oltp - Shutdown initiated...
+2026-09-04T16:07:53.103+05:00  INFO 2838539 --- [a1-observability] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : a1-oltp - Shutdown completed.

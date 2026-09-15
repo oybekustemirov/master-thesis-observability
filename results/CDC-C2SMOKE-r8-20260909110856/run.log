@@ -1,0 +1,50 @@
+[11:08:56] === RUN CDC-C2SMOKE-r8-20260909110856 ===
+[11:08:56] mode=CDC profile=C2SMOKE rep=8 tps=50 duration=60s fault=none
+[11:08:56] jar: target/master-thesis-observability-0.0.1-SNAPSHOT.jar
+[11:08:56] workload tozalanmoqda (reference saqlanadi)
+workload reset; reference data preserved
+AQ backlog purged: 0 -> 0
+[11:09:00] Kafka topigi qayta yaratilmoqda
+[11:09:10] ilova ishga tushirilmoqda (mode=CDC)
+[11:09:26] ilova tayyor (pid 128349)
+[11:09:26] Debezium konnektori ro'yxatdan o'tkazilmoqda (CDC, prefix=obsv_cdc_c2smoke_r8_20260909110856)
+konnektor ro'yxatdan o'tkazilmoqda: a1-cdc-obsv_cdc_c2smoke_r8_20260909110856 (prefix=obsv_cdc_c2smoke_r8_20260909110856)
+konnektor RUNNING (2s)
+streaming tasdiqlanmoqda (heartbeat topigi: __debezium-heartbeat.obsv_cdc_c2smoke_r8_20260909110856)
+streaming tasdiqlandi (8 urinish)
+[11:10:01] k6 yuklamasi boshlandi
+[11:11:03] k6 iteratsiyalari: 3001
+[11:11:03] pipeline bo'shashi kutilmoqda (maks 120s)
+[11:11:49] pipeline bo'sh (15s, sink=9003 xabar)
+[11:12:01] ground truth eksport qilinmoqda
+[11:12:02] Kafka topigi eksport qilinmoqda
+[11:12:29] tahlil
+{
+  "mode": "CDC",
+  "profile": "C2SMOKE",
+  "rep": "8",
+  "fault": "none",
+  "ground_truth_transitions": 9003,
+  "delivered_distinct": 9003,
+  "delivered_total": 9003,
+  "matched": 9003,
+  "missing": 0,
+  "phantom": 0,
+  "malformed": 0,
+  "loss_rate": 0.0,
+  "loss_rate_ppm": 0.0,
+  "duplicate_rate": 0.0,
+  "ordering_violation_rate": 0.0,
+  "txns_split_across_partitions": 0,
+  "latency_ms_p50": 4184,
+  "latency_ms_p95": 6739,
+  "latency_ms_p99": 7325,
+  "latency_ms_max": 7687,
+  "latency_ms_mean": 4255.8,
+  "latency_samples": 9003,
+  "latency_negative_samples": 0,
+  "loss_rate_upper_bound_95_ppm": 333.22
+}
+[11:12:30] ilova va konnektor to'xtatilmoqda
+connector o'chirilmoqda: a1-cdc-obsv_cdc_c2smoke_r8_20260909110856
+[11:12:34] === TUGADI: results/CDC-C2SMOKE-r8-20260909110856 ===

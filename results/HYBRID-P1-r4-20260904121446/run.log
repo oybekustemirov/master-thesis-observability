@@ -1,0 +1,49 @@
+[12:14:46] === RUN HYBRID-P1-r4-20260904121446 ===
+[12:14:46] mode=HYBRID profile=P1 rep=4 tps=50 duration=120s fault=none
+[12:14:46] jar: target/master-thesis-observability-0.0.1-SNAPSHOT.jar
+[12:14:46] workload tozalanmoqda (reference saqlanadi)
+workload reset; reference data preserved
+AQ backlog purged: 0 -> 0
+[12:14:47] Kafka topigi qayta yaratilmoqda
+[12:14:56] ilova ishga tushirilmoqda (mode=HYBRID)
+[12:15:08] ilova tayyor (pid 267772)
+[12:15:08] Debezium konnektori ro'yxatdan o'tkazilmoqda (HYBRID, prefix=obsv_hybrid_p1_r4_20260904121446)
+konnektor ro'yxatdan o'tkazilmoqda: a1-hybrid-obsv_hybrid_p1_r4_20260904121446 (prefix=obsv_hybrid_p1_r4_20260904121446)
+konnektor RUNNING (2s)
+streaming tasdiqlanmoqda (heartbeat topigi: __debezium-heartbeat.obsv_hybrid_p1_r4_20260904121446)
+streaming tasdiqlandi (1 urinish)
+[12:15:19] k6 yuklamasi boshlandi
+[12:17:28] pipeline bo'shashi kutilmoqda (maks 120s)
+[12:17:43] pipeline bo'sh (5s, sink=18000 xabar)
+[12:17:53] ground truth eksport qilinmoqda
+[12:17:54] Kafka topigi eksport qilinmoqda
+[12:18:48] tahlil
+{
+  "mode": "HYBRID",
+  "profile": "P1",
+  "rep": "4",
+  "fault": "none",
+  "ground_truth_transitions": 18000,
+  "delivered_distinct": 18000,
+  "delivered_total": 18000,
+  "matched": 18000,
+  "missing": 0,
+  "phantom": 0,
+  "malformed": 0,
+  "loss_rate": 0.0,
+  "loss_rate_ppm": 0.0,
+  "duplicate_rate": 0.0,
+  "ordering_violation_rate": 0.0,
+  "txns_split_across_partitions": 0,
+  "latency_ms_p50": 3186,
+  "latency_ms_p95": 5730,
+  "latency_ms_p99": 7539,
+  "latency_ms_max": 8342,
+  "latency_ms_mean": 3275.6,
+  "latency_samples": 18000,
+  "latency_negative_samples": 0,
+  "loss_rate_upper_bound_95_ppm": 166.67
+}
+[12:18:48] ilova va konnektor to'xtatilmoqda
+connector o'chirilmoqda: a1-hybrid-obsv_hybrid_p1_r4_20260904121446
+[12:18:53] === TUGADI: results/HYBRID-P1-r4-20260904121446 ===

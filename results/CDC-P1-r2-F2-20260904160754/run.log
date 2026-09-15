@@ -1,0 +1,53 @@
+[16:07:54] === RUN CDC-P1-r2-F2-20260904160754 ===
+[16:07:54] mode=CDC profile=P1 rep=2 tps=50 duration=180s fault=F2
+[16:07:54] jar: target/master-thesis-observability-0.0.1-SNAPSHOT.jar
+[16:07:54] workload tozalanmoqda (reference saqlanadi)
+workload reset; reference data preserved
+AQ backlog purged: 0 -> 0
+[16:07:55] Kafka topigi qayta yaratilmoqda
+[16:08:07] ilova ishga tushirilmoqda (mode=CDC)
+[16:08:17] ilova tayyor (pid 2886506)
+[16:08:17] Debezium konnektori ro'yxatdan o'tkazilmoqda (CDC, prefix=obsv_cdc_p1_r2_f2_20260904160754)
+konnektor ro'yxatdan o'tkazilmoqda: a1-cdc-obsv_cdc_p1_r2_f2_20260904160754 (prefix=obsv_cdc_p1_r2_f2_20260904160754)
+konnektor RUNNING (2s)
+streaming tasdiqlanmoqda (heartbeat topigi: __debezium-heartbeat.obsv_cdc_p1_r2_f2_20260904160754)
+streaming tasdiqlandi (1 urinish)
+[16:08:23] fault F2 60s dan keyin yuboriladi
+[16:08:23] k6 yuklamasi boshlandi
+[fault 16:09:29] kafka-2 va kafka-3 to'xtatilmoqda (90s)
+[fault 16:11:12] brokerlar qaytarilmoqda
+[fault 16:11:13] F2 tugadi
+[16:11:42] pipeline bo'shashi kutilmoqda (maks 120s)
+[16:11:54] pipeline bo'sh (5s, sink=27003 xabar)
+[16:12:04] ground truth eksport qilinmoqda
+[16:12:04] Kafka topigi eksport qilinmoqda
+[16:12:56] tahlil
+{
+  "mode": "CDC",
+  "profile": "P1",
+  "rep": "2",
+  "fault": "F2",
+  "ground_truth_transitions": 27003,
+  "delivered_distinct": 27003,
+  "delivered_total": 27003,
+  "matched": 27003,
+  "missing": 0,
+  "phantom": 0,
+  "malformed": 0,
+  "loss_rate": 0.0,
+  "loss_rate_ppm": 0.0,
+  "duplicate_rate": 0.0,
+  "ordering_violation_rate": 0.0,
+  "txns_split_across_partitions": 0,
+  "latency_ms_p50": 3273,
+  "latency_ms_p95": 6924,
+  "latency_ms_p99": 8549,
+  "latency_ms_max": 9291,
+  "latency_ms_mean": 3504.0,
+  "latency_samples": 27003,
+  "latency_negative_samples": 0,
+  "loss_rate_upper_bound_95_ppm": 111.1
+}
+[16:12:57] ilova va konnektor to'xtatilmoqda
+connector o'chirilmoqda: a1-cdc-obsv_cdc_p1_r2_f2_20260904160754
+[16:13:01] === TUGADI: results/CDC-P1-r2-F2-20260904160754 ===

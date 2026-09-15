@@ -1,0 +1,56 @@
+[18:53:25] === RUN CDC-P1-r2-F5R-20260909185325 ===
+[18:53:25] mode=CDC profile=P1 rep=2 tps=50 duration=420s fault=F5R
+[18:53:25] jar: target/master-thesis-observability-0.0.1-SNAPSHOT.jar
+[18:53:25] arxiv redo tozalanmoqda
+[18:53:25] workload tozalanmoqda (reference saqlanadi)
+workload reset; reference data preserved
+AQ backlog purged: 0 -> 0
+[18:53:30] Kafka topigi qayta yaratilmoqda
+[18:53:39] ilova ishga tushirilmoqda (mode=CDC)
+[18:53:56] ilova tayyor (pid 1258041)
+[18:53:56] Debezium konnektori ro'yxatdan o'tkazilmoqda (CDC, prefix=obsv_cdc_p1_r2_f5r_20260909185325)
+konnektor ro'yxatdan o'tkazilmoqda: a1-cdc-obsv_cdc_p1_r2_f5r_20260909185325 (prefix=obsv_cdc_p1_r2_f5r_20260909185325)
+konnektor RUNNING (2s)
+streaming tasdiqlanmoqda (heartbeat topigi: __debezium-heartbeat.obsv_cdc_p1_r2_f5r_20260909185325)
+streaming tasdiqlandi (1 urinish)
+[18:54:03] fault F5R 30s dan keyin yuboriladi
+[18:54:03] k6 yuklamasi boshlandi
+[fault 18:54:33] bitta ochiq tranzaksiyada 5000 satr, 240 soniya ushlab turiladi
+[fault 18:54:33] F5R tugadi
+PL/SQL procedure successfully completed.
+
+[19:01:04] k6 iteratsiyalari: 21001
+[19:01:04] pipeline bo'shashi kutilmoqda (maks 120s)
+[19:01:25] pipeline bo'sh (15s, sink=77997 xabar)
+[19:01:36] ground truth eksport qilinmoqda
+[19:01:37] Kafka topigi eksport qilinmoqda
+[19:01:48] tahlil
+{
+  "mode": "CDC",
+  "profile": "P1",
+  "rep": "2",
+  "fault": "F5R",
+  "ground_truth_transitions": 77997,
+  "delivered_distinct": 77997,
+  "delivered_total": 77997,
+  "matched": 77997,
+  "missing": 0,
+  "phantom": 0,
+  "malformed": 0,
+  "loss_rate": 0.0,
+  "loss_rate_ppm": 0.0,
+  "duplicate_rate": 0.0,
+  "ordering_violation_rate": 0.0,
+  "txns_split_across_partitions": 0,
+  "latency_ms_p50": 3722,
+  "latency_ms_p95": 13989,
+  "latency_ms_p99": 15411,
+  "latency_ms_max": 15761,
+  "latency_ms_mean": 5007.6,
+  "latency_samples": 77997,
+  "latency_negative_samples": 0,
+  "loss_rate_upper_bound_95_ppm": 38.46
+}
+[19:01:49] ilova va konnektor to'xtatilmoqda
+connector o'chirilmoqda: a1-cdc-obsv_cdc_p1_r2_f5r_20260909185325
+[19:02:01] === TUGADI: results/CDC-P1-r2-F5R-20260909185325 ===

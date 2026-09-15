@@ -1,0 +1,51 @@
+[16:40:37] === RUN WRAPPER_B1-P1-r1-F1R-20260909164037 ===
+[16:40:37] mode=WRAPPER_B1 profile=P1 rep=1 tps=50 duration=180s fault=F1R
+[16:40:37] jar: target/master-thesis-observability-0.0.1-SNAPSHOT.jar
+[16:40:37] arxiv redo tozalanmoqda
+[16:40:38] workload tozalanmoqda (reference saqlanadi)
+workload reset; reference data preserved
+AQ backlog purged: 0 -> 0
+[16:40:39] Kafka topigi qayta yaratilmoqda
+[16:40:48] ilova ishga tushirilmoqda (mode=WRAPPER_B1)
+[16:41:02] ilova tayyor (pid 3853613)
+[16:41:06] fault F1R 60s dan keyin yuboriladi
+[16:41:06] k6 yuklamasi boshlandi
+[fault 16:42:06] SIGKILL ilovaga: 3853613
+[fault 16:42:17] ilova qayta ishga tushirilmoqda (mode=results/WRAPPER_B3-P1-r91-20260903164920/run.log:WRAPPER_B3)
+[fault 16:42:17] F1R tugadi
+[16:44:07] k6 nolga teng bo'lmagan kod bilan tugadi (natija baribir tahlil qilinadi)
+[16:44:07] k6 iteratsiyalari: 8994
+[16:44:07] ilova ishlamayapti (fault=F1R) — drenaj uchun qayta ishga tushirilmoqda
+[16:44:21] ilova qayta tiklandi (8x2s)
+[16:44:21] pipeline bo'shashi kutilmoqda (maks 120s)
+[16:45:04] pipeline bo'sh (15s, sink=8930 xabar)
+[16:45:14] ground truth eksport qilinmoqda
+[16:45:15] Kafka topigi eksport qilinmoqda
+[16:46:07] tahlil
+{
+  "mode": "WRAPPER_B1",
+  "profile": "P1",
+  "rep": "1",
+  "fault": "F1R",
+  "ground_truth_transitions": 8931,
+  "delivered_distinct": 8930,
+  "delivered_total": 8930,
+  "matched": 8930,
+  "missing": 1,
+  "phantom": 0,
+  "malformed": 0,
+  "loss_rate": 0.00011197,
+  "loss_rate_ppm": 111.97,
+  "duplicate_rate": 0.0,
+  "ordering_violation_rate": 0.0,
+  "txns_split_across_partitions": 0,
+  "latency_ms_p50": 0,
+  "latency_ms_p95": 1,
+  "latency_ms_p99": 3,
+  "latency_ms_max": 1136,
+  "latency_ms_mean": 1.7,
+  "latency_samples": 8930,
+  "latency_negative_samples": 4011
+}
+[16:46:08] ilova va konnektor to'xtatilmoqda
+[16:46:12] === TUGADI: results/WRAPPER_B1-P1-r1-F1R-20260909164037 ===

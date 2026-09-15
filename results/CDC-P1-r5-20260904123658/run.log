@@ -1,0 +1,49 @@
+[12:36:58] === RUN CDC-P1-r5-20260904123658 ===
+[12:36:58] mode=CDC profile=P1 rep=5 tps=50 duration=120s fault=none
+[12:36:58] jar: target/master-thesis-observability-0.0.1-SNAPSHOT.jar
+[12:36:58] workload tozalanmoqda (reference saqlanadi)
+workload reset; reference data preserved
+AQ backlog purged: 0 -> 0
+[12:37:00] Kafka topigi qayta yaratilmoqda
+[12:37:09] ilova ishga tushirilmoqda (mode=CDC)
+[12:37:21] ilova tayyor (pid 503746)
+[12:37:21] Debezium konnektori ro'yxatdan o'tkazilmoqda (CDC, prefix=obsv_cdc_p1_r5_20260904123658)
+konnektor ro'yxatdan o'tkazilmoqda: a1-cdc-obsv_cdc_p1_r5_20260904123658 (prefix=obsv_cdc_p1_r5_20260904123658)
+konnektor RUNNING (2s)
+streaming tasdiqlanmoqda (heartbeat topigi: __debezium-heartbeat.obsv_cdc_p1_r5_20260904123658)
+streaming tasdiqlandi (1 urinish)
+[12:37:28] k6 yuklamasi boshlandi
+[12:39:41] pipeline bo'shashi kutilmoqda (maks 120s)
+[12:39:56] pipeline bo'sh (5s, sink=18003 xabar)
+[12:40:06] ground truth eksport qilinmoqda
+[12:40:06] Kafka topigi eksport qilinmoqda
+[12:40:59] tahlil
+{
+  "mode": "CDC",
+  "profile": "P1",
+  "rep": "5",
+  "fault": "none",
+  "ground_truth_transitions": 18003,
+  "delivered_distinct": 18003,
+  "delivered_total": 18003,
+  "matched": 18003,
+  "missing": 0,
+  "phantom": 0,
+  "malformed": 0,
+  "loss_rate": 0.0,
+  "loss_rate_ppm": 0.0,
+  "duplicate_rate": 0.0,
+  "ordering_violation_rate": 0.0,
+  "txns_split_across_partitions": 0,
+  "latency_ms_p50": 3277,
+  "latency_ms_p95": 6346,
+  "latency_ms_p99": 8177,
+  "latency_ms_max": 8777,
+  "latency_ms_mean": 3443.9,
+  "latency_samples": 18003,
+  "latency_negative_samples": 0,
+  "loss_rate_upper_bound_95_ppm": 166.64
+}
+[12:40:59] ilova va konnektor to'xtatilmoqda
+connector o'chirilmoqda: a1-cdc-obsv_cdc_p1_r5_20260904123658
+[12:41:06] === TUGADI: results/CDC-P1-r5-20260904123658 ===

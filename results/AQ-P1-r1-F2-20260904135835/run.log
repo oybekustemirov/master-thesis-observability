@@ -1,0 +1,47 @@
+[13:58:35] === RUN AQ-P1-r1-F2-20260904135835 ===
+[13:58:35] mode=AQ profile=P1 rep=1 tps=50 duration=180s fault=F2
+[13:58:35] jar: target/master-thesis-observability-0.0.1-SNAPSHOT.jar
+[13:58:35] workload tozalanmoqda (reference saqlanadi)
+workload reset; reference data preserved
+AQ backlog purged: 0 -> 0
+[13:58:37] Kafka topigi qayta yaratilmoqda
+[13:58:46] ilova ishga tushirilmoqda (mode=AQ)
+[13:58:58] ilova tayyor (pid 1459224)
+[13:59:05] fault F2 60s dan keyin yuboriladi
+[13:59:05] k6 yuklamasi boshlandi
+[fault 14:00:08] kafka-2 va kafka-3 to'xtatilmoqda (90s)
+[fault 14:01:51] brokerlar qaytarilmoqda
+[fault 14:01:52] F2 tugadi
+[14:02:20] pipeline bo'shashi kutilmoqda (maks 120s)
+[14:02:30] pipeline bo'sh (4s, sink=27003 xabar)
+[14:02:44] ground truth eksport qilinmoqda
+[14:02:44] Kafka topigi eksport qilinmoqda
+[14:03:12] tahlil
+{
+  "mode": "AQ",
+  "profile": "P1",
+  "rep": "1",
+  "fault": "F2",
+  "ground_truth_transitions": 27003,
+  "delivered_distinct": 27003,
+  "delivered_total": 27003,
+  "matched": 27003,
+  "missing": 0,
+  "phantom": 0,
+  "malformed": 0,
+  "loss_rate": 0.0,
+  "loss_rate_ppm": 0.0,
+  "duplicate_rate": 0.0,
+  "ordering_violation_rate": 0.0,
+  "txns_split_across_partitions": 0,
+  "latency_ms_p50": 19123,
+  "latency_ms_p95": 101298,
+  "latency_ms_p99": 110964,
+  "latency_ms_max": 112764,
+  "latency_ms_mean": 33429.1,
+  "latency_samples": 27003,
+  "latency_negative_samples": 0,
+  "loss_rate_upper_bound_95_ppm": 111.1
+}
+[14:03:12] ilova va konnektor to'xtatilmoqda
+[14:03:16] === TUGADI: results/AQ-P1-r1-F2-20260904135835 ===

@@ -1,0 +1,52 @@
+[10:40:27] === RUN CDC-C2NARROW-r3-20260910104027 ===
+[10:40:27] mode=CDC profile=C2NARROW rep=3 tps=50 duration=180s fault=none
+[10:40:27] jar: target/master-thesis-observability-0.0.1-SNAPSHOT.jar
+[10:40:27] arxiv redo tozalanmoqda
+[10:40:27] workload tozalanmoqda (reference saqlanadi)
+workload reset; reference data preserved
+AQ backlog purged: 0 -> 0
+[10:40:33] Kafka topigi qayta yaratilmoqda
+[10:40:43] ilova ishga tushirilmoqda (mode=CDC)
+[10:40:59] ilova tayyor (pid 1015665)
+[10:40:59] Debezium konnektori ro'yxatdan o'tkazilmoqda (CDC, prefix=obsv_cdc_c2narrow_r3_20260910104027)
+C2 shabloni ishlatilmoqda: docker/connect/connectors/cdc.json.tmpl
+konnektor ro'yxatdan o'tkazilmoqda: a1-cdc-obsv_cdc_c2narrow_r3_20260910104027 (prefix=obsv_cdc_c2narrow_r3_20260910104027)
+konnektor RUNNING (2s)
+streaming tasdiqlanmoqda (heartbeat topigi: __debezium-heartbeat.obsv_cdc_c2narrow_r3_20260910104027)
+streaming tasdiqlandi (1 urinish)
+[10:41:06] k6 yuklamasi boshlandi
+[10:44:08] k6 iteratsiyalari: 8836
+[10:44:08] qat'iy settle: 45s (o'lchov oynasi ikkala qo'lda bir xil)
+[10:44:53] pipeline bo'shashi kutilmoqda (maks 120s)
+[10:45:45] pipeline bo'sh (33s, sink=16805 / gt=26508)
+[10:45:55] ground truth eksport qilinmoqda
+[10:45:56] Kafka topigi eksport qilinmoqda
+[10:46:06] tahlil
+{
+  "mode": "CDC",
+  "profile": "C2NARROW",
+  "rep": "3",
+  "fault": "none",
+  "ground_truth_transitions": 26508,
+  "delivered_distinct": 16805,
+  "delivered_total": 16805,
+  "matched": 16805,
+  "missing": 9703,
+  "phantom": 0,
+  "malformed": 0,
+  "loss_rate": 0.36604044,
+  "loss_rate_ppm": 366040.44,
+  "duplicate_rate": 0.0,
+  "ordering_violation_rate": 0.0,
+  "txns_split_across_partitions": 0,
+  "latency_ms_p50": 5975,
+  "latency_ms_p95": 13012,
+  "latency_ms_p99": 14405,
+  "latency_ms_max": 14764,
+  "latency_ms_mean": 6535.9,
+  "latency_samples": 16805,
+  "latency_negative_samples": 0
+}
+[10:46:07] ilova va konnektor to'xtatilmoqda
+connector o'chirilmoqda: a1-cdc-obsv_cdc_c2narrow_r3_20260910104027
+[10:46:17] === TUGADI: results/CDC-C2NARROW-r3-20260910104027 ===

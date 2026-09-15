@@ -1,0 +1,50 @@
+[10:46:25] === RUN CDC-C2NARROW-r2-20260909104625 ===
+[10:46:25] mode=CDC profile=C2NARROW rep=2 tps=50 duration=180s fault=none
+[10:46:25] jar: target/master-thesis-observability-0.0.1-SNAPSHOT.jar
+[10:46:25] workload tozalanmoqda (reference saqlanadi)
+workload reset; reference data preserved
+AQ backlog purged: 0 -> 0
+[10:46:28] Kafka topigi qayta yaratilmoqda
+[10:46:39] ilova ishga tushirilmoqda (mode=CDC)
+[10:46:53] ilova tayyor (pid 2312558)
+[10:46:53] Debezium konnektori ro'yxatdan o'tkazilmoqda (CDC, prefix=obsv_cdc_c2narrow_r2_20260909104625)
+C2 shabloni ishlatilmoqda: docker/connect/connectors/cdc.json.tmpl
+konnektor ro'yxatdan o'tkazilmoqda: a1-cdc-obsv_cdc_c2narrow_r2_20260909104625 (prefix=obsv_cdc_c2narrow_r2_20260909104625)
+konnektor RUNNING (2s)
+streaming tasdiqlanmoqda (heartbeat topigi: __debezium-heartbeat.obsv_cdc_c2narrow_r2_20260909104625)
+streaming tasdiqlandi (4 urinish)
+[10:47:14] k6 yuklamasi boshlandi
+[10:47:15] k6 nolga teng bo'lmagan kod bilan tugadi (natija baribir tahlil qilinadi)
+[10:47:15] pipeline bo'shashi kutilmoqda (maks 120s)
+[10:47:26] pipeline bo'sh (4s, sink=0 xabar)
+[10:47:36] ground truth eksport qilinmoqda
+[10:47:37] Kafka topigi eksport qilinmoqda
+[10:48:04] tahlil
+{
+  "mode": "CDC",
+  "profile": "C2NARROW",
+  "rep": "2",
+  "fault": "none",
+  "ground_truth_transitions": 0,
+  "delivered_distinct": 0,
+  "delivered_total": 0,
+  "matched": 0,
+  "missing": 0,
+  "phantom": 0,
+  "malformed": 0,
+  "loss_rate": 0.0,
+  "loss_rate_ppm": 0.0,
+  "duplicate_rate": 0.0,
+  "ordering_violation_rate": 0.0,
+  "txns_split_across_partitions": 0,
+  "latency_ms_p50": null,
+  "latency_ms_p95": null,
+  "latency_ms_p99": null,
+  "latency_ms_max": null,
+  "latency_ms_mean": null,
+  "latency_samples": 0,
+  "latency_negative_samples": 0
+}
+[10:48:04] ilova va konnektor to'xtatilmoqda
+connector o'chirilmoqda: a1-cdc-obsv_cdc_c2narrow_r2_20260909104625
+[10:48:08] === TUGADI: results/CDC-C2NARROW-r2-20260909104625 ===

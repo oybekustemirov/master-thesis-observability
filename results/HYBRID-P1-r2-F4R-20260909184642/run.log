@@ -1,0 +1,57 @@
+[18:46:42] === RUN HYBRID-P1-r2-F4R-20260909184642 ===
+[18:46:42] mode=HYBRID profile=P1 rep=2 tps=50 duration=300s fault=F4R
+[18:46:42] jar: target/master-thesis-observability-0.0.1-SNAPSHOT.jar
+[18:46:42] arxiv redo tozalanmoqda
+[18:46:42] workload tozalanmoqda (reference saqlanadi)
+workload reset; reference data preserved
+AQ backlog purged: 0 -> 0
+[18:46:44] Kafka topigi qayta yaratilmoqda
+[18:46:54] ilova ishga tushirilmoqda (mode=HYBRID)
+[18:47:10] ilova tayyor (pid 1181927)
+[18:47:10] Debezium konnektori ro'yxatdan o'tkazilmoqda (HYBRID, prefix=obsv_hybrid_p1_r2_f4r_20260909184642)
+konnektor ro'yxatdan o'tkazilmoqda: a1-hybrid-obsv_hybrid_p1_r2_f4r_20260909184642 (prefix=obsv_hybrid_p1_r2_f4r_20260909184642)
+konnektor RUNNING (2s)
+streaming tasdiqlanmoqda (heartbeat topigi: __debezium-heartbeat.obsv_hybrid_p1_r2_f4r_20260909184642)
+streaming tasdiqlandi (1 urinish)
+[18:47:18] fault F4R 60s dan keyin yuboriladi
+[18:47:18] k6 yuklamasi boshlandi
+[fault 18:48:18] Connect to'xtatilmoqda; 10 marta log almashtiriladi, so'ng archive'lar o'chiriladi
+[fault 18:48:55] RMAN: barcha archive log'lar o'chirilmoqda
+bash: rman: command not found
+[fault 18:49:16] Connect qaytarildi — endi ORA-01291 kutilmoqda
+[fault 18:49:16] F4R tugadi
+[18:52:18] k6 iteratsiyalari: 14750
+[18:52:18] pipeline bo'shashi kutilmoqda (maks 120s)
+[18:52:41] pipeline bo'sh (15s, sink=44250 xabar)
+[18:52:51] ground truth eksport qilinmoqda
+[18:52:52] Kafka topigi eksport qilinmoqda
+[18:53:10] tahlil
+{
+  "mode": "HYBRID",
+  "profile": "P1",
+  "rep": "2",
+  "fault": "F4R",
+  "ground_truth_transitions": 44250,
+  "delivered_distinct": 44250,
+  "delivered_total": 44250,
+  "matched": 44250,
+  "missing": 0,
+  "phantom": 0,
+  "malformed": 0,
+  "loss_rate": 0.0,
+  "loss_rate_ppm": 0.0,
+  "duplicate_rate": 0.0,
+  "ordering_violation_rate": 0.0,
+  "txns_split_across_partitions": 0,
+  "latency_ms_p50": 4114,
+  "latency_ms_p95": 70095,
+  "latency_ms_p99": 80973,
+  "latency_ms_max": 83442,
+  "latency_ms_mean": 14987.5,
+  "latency_samples": 44250,
+  "latency_negative_samples": 0,
+  "loss_rate_upper_bound_95_ppm": 67.8
+}
+[18:53:12] ilova va konnektor to'xtatilmoqda
+connector o'chirilmoqda: a1-hybrid-obsv_hybrid_p1_r2_f4r_20260909184642
+[18:53:23] === TUGADI: results/HYBRID-P1-r2-F4R-20260909184642 ===

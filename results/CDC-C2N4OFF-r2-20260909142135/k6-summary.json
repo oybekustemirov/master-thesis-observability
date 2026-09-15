@@ -1,0 +1,164 @@
+{
+    "metrics": {
+        "dropped_iterations": {
+            "count": 184,
+            "rate": 1.019809244695966
+        },
+        "http_req_failed": {
+            "passes": 0,
+            "fails": 26451,
+            "thresholds": {
+                "rate<0.05": false
+            },
+            "value": 0
+        },
+        "vus_max": {
+            "value": 284,
+            "min": 100,
+            "max": 284
+        },
+        "http_req_duration": {
+            "med": 37.24178,
+            "p(95)": 1731.1896415,
+            "p(99)": 3293.3352885000004,
+            "max": 9028.413956,
+            "avg": 287.2714207619379,
+            "min": 1.450614
+        },
+        "http_req_sending": {
+            "p(95)": 0.0551,
+            "p(99)": 0.094651,
+            "max": 2.60732,
+            "avg": 0.022088362103512095,
+            "min": 0.0018,
+            "med": 0.0133
+        },
+        "a1_lifecycles_completed": {
+            "count": 8817,
+            "rate": 48.86770712219745
+        },
+        "data_received": {
+            "count": 10081953,
+            "rate": 55878.63518472949
+        },
+        "http_req_waiting": {
+            "max": 9028.323556,
+            "avg": 287.182741294922,
+            "min": 1.415313,
+            "med": 37.176486,
+            "p(95)": 1731.121991,
+            "p(99)": 3293.2477870000002
+        },
+        "http_req_receiving": {
+            "p(95)": 0.13955099999999998,
+            "p(99)": 0.219552,
+            "max": 3.468827,
+            "avg": 0.0665911049109667,
+            "min": 0.0066,
+            "med": 0.054501
+        },
+        "http_req_blocked": {
+            "p(95)": 0.0102,
+            "p(99)": 0.21205200000000002,
+            "max": 24.174682,
+            "avg": 0.00982426978186066,
+            "min": 0.0005,
+            "med": 0.004101
+        },
+        "a1_lifecycle_duration": {
+            "max": 11281,
+            "avg": 862.3416127934672,
+            "min": 6,
+            "med": 227,
+            "p(95)": 4480.199999999999,
+            "p(99)": 8708.480000000003
+        },
+        "checks": {
+            "fails": 0,
+            "passes": 26451,
+            "value": 1
+        },
+        "vus": {
+            "max": 272,
+            "value": 17,
+            "min": 0
+        },
+        "a1_transitions_committed": {
+            "count": 26451,
+            "rate": 146.60312136659235
+        },
+        "iteration_duration": {
+            "avg": 862.4082178387222,
+            "min": 6.038044,
+            "med": 227.040607,
+            "p(95)": 4480.233565399998,
+            "p(99)": 8708.331797640003,
+            "max": 11281.113494
+        },
+        "iterations": {
+            "count": 8817,
+            "rate": 48.86770712219745
+        },
+        "http_req_tls_handshaking": {
+            "avg": 0,
+            "min": 0,
+            "med": 0,
+            "p(95)": 0,
+            "p(99)": 0,
+            "max": 0
+        },
+        "http_reqs": {
+            "count": 26451,
+            "rate": 146.60312136659235
+        },
+        "http_req_duration{expected_response:true}": {
+            "avg": 287.2714207619379,
+            "min": 1.450614,
+            "med": 37.24178,
+            "p(95)": 1731.1896415,
+            "p(99)": 3293.3352885000004,
+            "max": 9028.413956
+        },
+        "http_req_connecting": {
+            "p(95)": 0,
+            "p(99)": 0.1372515,
+            "max": 24.04998,
+            "avg": 0.0033919251068012567,
+            "min": 0,
+            "med": 0
+        },
+        "data_sent": {
+            "count": 5708373,
+            "rate": 31638.323682461112
+        }
+    },
+    "root_group": {
+        "name": "",
+        "path": "",
+        "id": "d41d8cd98f00b204e9800998ecf8427e",
+        "groups": {},
+        "checks": {
+                "initiated": {
+                    "passes": 8817,
+                    "fails": 0,
+                    "name": "initiated",
+                    "path": "::initiated",
+                    "id": "a432a6c4a07185337720524110e85c5d"
+                },
+                "validated": {
+                    "fails": 0,
+                    "name": "validated",
+                    "path": "::validated",
+                    "id": "5081cce3725e85b9d89c8ba6d41c7310",
+                    "passes": 8817
+                },
+                "terminal": {
+                    "path": "::terminal",
+                    "id": "35706f341ecccaff9a76ca9556ddfcbf",
+                    "passes": 8817,
+                    "fails": 0,
+                    "name": "terminal"
+                }
+            }
+    }
+}

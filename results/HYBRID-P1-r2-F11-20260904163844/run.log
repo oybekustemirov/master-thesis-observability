@@ -1,0 +1,53 @@
+[16:38:44] === RUN HYBRID-P1-r2-F11-20260904163844 ===
+[16:38:44] mode=HYBRID profile=P1 rep=2 tps=50 duration=180s fault=F11
+[16:38:44] jar: target/master-thesis-observability-0.0.1-SNAPSHOT.jar
+[16:38:44] workload tozalanmoqda (reference saqlanadi)
+workload reset; reference data preserved
+AQ backlog purged: 0 -> 0
+[16:38:46] Kafka topigi qayta yaratilmoqda
+[16:38:55] ilova ishga tushirilmoqda (mode=HYBRID)
+[16:39:10] ilova tayyor (pid 3194669)
+[16:39:10] Debezium konnektori ro'yxatdan o'tkazilmoqda (HYBRID, prefix=obsv_hybrid_p1_r2_f11_20260904163844)
+konnektor ro'yxatdan o'tkazilmoqda: a1-hybrid-obsv_hybrid_p1_r2_f11_20260904163844 (prefix=obsv_hybrid_p1_r2_f11_20260904163844)
+konnektor RUNNING (2s)
+streaming tasdiqlanmoqda (heartbeat topigi: __debezium-heartbeat.obsv_hybrid_p1_r2_f11_20260904163844)
+streaming tasdiqlandi (1 urinish)
+[16:39:16] fault F11 60s dan keyin yuboriladi
+[16:39:16] k6 yuklamasi boshlandi
+[fault 16:40:22] 20000 tranzaksiya ilovadan chetlab yaratilmoqda (PL/SQL batch)
+PL/SQL procedure successfully completed.
+
+[fault 16:40:37] F11 tugadi
+[16:42:32] pipeline bo'shashi kutilmoqda (maks 120s)
+[16:42:47] pipeline bo'sh (5s, sink=27000 xabar)
+[16:42:57] ground truth eksport qilinmoqda
+[16:42:58] Kafka topigi eksport qilinmoqda
+[16:43:25] tahlil
+{
+  "mode": "HYBRID",
+  "profile": "P1",
+  "rep": "2",
+  "fault": "F11",
+  "ground_truth_transitions": 86997,
+  "delivered_distinct": 27000,
+  "delivered_total": 27000,
+  "matched": 27000,
+  "missing": 59997,
+  "phantom": 0,
+  "malformed": 0,
+  "loss_rate": 0.68964447,
+  "loss_rate_ppm": 689644.47,
+  "duplicate_rate": 0.0,
+  "ordering_violation_rate": 0.0,
+  "txns_split_across_partitions": 0,
+  "latency_ms_p50": 3390,
+  "latency_ms_p95": 6932,
+  "latency_ms_p99": 8142,
+  "latency_ms_max": 8943,
+  "latency_ms_mean": 3616.0,
+  "latency_samples": 27000,
+  "latency_negative_samples": 0
+}
+[16:43:26] ilova va konnektor to'xtatilmoqda
+connector o'chirilmoqda: a1-hybrid-obsv_hybrid_p1_r2_f11_20260904163844
+[16:43:30] === TUGADI: results/HYBRID-P1-r2-F11-20260904163844 ===

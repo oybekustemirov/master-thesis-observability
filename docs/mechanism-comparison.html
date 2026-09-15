@@ -1,0 +1,507 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Event-capture mechanisms — comparison</title>
+<style>
+  :root {
+    --ground:#F1F3F5; --surface:#FFFFFF; --ink:#101317; --ink-2:#52514E; --ink-3:#85847F;
+    --rule:#DDE1E6; --rule-2:#B8BEC6; --accent:#1F5C8B; --accent-wash:#E8EFF5;
+    --bad:#A3302B; --good:#2C6A4E; --warn:#9A6A00;
+    --c-aq:#eb6834; --c-outbox:#2a78d6; --c-cdc:#1baf7a; --c-hybrid:#8a5cd6;
+    --f-display: ui-serif, Georgia, "Times New Roman", serif;
+    --f-body: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --f-mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ground:#121417; --surface:#1A1C20; --ink:#F2F4F6; --ink-2:#B9BDC4; --ink-3:#868B93;
+      --rule:#2C3138; --rule-2:#3E444C; --accent:#6FAAD9; --accent-wash:#1B2732;
+      --bad:#E07B73; --good:#6DBE96; --warn:#D6A544;
+      --c-aq:#d95926; --c-outbox:#3987e5; --c-cdc:#199e70; --c-hybrid:#a081e0;
+    }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--ground); color:var(--ink); font-family:var(--f-body);
+         font-size:15px; line-height:1.55; -webkit-font-smoothing:antialiased; }
+  .wrap { max-width:82rem; margin:0 auto; padding:1.6rem 1.2rem 6rem; }
+
+  header.top { border-bottom:2px solid var(--ink); padding-bottom:1rem; margin-bottom:1.2rem; }
+  .eyebrow { font-family:var(--f-mono); font-size:.66rem; letter-spacing:.14em;
+             text-transform:uppercase; color:var(--ink-3); margin-bottom:.5rem; }
+  h1 { font-family:var(--f-display); font-weight:600; font-size:clamp(1.5rem,3vw,2.1rem);
+       margin:0 0 .3rem; letter-spacing:-.01em; }
+  .sub { color:var(--ink-2); margin:0; max-width:76ch; font-size:.95rem; }
+
+  nav.jump { position:sticky; top:0; z-index:10; background:var(--ground);
+             display:flex; gap:.3rem; flex-wrap:wrap; padding:.8rem 0; margin-bottom:.6rem;
+             border-bottom:1px solid var(--rule); }
+  nav.jump a { font-family:var(--f-mono); font-size:.72rem; text-decoration:none;
+    color:var(--ink-2); background:var(--surface); border:1px solid var(--rule-2);
+    padding:.32rem .6rem; border-radius:3px; }
+  nav.jump a:hover { color:var(--accent); border-color:var(--accent); }
+
+  .box { background:var(--surface); border:1px solid var(--rule); padding:1.2rem 1.3rem;
+         margin-bottom:1.3rem; scroll-margin-top:4.2rem; }
+  .box h2 { font-family:var(--f-display); font-size:1.2rem; margin:0 0 .3rem; font-weight:600; }
+  .box .kicker { font-family:var(--f-mono); font-size:.66rem; letter-spacing:.1em;
+                 text-transform:uppercase; color:var(--accent); margin-bottom:.3rem; }
+  .box .note { color:var(--ink-2); font-size:.9rem; margin:0 0 1rem; max-width:78ch; }
+  .box .note strong { color:var(--ink); }
+
+  table { border-collapse:collapse; width:100%; font-size:.86rem; }
+  th, td { text-align:left; padding:.5rem .7rem; border-bottom:1px solid var(--rule);
+           vertical-align:top; }
+  thead th { font-family:var(--f-mono); font-size:.62rem; letter-spacing:.07em;
+             text-transform:uppercase; color:var(--ink-2); font-weight:500;
+             border-bottom:1px solid var(--rule-2); white-space:nowrap; }
+  tbody tr:last-child td { border-bottom:none; }
+  td.num, th.num { text-align:right; font-variant-numeric:tabular-nums; font-family:var(--f-mono); }
+  .scroll { overflow-x:auto; }
+  .hi { background:var(--accent-wash); font-weight:600; }
+  .good-txt { color:var(--good); font-weight:600; }
+  .bad-txt { color:var(--bad); font-weight:600; }
+  .ns { color:var(--ink-3); font-style:italic; }
+
+  .barrow { display:grid; grid-template-columns:9rem 1fr auto; gap:.7rem; align-items:center;
+            padding:.4rem 0; }
+  .barrow .lbl { font-size:.82rem; font-weight:600; }
+  .barrow .track { background:var(--rule); border-radius:3px; height:20px; position:relative;
+                   overflow:hidden; }
+  .barrow .track span { display:block; height:100%; border-radius:3px; }
+  .barrow .val { font-family:var(--f-mono); font-size:.82rem; white-space:nowrap;
+                 font-variant-numeric:tabular-nums; min-width:5.5rem; text-align:right; }
+
+  .pill { display:inline-block; font-size:.7rem; padding:.12rem .5rem; border-radius:3px;
+          border:1px solid currentColor; font-weight:600; white-space:nowrap; }
+  .pill.good { color:var(--good); } .pill.bad { color:var(--bad); } .pill.warn { color:var(--warn); }
+
+  details.qa { border:1px solid var(--rule); background:var(--accent-wash); padding:.7rem .9rem;
+               margin-bottom:.55rem; border-radius:4px; }
+  details.qa summary { cursor:pointer; font-weight:600; font-size:.9rem; color:var(--accent); }
+  details.qa summary::marker { color:var(--accent); }
+  details.qa .ans { margin-top:.6rem; padding-top:.6rem; border-top:1px dashed var(--rule-2); }
+  details.qa .ans p { margin:.3rem 0; color:var(--ink); font-size:.88rem; }
+  details.qa .ans p.say { font-style:italic; color:var(--ink-2); }
+  details.qa .quote { font-family:var(--f-mono); font-size:.78rem; color:var(--ink-3);
+                       margin-bottom:.4rem; }
+
+  code { font-family:var(--f-mono); font-size:.85em; background:var(--accent-wash);
+         padding:.06em .3em; border-radius:2px; }
+  .muted { color:var(--ink-3); font-size:.85rem; }
+  footer { margin-top:2.4rem; border-top:1px solid var(--rule-2); padding-top:.8rem;
+           font-family:var(--f-mono); font-size:.68rem; color:var(--ink-3); }
+
+  .print-hide { }
+  @media print { nav.jump, details.qa { display:none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <div class="eyebrow">Chapters 5–6 · event-capture mechanisms for Oracle-backed transaction processing</div>
+  <h1>Four ways to capture a state-change event — measured, not estimated</h1>
+  <p class="sub">175 archived experimental cells, ~720,000 transitions. Every comparison below is
+    between modes under identical conditions, on Oracle 26ai Free / Kafka 4.1 / Debezium 3.5.2.
+    Full source: <code>docs/empirical_comparison_results.md</code>.</p>
+</header>
+
+<nav class="jump">
+  <a href="#matrix">1. Comparison matrix</a>
+  <a href="#latency">2. Latency vs. redo</a>
+  <a href="#silent">3. Silent failure (CDC)</a>
+  <a href="#coverage">4. Writer coverage</a>
+  <a href="#loe">5. Implementation effort</a>
+  <a href="#refuted">6. Refuted predictions</a>
+  <a href="#recommend">7. Recommendation</a>
+  <a href="#config">8. Exact configuration</a>
+  <a href="#qa">9. Q&amp;A / objections</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════ 1. MATRIX ═══ -->
+<section class="box" id="matrix">
+  <div class="kicker">What is being compared</div>
+  <h2>1. The comparison matrix</h2>
+  <p class="note">Four mechanisms for the same problem: an Oracle-backed A1 transaction changes
+    state, and something must turn that into an event. <strong>A1</strong> writes it from a PL/SQL
+    trigger onto Oracle AQ. <strong>A2</strong> writes it from the application into a transactional
+    outbox table, relayed by a poller. <strong>A3</strong> writes nothing — Debezium reads the
+    change directly from the redo log via LogMiner. <strong>HYBRID</strong> combines A2's outbox
+    with A3's relay.</p>
+  <div class="scroll">
+    <table>
+      <thead><tr>
+        <th>Metric</th><th class="num">A1 · Trigger + AQ</th><th class="num">A2 · App Outbox</th>
+        <th class="num">A3 · CDC (Debezium)</th><th class="num">HYBRID</th>
+      </tr></thead>
+      <tbody>
+        <tr><td>End-to-end latency, p50</td><td class="num hi">6 ms</td><td class="num">128 ms</td><td class="num">3,362 ms</td><td class="num">3,186 ms</td></tr>
+        <tr><td>End-to-end latency, p99</td><td class="num">1,017 ms</td><td class="num">1,279 ms</td><td class="num">8,177 ms</td><td class="num">7,539 ms</td></tr>
+        <tr><td>Redo amplification vs control</td><td class="num bad-txt">+171.4%</td><td class="num bad-txt">+110.4%</td><td class="num good-txt">+0.7% <span class="ns">n.s.</span></td><td class="num bad-txt">+84.0%</td></tr>
+        <tr><td>— significance (exact permutation)</td><td class="num">p=0.0079</td><td class="num">p=0.0079</td><td class="num ns">p=0.0952</td><td class="num">p=0.0079</td></tr>
+        <tr><td>OLTP impact, HTTP p95 delta</td><td class="num">+1.55 ms</td><td class="num">+1.64 ms</td><td class="num good-txt">−0.18 ms</td><td class="num">+2.37 ms</td></tr>
+        <tr><td>Extra DB commits / 120s run</td><td class="num bad-txt">+6,758</td><td class="num">+531</td><td class="num good-txt">+101</td><td class="num">+99</td></tr>
+        <tr><td>Loss, clean running</td><td class="num">&lt;33.5 ppm</td><td class="num">&lt;33.3 ppm</td><td class="num">&lt;33.3 ppm</td><td class="num">&lt;33.3 ppm</td></tr>
+        <tr><td>Loss, writer bypasses app (F11)</td><td class="num good-txt">0%</td><td class="num bad-txt">69.0%</td><td class="num good-txt">0%</td><td class="num bad-txt">69.0%¹</td></tr>
+        <tr><td>Availability coupling (F8)</td><td class="num bad-txt">40% payments failed</td><td class="num good-txt">none</td><td class="num good-txt">none</td><td class="num good-txt">none</td></tr>
+        <tr><td>Implementation volume (measured LOC)</td><td class="num">591</td><td class="num">468</td><td class="num hi">175</td><td class="num">253</td></tr>
+        <tr><td>Added dependencies</td><td class="num">2</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="muted" style="margin-top:.8rem">¹ Not the architecture's fault — see §4. Full table incl.
+    F1R/F2/F4R/F5R/C2a and measurement instruments in the source document, §1 and §1.1.</p>
+</section>
+
+<!-- ═══════════════════════════════════════════════ 2. LATENCY/REDO ═══ -->
+<section class="box" id="latency">
+  <div class="kicker">Section 2.1 · the trade-off is real</div>
+  <h2>2. Latency spans 560×, and it runs opposite to redo cost</h2>
+  <p class="note">Same events, same workload. <strong>AQ is notified</strong> at commit
+    (<code>DBMS_AQ.DEQUEUE</code> blocks, no poll). <strong>The outbox relay asks repeatedly</strong>
+    — half a 200&nbsp;ms poll interval expected, matching the measured 128&nbsp;ms. <strong>Both
+    Debezium pipelines wait for the LogMiner cycle</strong> — seconds, not milliseconds.</p>
+  <div class="barrow"><span class="lbl">AQ</span><div class="track"><span style="width:0.2%;background:var(--c-aq)"></span></div><span class="val">6 ms</span></div>
+  <div class="barrow"><span class="lbl">Outbox</span><div class="track"><span style="width:3.8%;background:var(--c-outbox)"></span></div><span class="val">128 ms</span></div>
+  <div class="barrow"><span class="lbl">HYBRID</span><div class="track"><span style="width:94.7%;background:var(--c-hybrid)"></span></div><span class="val">3,186 ms</span></div>
+  <div class="barrow"><span class="lbl">CDC</span><div class="track"><span style="width:100%;background:var(--c-cdc)"></span></div><span class="val">3,362 ms</span></div>
+  <p class="note" style="margin-top:1rem"><strong>Speed of delivery is bought with work done inside
+    the transaction.</strong> AQ is fastest and most expensive to write (+171% redo); CDC is
+    slowest and free to the writer (+0.7%, not distinguishable from the uninstrumented control).</p>
+  <p class="note"><strong>CDC's cost is not zero — it is moved, not removed (claim C2).</strong>
+    Database CPU rises at <strong>13.0 CPU-seconds per GB of discarded redo</strong> (95% bootstrap
+    CI 5.86–18.62), and at the highest tested level <strong>79% of CDC's database-side cost was
+    spent reading redo that never became an event.</strong> Cheap in the transaction, expensive in
+    the instance — a different budget line, not an absent one.</p>
+</section>
+
+<!-- ═══════════════════════════════════════════════ 3. SILENT FAILURE ═══ -->
+<section class="box" id="silent">
+  <div class="kicker">Section 2.2 · strongest methodological result in the thesis</div>
+  <h2>3. Counting events does not measure an event pipeline</h2>
+  <p class="note">First CDC run: <strong>9,003 messages for 9,003 committed transitions.</strong>
+    Counts matched exactly. Every message was well-formed JSON. Connector <code>RUNNING</code>,
+    lag flat, zero warnings. Every conventional health signal said the pipeline was perfect.</p>
+  <p class="note"><strong>Two thirds of those messages looked like this:</strong></p>
+  <p><code>{ "TXN_ID": "0", "TXN_REF": "", "AMOUNT": "0.0000", "STATUS": "VALIDATED" }</code></p>
+  <p class="note">Minimal supplemental logging means the redo record for an <code>UPDATE</code>
+    carries only the changed columns; Debezium fills the rest with type defaults. Only
+    reconciliation against an <strong>independent ground truth on a semantic key</strong> exposed
+    it — no count, no health check, no lag metric could. Fixed with
+    <code>ADD SUPPLEMENTAL LOG DATA (ALL) COLUMNS</code>; the same run then reconciled 9,003/9,003
+    with zero loss, zero phantoms.</p>
+  <p class="note" style="border-left:3px solid var(--warn); padding-left:.8rem">
+    <strong>A pipeline can deliver exactly the right number of structurally valid, semantically
+    empty messages, and every conventional health signal will report success.</strong></p>
+</section>
+
+<!-- ═══════════════════════════════════════════════ 4. COVERAGE ═══ -->
+<section class="box" id="coverage">
+  <div class="kicker">Section 2.3 · fault F11 — the condition, measured</div>
+  <h2>4. The hybrid's coverage is an organisational property, not an architectural one</h2>
+  <p class="note">An end-of-day PL/SQL batch writes A1 transactions directly, bypassing the
+    application entirely (~87,000 transitions):</p>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Mode</th><th class="num">Missing</th><th class="num">Loss rate</th></tr></thead>
+      <tbody>
+        <tr><td>AQ</td><td class="num">0 / 86,990</td><td class="num good-txt">0%</td></tr>
+        <tr><td>CDC</td><td class="num">0 / 86,994</td><td class="num good-txt">0%</td></tr>
+        <tr><td>Outbox (WRAPPER_B3)</td><td class="num bad-txt">59,983 / 86,984</td><td class="num bad-txt">69.0%</td></tr>
+        <tr><td>HYBRID</td><td class="num bad-txt">59,990 / 86,991</td><td class="num bad-txt">69.0%</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note" style="margin-top:1rem"><strong>The hybrid failed identically to the plain
+    outbox — not predicted in advance.</strong> Writer coverage is not a property of the
+    architecture; it is a property of whether an organisation modifies <em>every</em> writer to go
+    through the shared contract. In a core bank with decades of batch jobs, that cannot be
+    guaranteed. <strong>Only the trigger and the redo log see everything</strong> a writer does,
+    modified or not.</p>
+</section>
+
+<!-- ═══════════════════════════════════════════════ 5. LOE ═══ -->
+<section class="box" id="loe">
+  <div class="kicker">"Timing metrics for creation of such code"</div>
+  <h2>5. Implementation effort — measured components, judged synthesis</h2>
+  <p class="note">Four components are <strong>measured</strong>, not guessed. Only the final
+    ordinal grade synthesises them into one label, and that synthesis is stated as judgement —
+    checkable against the numbers beside it, not asked to be taken on trust.</p>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Component</th><th class="num">A1 · AQ</th><th class="num">A2 · Outbox</th>
+        <th class="num">A3 · CDC</th><th class="num">HYBRID</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Lines of code</strong> <span class="muted">(measured)</span></td>
+          <td class="num">591</td><td class="num">468</td><td class="num hi">175</td><td class="num">253</td></tr>
+        <tr><td><strong>Added dependencies</strong> <span class="muted">(measured)</span></td>
+          <td class="num">2</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+        <tr><td><strong>Required infrastructure</strong> <span class="muted">(measured)</span></td>
+          <td class="num">none beyond Oracle</td><td class="num">none beyond Oracle</td>
+          <td class="num">Kafka Connect + Debezium</td><td class="num">Kafka Connect + Debezium</td></tr>
+        <tr><td><strong>Environment defects hit while building</strong> <span class="muted">(measured)</span></td>
+          <td class="num">6</td><td class="num">3</td><td class="num">5</td><td class="num">4</td></tr>
+        <tr class="hi"><td>LOE / complexity <span class="muted" style="font-weight:400">(judgement, from the rows above)</span></td>
+          <td class="num">High</td><td class="num">Medium</td><td class="num">Low–Medium</td><td class="num">Medium</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note" style="margin-top:.8rem">A3 has <strong>zero lines of application source code</strong>
+    — the 175 lines are Kafka Connect JSON configuration and a registration script, not code that
+    ships inside the bank's application. That is a qualitative difference the line count alone
+    understates: it is also the only approach that does not touch the existing system's source at
+    all.</p>
+</section>
+
+<!-- ═══════════════════════════════════════════════ 6. REFUTED ═══ -->
+<section class="box" id="refuted">
+  <div class="kicker">"Create a new knowledge"</div>
+  <h2>6. Three predictions were made in advance and refuted</h2>
+  <p class="note">Of seven statements the fault matrix set out to test: three established, one
+    supported with a stated statistical limit, <strong>three refuted</strong> — two of them
+    contradicting this thesis's own predictions, made before any of it was built.</p>
+  <table>
+    <thead><tr><th>Prediction (stated in advance)</th><th>Result</th></tr></thead>
+    <tbody>
+      <tr><td>Purging every archive after 10 forced log switches (F4) would cause loss</td>
+        <td><span class="pill bad">Refuted</span> — 0% loss observed</td></tr>
+      <tr><td>Holding a transaction 240s past a 180s configured retention (F5) would discard it</td>
+        <td><span class="pill bad">Refuted</span> — not discarded</td></tr>
+      <tr><td>Relaying the outbox with Debezium (HYBRID) "cuts end-to-end latency" (own prior analysis)</td>
+        <td><span class="pill bad">Refuted</span> — arrives 25× later than AQ; benefit is DB protection, not speed</td></tr>
+    </tbody>
+  </table>
+  <p class="note" style="margin-top:.8rem">A refuted prediction, tested under a controlled fault
+    injection with a stated methodology, is what distinguishes this from a report that only
+    confirms documented behaviour.</p>
+</section>
+
+<!-- ═══════════════════════════════════════════════ 7. RECOMMEND ═══ -->
+<section class="box" id="recommend">
+  <div class="kicker">"Provide result of comparison and results"</div>
+  <h2>7. Recommendation, by constraint</h2>
+  <table>
+    <thead><tr><th>If the constraint is…</th><th>Recommended</th><th>Because</th></tr></thead>
+    <tbody>
+      <tr><td>Every writer goes through the app; source is modifiable</td><td class="hi">HYBRID</td>
+        <td>No dual write, no polling load, lowest in-transaction cost of the atomic options</td></tr>
+      <tr><td>Writers bypass the app and cannot be modified</td><td class="hi">CDC or AQ</td>
+        <td>The only two that captured 100% of the bypassing batch (F11)</td></tr>
+      <tr><td>Sub-100ms latency is a hard requirement</td><td class="hi">AQ</td>
+        <td>6 ms median. Cost: +171% redo, and a capture defect can fail payments (F8)</td></tr>
+      <tr><td>Database overhead must be near zero</td><td class="hi">CDC</td>
+        <td>+0.7% redo, −0.18ms p95 — neither distinguishable from the uninstrumented control</td></tr>
+      <tr><td>Cannot introduce Kafka Connect / Debezium</td><td class="hi">Outbox</td>
+        <td>468 lines, no new infrastructure. Costs +110% redo and a 200ms polling delay</td></tr>
+    </tbody>
+  </table>
+  <p class="note" style="margin-top:1rem; border-left:3px solid var(--bad); padding-left:.8rem">
+    <strong>The single most important trade-off: availability coupling.</strong> AQ is the only
+    mechanism where a defect in the observability path <strong>stopped 40% of payments</strong>
+    (fault F8). For a core banking system that is not a performance characteristic — it is a
+    category of outage the other three approaches structurally cannot produce.</p>
+</section>
+
+<!-- ═══════════════════════════════════════════════ 8. Q&A ═══ -->
+<section class="box" id="config">
+  <div class="kicker">Requested detail — read from the running instance, not memory</div>
+  <h2>8. Exact experimental setup and configuration</h2>
+  <p class="note">Every value below was read from the live Oracle instance or the checked-in
+    configuration that produced §1's numbers. Full detail with file paths:
+    <code>docs/empirical_comparison_results.md</code> §6.</p>
+
+  <p class="note" style="margin-top:1rem"><strong>Harness.</strong> 5 repetitions per mode,
+    50 TPS, 120 s steady-state / 180 s fault duration, fault injected at 60 s. Repetitions
+    interleaved (rep 1 of every mode, then rep 2, …) and mode order rotated per repetition, so
+    no mode is confounded with time-of-day drift or a fixed cold-cache position.</p>
+  <p><code>./scripts/run-experiment.sh --mode WRAPPER_B3 --profile P1 --tps 50 --duration 120s --rep 1</code></p>
+
+  <p class="note" style="margin-top:1rem"><strong>Oracle instance</strong> (Oracle AI Database
+    26ai Free 23.26.3) — queried live:</p>
+  <div class="scroll"><table>
+    <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
+    <tbody>
+      <tr><td>sga_target / sga_max_size</td><td class="num">1.5 GB</td></tr>
+      <tr><td>pga_aggregate_target</td><td class="num">512 MB</td></tr>
+      <tr><td>processes / sessions / open_cursors</td><td class="num">200 / 322 / 300</td></tr>
+      <tr><td>Redo log groups</td><td class="num">2 × 10 MB (image default)</td></tr>
+      <tr><td>log_mode / force_logging</td><td class="num">ARCHIVELOG / TRUE</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">Stated honestly: 10 MB redo groups switch every few seconds under AQ's
+    +171% redo load, visible as <code>Checkpoint not complete</code> in the alert log. Every
+    mode runs against the same log configuration, so the relative comparison holds; the
+    absolute redo percentages are specific to a small-redo-log instance.</p>
+
+  <p class="note" style="margin-top:1rem"><strong>Per-mode activation</strong> — set
+    automatically at application startup by <code>ModeActivator</code>, not by hand:</p>
+  <div class="scroll"><table>
+    <thead><tr><th>Mode</th><th>Ground-truth trigger</th><th>AQ trigger</th><th>ALL-COLUMN supplemental logging</th></tr></thead>
+    <tbody>
+      <tr><td>OFF</td><td class="num">off</td><td class="num">off</td><td class="num">none</td></tr>
+      <tr><td>BASELINE_GT</td><td class="num">on</td><td class="num">off</td><td class="num">none</td></tr>
+      <tr><td>AQ</td><td class="num">on</td><td class="num">on</td><td class="num">none</td></tr>
+      <tr><td>WRAPPER_B1/B2/B3</td><td class="num">on</td><td class="num">off</td><td class="num">none</td></tr>
+      <tr><td>CDC</td><td class="num">on</td><td class="num">off</td><td class="num">TXN_A1</td></tr>
+      <tr><td>HYBRID</td><td class="num">on</td><td class="num">off</td><td class="num">A1_EVENT_OUTBOX</td></tr>
+    </tbody>
+  </table></div>
+
+  <p class="note" style="margin-top:1rem"><strong>Debezium connector (CDC)</strong> — key parameters:</p>
+  <p><code>snapshot.mode=no_data · log.mining.strategy=online_catalog · log.mining.transaction.retention.ms=180000 · heartbeat.interval.ms=1000 · decimal.handling.mode=string</code></p>
+  <p class="note">The 180,000 ms retention is fault F5's exact target — a transaction held open
+    past it is silently discarded by design, confirmed by the fault test. HYBRID differs by
+    capturing <code>A1_EVENT_OUTBOX</code> instead, through Debezium's <code>EventRouter</code>
+    outbox transform, with <code>table.field.event.timestamp</code> deliberately left unset
+    (setting it produced a physically impossible −1 ms median latency in an earlier draft).</p>
+
+  <p class="note" style="margin-top:1rem"><strong>Fault injection — exact mechanics</strong>
+    (<code>scripts/inject-fault.sh</code>):</p>
+  <div class="scroll"><table>
+    <thead><tr><th>Fault</th><th>Exact action</th></tr></thead>
+    <tbody>
+      <tr><td>F8</td><td>Recompiles <code>PKG_A1_EVENT</code> with its type-resolution function forced to return an invalid value, making the capture package invalid mid-run</td></tr>
+      <tr><td>F11</td><td><code>PKG_SYNTH_DATA.generate_transactions(p_count=20000, p_source='BATCH_EOD')</code> — writes <code>TXN_A1</code> directly, bypassing the app and the outbox contract</td></tr>
+      <tr><td>F11B</td><td>Same batch, with <code>p_emit_outbox =&gt; TRUE</code> — the same writer honouring the shared contract</td></tr>
+      <tr><td>F4/F4R</td><td>Stop Connect → switch/archive the redo log 10×→ <code>RMAN DELETE ARCHIVELOG ALL</code> → restart Connect</td></tr>
+      <tr><td>F5/F5R</td><td>5,000-row transaction held open 240 s (60 s past the 180 s retention) before commit</td></tr>
+    </tbody>
+  </table></div>
+
+  <p class="note" style="margin-top:1rem"><strong>Approach 1 (trigger+AQ)</strong>: queue table
+    <code>A1_EVT_QT</code> (payload <code>SYS.AQ$_JMS_TEXT_MESSAGE</code>), queue
+    <code>A1_EVT_Q</code>, compound trigger <code>TRG_TXN_A1_AQ</code> buffering per-row and
+    emitting per-statement, <code>DBMS_AQ.ENQUEUE</code> with
+    <code>visibility =&gt; ON_COMMIT</code>. Bridge dequeues batches of up to 500 messages
+    (500 ms receive timeout), single-threaded to preserve enqueue order.</p>
+  <p class="note"><strong>Approach 2 (outbox)</strong>: table <code>A1_EVENT_OUTBOX</code>
+    (insert-only), write contract <code>EMIT_A1_EVENT</code> — no autonomous transaction, the
+    caller's transaction owns the commit. <code>OutboxRelay</code> polls every 200 ms, batch
+    size 500.</p>
+</section>
+
+<section class="box" id="qa">
+  <div class="kicker">For the meeting</div>
+  <h2>9. Anticipated questions and objections</h2>
+  <p class="note">Click to expand. Each one maps to something Kolbasin has already asked.</p>
+
+  <details class="qa" open>
+    <summary>"What is the comparison of?"</summary>
+    <div class="ans">
+      <p class="quote">His words, verbatim from chat.</p>
+      <p class="say">Say:</p>
+      <p>"Four mechanisms for capturing state-change events in Oracle-backed transaction
+      processing: an internal PL/SQL trigger with Oracle AQ, an application-level transactional
+      outbox, log-based CDC via Debezium, and a hybrid of the two. All four are implemented and
+      measured under identical conditions — 175 archived experimental cells, ~720,000 transitions."</p>
+      <p>Jump to <a href="#matrix">§1</a> and read the matrix top row down.</p>
+    </div>
+  </details>
+
+  <details class="qa">
+    <summary>"Timing metrics for creation of such code" — is effort measured or estimated?</summary>
+    <div class="ans">
+      <p class="say">Say:</p>
+      <p>"Four components are measured: lines of code, added dependencies, required
+      infrastructure, and environment defects hit while building each. Only the final label —
+      High/Medium/Low — is a judgement call synthesising those four numbers, and I say so
+      explicitly so it can be checked, not taken on trust."</p>
+      <p>Jump to <a href="#loe">§5</a>.</p>
+    </div>
+  </details>
+
+  <details class="qa">
+    <summary>"But coding this is not a goal for scientific work — where is the new knowledge?"</summary>
+    <div class="ans">
+      <p class="say">Say:</p>
+      <p>"Three predictions this thesis made before building anything were refuted by controlled
+      fault injection — two of them contradicting the thesis's own prior analysis. A prediction
+      that survives contact with a real, measured fault is not literature review; a prediction
+      that fails and is reported as failing is exactly what distinguishes an experiment from a
+      demo."</p>
+      <p>Jump to <a href="#refuted">§6</a>. If pressed further, add §3 — the silent-CDC-failure
+      result — as the strongest single methodological finding: a pipeline can pass every
+      conventional health check while delivering two-thirds empty messages.</p>
+    </div>
+  </details>
+
+  <details class="qa">
+    <summary>"You already coded these three approaches — show me the result of comparison."</summary>
+    <div class="ans">
+      <p class="say">Say:</p>
+      <p>"Here" — open §1, walk latency → redo → loss → LOE left to right, then §7 for the
+      constraint-driven recommendation. Do not read every row; point at the ones with a colour:
+      AQ's 40% payment failure (bad-txt, §1/§4), CDC's near-zero redo (good-txt, §1/§2).</p>
+    </div>
+  </details>
+
+  <details class="qa">
+    <summary>Objection: "This is all synthetic / simulated, not a real bank"</summary>
+    <div class="ans">
+      <p class="say">Say:</p>
+      <p>"The workload generator is synthetic — a real bank's transaction mix was not used, on
+      information-security grounds. But the <em>measurement</em> is real: the same Oracle
+      instance, the same Debezium connector, the same Kafka cluster measured the redo log, the
+      commit counters, and the wall-clock latency. The workload is synthetic; the physics — redo
+      bytes written, milliseconds elapsed — is not."</p>
+    </div>
+  </details>
+
+  <details class="qa">
+    <summary>Objection: "Only 5 repetitions — is that enough?"</summary>
+    <div class="ans">
+      <p class="say">Say:</p>
+      <p>"For the size of the effects being tested, yes — AQ's +171% redo against CDC's +0.7% is
+      not a difference five repetitions leaves in doubt, and the exact permutation test's own
+      floor (p=0.0079 at n=5) is stated rather than hidden. Where an effect is small — CDC's redo
+      change is not statistically significant at n=5 — that is reported as non-significant, not
+      rounded up to a claim."</p>
+    </div>
+  </details>
+
+  <details class="qa">
+    <summary>Objection: "Throughput ceiling isn't measured — that's a gap"</summary>
+    <div class="ans">
+      <p class="say">Say:</p>
+      <p>"Correct, and stated as a limitation, not hidden. All four modes sustained 45.6 tps with
+      no degradation at the tested load; the saturation point (profile P2) was not run. What is
+      known: the naive after-commit variant — not one of the four in this table — was already the
+      binding constraint at 50 tps, which is why 50 rather than 200 was chosen as the operating
+      point."</p>
+    </div>
+  </details>
+
+  <details class="qa">
+    <summary>Objection: "C2 — I heard one of your analyses was wrong at first"</summary>
+    <div class="ans">
+      <p class="say">Say:</p>
+      <p>"Yes — a regression in the first C2 pass used two variables that were arithmetically
+      identical, which mechanically produces a false rejection. Caught during review, and the
+      corrected analysis is what's reported: 13.0 CPU-seconds per GB of discarded redo, CI
+      5.86–18.62. C2b's control separately failed and is reported as inconclusive rather than
+      patched to look conclusive."</p>
+    </div>
+  </details>
+
+  <details class="qa">
+    <summary>How does this connect to the credit-process chapter (7)?</summary>
+    <div class="ans">
+      <p class="say">Say:</p>
+      <p>"Chapter 7 measures where time goes in a credit application from stage-transition events.
+      Every figure there is a difference between two timestamps. If a mechanism drops one
+      transition, the case silently appears to have skipped a stage and the previous stage's
+      duration is inflated — no error, no alarm, just a wrong number that looks right. Chapters
+      5–6 establish which mechanism can be trusted not to do that before chapter 7 uses one."</p>
+    </div>
+  </details>
+</section>
+
+<footer>
+  Source: <code>docs/empirical_comparison_results.md</code> · Raw data: <code>results/summary.csv</code>
+  · Full statistics: <code>results/aggregate-P1.md</code> · ITPU master's thesis
+</footer>
+</div>
+</body>
+</html>

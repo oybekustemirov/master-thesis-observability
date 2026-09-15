@@ -1,0 +1,34 @@
+lowercaseOutputName: true
+lowercaseOutputLabelNames: true
+rules:
+  # Debezium Oracle connector — the metrics the reliability and latency chapters need
+  - pattern: "debezium.oracle<type=connector-metrics, context=(.+), server=(.+), task=(.+)><>(.+):"
+    name: "debezium_oracle_$4"
+    labels:
+      context: "$1"
+      server: "$2"
+      task: "$3"
+    type: GAUGE
+  - pattern: "debezium.oracle<type=connector-metrics, context=(.+), server=(.+)><>(.+):"
+    name: "debezium_oracle_$3"
+    labels:
+      context: "$1"
+      server: "$2"
+    type: GAUGE
+  # Kafka Connect worker/task health
+  - pattern: "kafka.connect<type=connector-task-metrics, connector=(.+), task=(.+)><>(.+):"
+    name: "kafka_connect_task_$3"
+    labels:
+      connector: "$1"
+      task: "$2"
+  - pattern: "kafka.connect<type=source-task-metrics, connector=(.+), task=(.+)><>(.+):"
+    name: "kafka_connect_source_task_$3"
+    labels:
+      connector: "$1"
+      task: "$2"
+  - pattern: "kafka.connect<type=connect-worker-metrics><>(.+):"
+    name: "kafka_connect_worker_$1"
+  - pattern: "kafka.producer<type=producer-metrics, client-id=(.+)><>(.+):"
+    name: "kafka_producer_$2"
+    labels:
+      client_id: "$1"

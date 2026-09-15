@@ -1,0 +1,897 @@
+[2026-09-04 10:30:26] === PHASE A: 8 rejim x P1 x 5 takror, 50 tps, 120s ===
+[2026-09-04 10:30:26] --- takror 1/5 ---
+[2026-09-04 10:30:26] SKIP  BASELINE_GT/P1/r1/none (allaqachon bajarilgan)
+[2026-09-04 10:30:26] RUN   AQ/P1/r1/none
+[2026-09-04 10:31:43] === PHASE A: 8 rejim x P1 x 5 takror, 50 tps, 120s ===
+[2026-09-04 10:31:43] --- takror 1/5 ---
+[2026-09-04 10:31:43] RUN   BASELINE_GT/P1/r1/none
+[2026-09-04 10:35:16] OK    BASELINE_GT/P1/r1/none
+[2026-09-04 10:35:16] RUN   AQ/P1/r1/none
+[2026-09-04 10:39:15] OK    AQ/P1/r1/none
+[2026-09-04 10:39:15] RUN   WRAPPER_B1/P1/r1/none
+[2026-09-04 10:42:54] OK    WRAPPER_B1/P1/r1/none
+[2026-09-04 10:42:54] RUN   WRAPPER_B2/P1/r1/none
+[2026-09-04 10:46:32] OK    WRAPPER_B2/P1/r1/none
+[2026-09-04 10:46:32] RUN   WRAPPER_B3/P1/r1/none
+[2026-09-04 10:50:15] OK    WRAPPER_B3/P1/r1/none
+[2026-09-04 10:50:15] RUN   CDC/P1/r1/none
+[2026-09-04 10:54:24] OK    CDC/P1/r1/none
+[2026-09-04 10:54:24] RUN   HYBRID/P1/r1/none
+[2026-09-04 10:59:10] OK    HYBRID/P1/r1/none
+[2026-09-04 10:59:10] RUN   OFF/P1/r1/none
+[2026-09-04 11:03:00] OK    OFF/P1/r1/none
+[2026-09-04 11:03:00] --- takror 2/5 ---
+[2026-09-04 11:03:00] RUN   AQ/P1/r2/none
+[2026-09-04 11:06:45] OK    AQ/P1/r2/none
+[2026-09-04 11:06:45] RUN   WRAPPER_B1/P1/r2/none
+[2026-09-04 11:10:19] OK    WRAPPER_B1/P1/r2/none
+[2026-09-04 11:10:19] RUN   WRAPPER_B2/P1/r2/none
+[2026-09-04 11:13:54] OK    WRAPPER_B2/P1/r2/none
+[2026-09-04 11:13:54] RUN   WRAPPER_B3/P1/r2/none
+[2026-09-04 11:17:52] OK    WRAPPER_B3/P1/r2/none
+[2026-09-04 11:17:52] RUN   CDC/P1/r2/none
+[2026-09-04 11:22:21] OK    CDC/P1/r2/none
+[2026-09-04 11:22:21] RUN   HYBRID/P1/r2/none
+[2026-09-04 11:26:36] OK    HYBRID/P1/r2/none
+[2026-09-04 11:26:36] RUN   OFF/P1/r2/none
+[2026-09-04 11:30:12] OK    OFF/P1/r2/none
+[2026-09-04 11:30:12] RUN   BASELINE_GT/P1/r2/none
+[2026-09-04 11:33:43] OK    BASELINE_GT/P1/r2/none
+[2026-09-04 11:33:43] --- takror 3/5 ---
+[2026-09-04 11:33:43] RUN   WRAPPER_B1/P1/r3/none
+[2026-09-04 11:37:14] OK    WRAPPER_B1/P1/r3/none
+[2026-09-04 11:37:14] RUN   WRAPPER_B2/P1/r3/none
+[2026-09-04 11:40:45] OK    WRAPPER_B2/P1/r3/none
+[2026-09-04 11:40:45] RUN   WRAPPER_B3/P1/r3/none
+[2026-09-04 11:44:17] OK    WRAPPER_B3/P1/r3/none
+[2026-09-04 11:44:17] RUN   CDC/P1/r3/none
+[2026-09-04 11:48:23] OK    CDC/P1/r3/none
+[2026-09-04 11:48:23] RUN   HYBRID/P1/r3/none
+[2026-09-04 11:52:27] OK    HYBRID/P1/r3/none
+[2026-09-04 11:52:27] RUN   OFF/P1/r3/none
+[2026-09-04 11:55:59] OK    OFF/P1/r3/none
+[2026-09-04 11:55:59] RUN   BASELINE_GT/P1/r3/none
+[2026-09-04 11:59:31] OK    BASELINE_GT/P1/r3/none
+[2026-09-04 11:59:31] RUN   AQ/P1/r3/none
+[2026-09-04 12:03:05] OK    AQ/P1/r3/none
+[2026-09-04 12:03:05] --- takror 4/5 ---
+[2026-09-04 12:03:05] RUN   WRAPPER_B2/P1/r4/none
+[2026-09-04 12:06:41] OK    WRAPPER_B2/P1/r4/none
+[2026-09-04 12:06:41] RUN   WRAPPER_B3/P1/r4/none
+[2026-09-04 12:10:43] OK    WRAPPER_B3/P1/r4/none
+[2026-09-04 12:10:43] RUN   CDC/P1/r4/none
+[2026-09-04 12:14:46] OK    CDC/P1/r4/none
+[2026-09-04 12:14:46] RUN   HYBRID/P1/r4/none
+[2026-09-04 12:18:53] OK    HYBRID/P1/r4/none
+[2026-09-04 12:18:53] RUN   OFF/P1/r4/none
+[2026-09-04 12:22:35] OK    OFF/P1/r4/none
+[2026-09-04 12:22:35] RUN   BASELINE_GT/P1/r4/none
+[2026-09-04 12:26:10] OK    BASELINE_GT/P1/r4/none
+[2026-09-04 12:26:10] RUN   AQ/P1/r4/none
+[2026-09-04 12:29:44] OK    AQ/P1/r4/none
+[2026-09-04 12:29:44] RUN   WRAPPER_B1/P1/r4/none
+[2026-09-04 12:33:21] OK    WRAPPER_B1/P1/r4/none
+[2026-09-04 12:33:21] --- takror 5/5 ---
+[2026-09-04 12:33:21] RUN   WRAPPER_B3/P1/r5/none
+[2026-09-04 12:36:58] OK    WRAPPER_B3/P1/r5/none
+[2026-09-04 12:36:58] RUN   CDC/P1/r5/none
+[2026-09-04 12:41:06] OK    CDC/P1/r5/none
+[2026-09-04 12:41:06] RUN   HYBRID/P1/r5/none
+[2026-09-04 12:44:44] OK    HYBRID/P1/r5/none
+[2026-09-04 12:44:44] RUN   OFF/P1/r5/none
+[2026-09-04 12:48:16] OK    OFF/P1/r5/none
+[2026-09-04 12:48:16] RUN   BASELINE_GT/P1/r5/none
+[2026-09-04 12:51:48] OK    BASELINE_GT/P1/r5/none
+[2026-09-04 12:51:48] RUN   AQ/P1/r5/none
+[2026-09-04 12:55:48] OK    AQ/P1/r5/none
+[2026-09-04 12:55:48] RUN   WRAPPER_B1/P1/r5/none
+[2026-09-04 12:59:21] OK    WRAPPER_B1/P1/r5/none
+[2026-09-04 12:59:21] RUN   WRAPPER_B2/P1/r5/none
+[2026-09-04 13:02:55] OK    WRAPPER_B2/P1/r5/none
+[2026-09-04 13:02:55] === MATRITSA TUGADI (151 daqiqa) ===
+[2026-09-04 13:03:30] === PHASE B: fault matritsasi, 3 takror ===
+[2026-09-04 13:03:30] --- fault takror 1/3 ---
+[2026-09-04 13:03:30] RUN   WRAPPER_B1/P1/r1/F1 (duration=180s)
+[2026-09-04 13:08:42] OK    WRAPPER_B1/P1/r1/F1
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 13:08:43] RUN   WRAPPER_B2/P1/r1/F1 (duration=180s)
+[2026-09-04 13:13:23] OK    WRAPPER_B2/P1/r1/F1
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 13:13:24] RUN   WRAPPER_B3/P1/r1/F1 (duration=180s)
+[2026-09-04 13:23:56] OK    WRAPPER_B3/P1/r1/F1
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 13:23:57] RUN   AQ/P1/r1/F1 (duration=180s)
+[2026-09-04 13:34:21] OK    AQ/P1/r1/F1
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 13:34:23] RUN   CDC/P1/r1/F1 (duration=180s)
+[2026-09-04 13:39:26] OK    CDC/P1/r1/F1
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 13:39:27] RUN   HYBRID/P1/r1/F1 (duration=180s)
+[2026-09-04 13:44:08] OK    HYBRID/P1/r1/F1
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 13:44:09] RUN   WRAPPER_B1/P1/r1/F2 (duration=180s)
+[2026-09-04 13:49:12] OK    WRAPPER_B1/P1/r1/F2
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 13:49:13] RUN   WRAPPER_B2/P1/r1/F2 (duration=180s)
+[2026-09-04 13:53:53] OK    WRAPPER_B2/P1/r1/F2
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 13:53:54] RUN   WRAPPER_B3/P1/r1/F2 (duration=180s)
+[2026-09-04 13:58:34] OK    WRAPPER_B3/P1/r1/F2
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 13:58:35] RUN   AQ/P1/r1/F2 (duration=180s)
+[2026-09-04 14:03:16] OK    AQ/P1/r1/F2
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 14:03:17] RUN   CDC/P1/r1/F2 (duration=180s)
+[2026-09-04 14:08:32] OK    CDC/P1/r1/F2
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 14:08:34] RUN   HYBRID/P1/r1/F2 (duration=180s)
+[2026-09-04 14:13:48] OK    HYBRID/P1/r1/F2
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 14:13:50] RUN   AQ/P1/r1/F8 (duration=180s)
+[2026-09-04 14:19:02] OK    AQ/P1/r1/F8
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 14:19:03] RUN   WRAPPER_B3/P1/r1/F11 (duration=180s)
+[2026-09-04 14:24:07] OK    WRAPPER_B3/P1/r1/F11
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 14:24:09] RUN   AQ/P1/r1/F11 (duration=180s)
+[2026-09-04 14:29:20] OK    AQ/P1/r1/F11
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 14:29:22] RUN   CDC/P1/r1/F11 (duration=180s)
+[2026-09-04 14:34:48] OK    CDC/P1/r1/F11
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 14:34:50] RUN   HYBRID/P1/r1/F11 (duration=180s)
+[2026-09-04 14:40:03] OK    HYBRID/P1/r1/F11
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 14:40:04] RUN   CDC/P1/r1/F4 (duration=180s)
+[2026-09-04 14:45:14] OK    CDC/P1/r1/F4
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 14:45:15] RUN   HYBRID/P1/r1/F4 (duration=180s)
+[2026-09-04 14:50:01] OK    HYBRID/P1/r1/F4
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 14:50:02] RUN   CDC/P1/r1/F5 (duration=420s)
+[2026-09-04 14:59:14] OK    CDC/P1/r1/F5
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 14:59:15] RUN   HYBRID/P1/r1/F5 (duration=420s)
+[2026-09-04 15:08:37] OK    HYBRID/P1/r1/F5
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 15:08:39] --- fault takror 2/3 ---
+[2026-09-04 15:08:39] RUN   WRAPPER_B1/P1/r2/F1 (duration=180s)
+[2026-09-04 15:13:21] OK    WRAPPER_B1/P1/r2/F1
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 15:13:22] RUN   WRAPPER_B2/P1/r2/F1 (duration=180s)
+[2026-09-04 15:18:00] OK    WRAPPER_B2/P1/r2/F1
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 15:18:01] RUN   WRAPPER_B3/P1/r2/F1 (duration=180s)
+[2026-09-04 15:28:16] OK    WRAPPER_B3/P1/r2/F1
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 15:28:17] RUN   AQ/P1/r2/F1 (duration=180s)
+[2026-09-04 15:38:32] OK    AQ/P1/r2/F1
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 15:38:33] RUN   CDC/P1/r2/F1 (duration=180s)
+[2026-09-04 15:43:37] OK    CDC/P1/r2/F1
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 15:43:38] RUN   HYBRID/P1/r2/F1 (duration=180s)
+[2026-09-04 15:48:43] OK    HYBRID/P1/r2/F1
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 15:48:45] RUN   WRAPPER_B1/P1/r2/F2 (duration=180s)
+[2026-09-04 15:53:26] OK    WRAPPER_B1/P1/r2/F2
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 15:53:26] RUN   WRAPPER_B2/P1/r2/F2 (duration=180s)
+[2026-09-04 15:58:08] OK    WRAPPER_B2/P1/r2/F2
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 15:58:09] RUN   WRAPPER_B3/P1/r2/F2 (duration=180s)
+[2026-09-04 16:02:51] OK    WRAPPER_B3/P1/r2/F2
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 16:02:51] RUN   AQ/P1/r2/F2 (duration=180s)
+[2026-09-04 16:07:54] OK    AQ/P1/r2/F2
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 16:07:54] RUN   CDC/P1/r2/F2 (duration=180s)
+[2026-09-04 16:13:01] OK    CDC/P1/r2/F2
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 16:13:02] RUN   HYBRID/P1/r2/F2 (duration=180s)
+[2026-09-04 16:18:12] OK    HYBRID/P1/r2/F2
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 16:18:13] RUN   AQ/P1/r2/F8 (duration=180s)
+[2026-09-04 16:23:20] OK    AQ/P1/r2/F8
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 16:23:21] RUN   WRAPPER_B3/P1/r2/F11 (duration=180s)
+[2026-09-04 16:28:24] OK    WRAPPER_B3/P1/r2/F11
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 16:28:25] RUN   AQ/P1/r2/F11 (duration=180s)
+[2026-09-04 16:33:31] OK    AQ/P1/r2/F11
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 16:33:32] RUN   CDC/P1/r2/F11 (duration=180s)
+[2026-09-04 16:38:43] OK    CDC/P1/r2/F11
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 16:38:44] RUN   HYBRID/P1/r2/F11 (duration=180s)
+[2026-09-04 16:43:30] OK    HYBRID/P1/r2/F11
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 16:43:31] RUN   CDC/P1/r2/F4 (duration=180s)
+[2026-09-04 16:48:15] OK    CDC/P1/r2/F4
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 16:48:16] RUN   HYBRID/P1/r2/F4 (duration=180s)
+[2026-09-04 16:53:25] OK    HYBRID/P1/r2/F4
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 16:53:26] RUN   CDC/P1/r2/F5 (duration=420s)
+[2026-09-04 17:02:37] OK    CDC/P1/r2/F5
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 17:02:38] RUN   HYBRID/P1/r2/F5 (duration=420s)
+[2026-09-04 17:11:42] OK    HYBRID/P1/r2/F5
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 17:11:43] --- fault takror 3/3 ---
+[2026-09-04 17:11:43] RUN   WRAPPER_B1/P1/r3/F1 (duration=180s)
+[2026-09-04 17:16:47] OK    WRAPPER_B1/P1/r3/F1
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 17:16:48] RUN   WRAPPER_B2/P1/r3/F1 (duration=180s)
+[2026-09-04 17:21:47] OK    WRAPPER_B2/P1/r3/F1
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 17:21:48] RUN   WRAPPER_B3/P1/r3/F1 (duration=180s)
+[2026-09-04 17:32:52] OK    WRAPPER_B3/P1/r3/F1
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 17:32:53] RUN   AQ/P1/r3/F1 (duration=180s)
+[2026-09-04 17:43:40] OK    AQ/P1/r3/F1
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 17:43:41] RUN   CDC/P1/r3/F1 (duration=180s)
+[2026-09-04 17:48:45] OK    CDC/P1/r3/F1
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 17:48:46] RUN   HYBRID/P1/r3/F1 (duration=180s)
+[2026-09-04 17:53:24] OK    HYBRID/P1/r3/F1
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 17:53:25] RUN   WRAPPER_B1/P1/r3/F2 (duration=180s)
+[2026-09-04 17:58:31] OK    WRAPPER_B1/P1/r3/F2
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 17:58:32] RUN   WRAPPER_B2/P1/r3/F2 (duration=180s)
+[2026-09-04 18:03:16] OK    WRAPPER_B2/P1/r3/F2
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 18:03:18] RUN   WRAPPER_B3/P1/r3/F2 (duration=180s)
+[2026-09-04 18:08:26] OK    WRAPPER_B3/P1/r3/F2
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 18:08:28] RUN   AQ/P1/r3/F2 (duration=180s)
+[2026-09-04 18:13:19] OK    AQ/P1/r3/F2
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 18:13:21] RUN   CDC/P1/r3/F2 (duration=180s)
+[2026-09-04 18:18:16] OK    CDC/P1/r3/F2
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 18:18:17] RUN   HYBRID/P1/r3/F2 (duration=180s)
+[2026-09-04 18:23:02] OK    HYBRID/P1/r3/F2
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 18:23:04] RUN   AQ/P1/r3/F8 (duration=180s)
+[2026-09-04 18:27:44] OK    AQ/P1/r3/F8
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 18:27:46] RUN   WRAPPER_B3/P1/r3/F11 (duration=180s)
+[2026-09-04 18:32:50] OK    WRAPPER_B3/P1/r3/F11
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 18:32:54] RUN   AQ/P1/r3/F11 (duration=180s)
+[2026-09-04 18:37:38] OK    AQ/P1/r3/F11
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 18:37:39] RUN   CDC/P1/r3/F11 (duration=180s)
+[2026-09-04 18:42:29] OK    CDC/P1/r3/F11
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 18:42:30] RUN   HYBRID/P1/r3/F11 (duration=180s)
+[2026-09-04 18:47:42] OK    HYBRID/P1/r3/F11
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 18:47:43] RUN   CDC/P1/r3/F4 (duration=180s)
+[2026-09-04 18:52:57] OK    CDC/P1/r3/F4
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 18:52:58] RUN   HYBRID/P1/r3/F4 (duration=180s)
+[2026-09-04 18:57:47] OK    HYBRID/P1/r3/F4
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-04 18:57:48] RUN   CDC/P1/r3/F5 (duration=420s)
+[2026-09-09 09:31:20] === PHASE B: fault matritsasi, 3 takror ===
+[2026-09-09 09:31:20] --- fault takror 1/3 ---
+[2026-09-09 09:31:20] SKIP  WRAPPER_B1/P1/r1/F1 (allaqachon bajarilgan)
+[2026-09-09 09:31:20] SKIP  WRAPPER_B2/P1/r1/F1 (allaqachon bajarilgan)
+[2026-09-09 09:31:20] SKIP  WRAPPER_B3/P1/r1/F1 (allaqachon bajarilgan)
+[2026-09-09 09:31:20] SKIP  AQ/P1/r1/F1 (allaqachon bajarilgan)
+[2026-09-09 09:31:20] SKIP  CDC/P1/r1/F1 (allaqachon bajarilgan)
+[2026-09-09 09:31:20] SKIP  HYBRID/P1/r1/F1 (allaqachon bajarilgan)
+[2026-09-09 09:31:20] SKIP  WRAPPER_B1/P1/r1/F2 (allaqachon bajarilgan)
+[2026-09-09 09:31:20] SKIP  WRAPPER_B2/P1/r1/F2 (allaqachon bajarilgan)
+[2026-09-09 09:31:20] SKIP  WRAPPER_B3/P1/r1/F2 (allaqachon bajarilgan)
+[2026-09-09 09:31:20] SKIP  AQ/P1/r1/F2 (allaqachon bajarilgan)
+[2026-09-09 09:31:20] SKIP  CDC/P1/r1/F2 (allaqachon bajarilgan)
+[2026-09-09 09:31:20] SKIP  HYBRID/P1/r1/F2 (allaqachon bajarilgan)
+[2026-09-09 09:31:20] SKIP  AQ/P1/r1/F8 (allaqachon bajarilgan)
+[2026-09-09 09:31:20] SKIP  WRAPPER_B3/P1/r1/F11 (allaqachon bajarilgan)
+[2026-09-09 09:31:20] SKIP  AQ/P1/r1/F11 (allaqachon bajarilgan)
+[2026-09-09 09:31:20] SKIP  CDC/P1/r1/F11 (allaqachon bajarilgan)
+[2026-09-09 09:31:21] SKIP  HYBRID/P1/r1/F11 (allaqachon bajarilgan)
+[2026-09-09 09:31:21] SKIP  CDC/P1/r1/F4 (allaqachon bajarilgan)
+[2026-09-09 09:31:21] SKIP  HYBRID/P1/r1/F4 (allaqachon bajarilgan)
+[2026-09-09 09:31:21] SKIP  CDC/P1/r1/F5 (allaqachon bajarilgan)
+[2026-09-09 09:31:21] SKIP  HYBRID/P1/r1/F5 (allaqachon bajarilgan)
+[2026-09-09 09:31:21] --- fault takror 2/3 ---
+[2026-09-09 09:31:21] SKIP  WRAPPER_B1/P1/r2/F1 (allaqachon bajarilgan)
+[2026-09-09 09:31:21] SKIP  WRAPPER_B2/P1/r2/F1 (allaqachon bajarilgan)
+[2026-09-09 09:31:21] SKIP  WRAPPER_B3/P1/r2/F1 (allaqachon bajarilgan)
+[2026-09-09 09:31:21] SKIP  AQ/P1/r2/F1 (allaqachon bajarilgan)
+[2026-09-09 09:31:21] SKIP  CDC/P1/r2/F1 (allaqachon bajarilgan)
+[2026-09-09 09:31:21] SKIP  HYBRID/P1/r2/F1 (allaqachon bajarilgan)
+[2026-09-09 09:31:21] SKIP  WRAPPER_B1/P1/r2/F2 (allaqachon bajarilgan)
+[2026-09-09 09:31:21] SKIP  WRAPPER_B2/P1/r2/F2 (allaqachon bajarilgan)
+[2026-09-09 09:31:21] SKIP  WRAPPER_B3/P1/r2/F2 (allaqachon bajarilgan)
+[2026-09-09 09:31:21] SKIP  AQ/P1/r2/F2 (allaqachon bajarilgan)
+[2026-09-09 09:31:21] SKIP  CDC/P1/r2/F2 (allaqachon bajarilgan)
+[2026-09-09 09:31:21] SKIP  HYBRID/P1/r2/F2 (allaqachon bajarilgan)
+[2026-09-09 09:31:21] SKIP  AQ/P1/r2/F8 (allaqachon bajarilgan)
+[2026-09-09 09:31:21] SKIP  WRAPPER_B3/P1/r2/F11 (allaqachon bajarilgan)
+[2026-09-09 09:31:21] SKIP  AQ/P1/r2/F11 (allaqachon bajarilgan)
+[2026-09-09 09:31:21] SKIP  CDC/P1/r2/F11 (allaqachon bajarilgan)
+[2026-09-09 09:31:21] SKIP  HYBRID/P1/r2/F11 (allaqachon bajarilgan)
+[2026-09-09 09:31:21] SKIP  CDC/P1/r2/F4 (allaqachon bajarilgan)
+[2026-09-09 09:31:21] SKIP  HYBRID/P1/r2/F4 (allaqachon bajarilgan)
+[2026-09-09 09:31:21] SKIP  CDC/P1/r2/F5 (allaqachon bajarilgan)
+[2026-09-09 09:31:21] SKIP  HYBRID/P1/r2/F5 (allaqachon bajarilgan)
+[2026-09-09 09:31:21] --- fault takror 3/3 ---
+[2026-09-09 09:31:21] SKIP  WRAPPER_B1/P1/r3/F1 (allaqachon bajarilgan)
+[2026-09-09 09:31:21] SKIP  WRAPPER_B2/P1/r3/F1 (allaqachon bajarilgan)
+[2026-09-09 09:31:21] SKIP  WRAPPER_B3/P1/r3/F1 (allaqachon bajarilgan)
+[2026-09-09 09:31:21] SKIP  AQ/P1/r3/F1 (allaqachon bajarilgan)
+[2026-09-09 09:31:21] SKIP  CDC/P1/r3/F1 (allaqachon bajarilgan)
+[2026-09-09 09:31:21] SKIP  HYBRID/P1/r3/F1 (allaqachon bajarilgan)
+[2026-09-09 09:31:21] SKIP  WRAPPER_B1/P1/r3/F2 (allaqachon bajarilgan)
+[2026-09-09 09:31:21] SKIP  WRAPPER_B2/P1/r3/F2 (allaqachon bajarilgan)
+[2026-09-09 09:31:21] SKIP  WRAPPER_B3/P1/r3/F2 (allaqachon bajarilgan)
+[2026-09-09 09:31:21] SKIP  AQ/P1/r3/F2 (allaqachon bajarilgan)
+[2026-09-09 09:31:21] SKIP  CDC/P1/r3/F2 (allaqachon bajarilgan)
+[2026-09-09 09:31:21] SKIP  HYBRID/P1/r3/F2 (allaqachon bajarilgan)
+[2026-09-09 09:31:21] SKIP  AQ/P1/r3/F8 (allaqachon bajarilgan)
+[2026-09-09 09:31:21] SKIP  WRAPPER_B3/P1/r3/F11 (allaqachon bajarilgan)
+[2026-09-09 09:31:21] SKIP  AQ/P1/r3/F11 (allaqachon bajarilgan)
+[2026-09-09 09:31:21] SKIP  CDC/P1/r3/F11 (allaqachon bajarilgan)
+[2026-09-09 09:31:21] SKIP  HYBRID/P1/r3/F11 (allaqachon bajarilgan)
+[2026-09-09 09:31:21] SKIP  CDC/P1/r3/F4 (allaqachon bajarilgan)
+[2026-09-09 09:31:21] SKIP  HYBRID/P1/r3/F4 (allaqachon bajarilgan)
+[2026-09-09 09:31:21] RUN   CDC/P1/r3/F5 (duration=420s)
+[2026-09-09 09:41:41] OK    CDC/P1/r3/F5
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-09 09:41:42] RUN   HYBRID/P1/r3/F5 (duration=420s)
+[2026-09-09 09:51:23] OK    HYBRID/P1/r3/F5
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-09 09:51:25] === MATRITSA TUGADI (20 daqiqa) ===
+[2026-09-09 11:13:07] === PHASE B: fault matritsasi, 3 takror ===
+[2026-09-09 11:13:07] --- fault takror 1/3 ---
+[2026-09-09 11:13:07] SKIP  WRAPPER_B1/P1/r1/F1 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] SKIP  WRAPPER_B2/P1/r1/F1 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] SKIP  WRAPPER_B3/P1/r1/F1 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] SKIP  AQ/P1/r1/F1 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] SKIP  CDC/P1/r1/F1 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] SKIP  HYBRID/P1/r1/F1 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] SKIP  WRAPPER_B1/P1/r1/F2 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] SKIP  WRAPPER_B2/P1/r1/F2 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] SKIP  WRAPPER_B3/P1/r1/F2 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] SKIP  AQ/P1/r1/F2 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] SKIP  CDC/P1/r1/F2 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] SKIP  HYBRID/P1/r1/F2 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] SKIP  AQ/P1/r1/F8 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] SKIP  WRAPPER_B3/P1/r1/F11 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] SKIP  AQ/P1/r1/F11 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] SKIP  CDC/P1/r1/F11 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] SKIP  HYBRID/P1/r1/F11 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] SKIP  CDC/P1/r1/F4 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] SKIP  HYBRID/P1/r1/F4 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] SKIP  CDC/P1/r1/F5 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] SKIP  HYBRID/P1/r1/F5 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] --- fault takror 2/3 ---
+[2026-09-09 11:13:07] SKIP  WRAPPER_B1/P1/r2/F1 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] SKIP  WRAPPER_B2/P1/r2/F1 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] SKIP  WRAPPER_B3/P1/r2/F1 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] SKIP  AQ/P1/r2/F1 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] SKIP  CDC/P1/r2/F1 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] SKIP  HYBRID/P1/r2/F1 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] SKIP  WRAPPER_B1/P1/r2/F2 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] SKIP  WRAPPER_B2/P1/r2/F2 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] SKIP  WRAPPER_B3/P1/r2/F2 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] SKIP  AQ/P1/r2/F2 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] SKIP  CDC/P1/r2/F2 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] SKIP  HYBRID/P1/r2/F2 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] SKIP  AQ/P1/r2/F8 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] SKIP  WRAPPER_B3/P1/r2/F11 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] SKIP  AQ/P1/r2/F11 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] SKIP  CDC/P1/r2/F11 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] SKIP  HYBRID/P1/r2/F11 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] SKIP  CDC/P1/r2/F4 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] SKIP  HYBRID/P1/r2/F4 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] SKIP  CDC/P1/r2/F5 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] SKIP  HYBRID/P1/r2/F5 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] --- fault takror 3/3 ---
+[2026-09-09 11:13:07] SKIP  WRAPPER_B1/P1/r3/F1 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] SKIP  WRAPPER_B2/P1/r3/F1 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] SKIP  WRAPPER_B3/P1/r3/F1 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] SKIP  AQ/P1/r3/F1 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] SKIP  CDC/P1/r3/F1 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] SKIP  HYBRID/P1/r3/F1 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] SKIP  WRAPPER_B1/P1/r3/F2 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] SKIP  WRAPPER_B2/P1/r3/F2 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] SKIP  WRAPPER_B3/P1/r3/F2 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] SKIP  AQ/P1/r3/F2 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] SKIP  CDC/P1/r3/F2 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] SKIP  HYBRID/P1/r3/F2 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] SKIP  AQ/P1/r3/F8 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] SKIP  WRAPPER_B3/P1/r3/F11 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] SKIP  AQ/P1/r3/F11 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] SKIP  CDC/P1/r3/F11 (allaqachon bajarilgan)
+[2026-09-09 11:13:07] SKIP  HYBRID/P1/r3/F11 (allaqachon bajarilgan)
+[2026-09-09 11:13:08] SKIP  CDC/P1/r3/F4 (allaqachon bajarilgan)
+[2026-09-09 11:13:08] SKIP  HYBRID/P1/r3/F4 (allaqachon bajarilgan)
+[2026-09-09 11:13:08] SKIP  CDC/P1/r3/F5 (allaqachon bajarilgan)
+[2026-09-09 11:13:08] SKIP  HYBRID/P1/r3/F5 (allaqachon bajarilgan)
+[2026-09-09 11:13:08] === MATRITSA TUGADI (0 daqiqa) ===
+[2026-09-09 12:42:25] === PHASE B: fault matritsasi, 3 takror ===
+[2026-09-09 12:42:25] --- fault takror 1/3 ---
+[2026-09-09 12:42:25] SKIP  WRAPPER_B1/P1/r1/F1 (allaqachon bajarilgan)
+[2026-09-09 12:42:25] SKIP  WRAPPER_B2/P1/r1/F1 (allaqachon bajarilgan)
+[2026-09-09 12:42:25] SKIP  WRAPPER_B3/P1/r1/F1 (allaqachon bajarilgan)
+[2026-09-09 12:42:25] SKIP  AQ/P1/r1/F1 (allaqachon bajarilgan)
+[2026-09-09 12:42:25] SKIP  CDC/P1/r1/F1 (allaqachon bajarilgan)
+[2026-09-09 12:42:25] SKIP  HYBRID/P1/r1/F1 (allaqachon bajarilgan)
+[2026-09-09 12:42:25] SKIP  WRAPPER_B1/P1/r1/F2 (allaqachon bajarilgan)
+[2026-09-09 12:42:25] SKIP  WRAPPER_B2/P1/r1/F2 (allaqachon bajarilgan)
+[2026-09-09 12:42:26] SKIP  WRAPPER_B3/P1/r1/F2 (allaqachon bajarilgan)
+[2026-09-09 12:42:26] SKIP  AQ/P1/r1/F2 (allaqachon bajarilgan)
+[2026-09-09 12:42:26] SKIP  CDC/P1/r1/F2 (allaqachon bajarilgan)
+[2026-09-09 12:42:26] SKIP  HYBRID/P1/r1/F2 (allaqachon bajarilgan)
+[2026-09-09 12:42:26] SKIP  AQ/P1/r1/F8 (allaqachon bajarilgan)
+[2026-09-09 12:42:26] SKIP  WRAPPER_B3/P1/r1/F11 (allaqachon bajarilgan)
+[2026-09-09 12:42:26] SKIP  AQ/P1/r1/F11 (allaqachon bajarilgan)
+[2026-09-09 12:42:26] SKIP  CDC/P1/r1/F11 (allaqachon bajarilgan)
+[2026-09-09 12:42:26] SKIP  HYBRID/P1/r1/F11 (allaqachon bajarilgan)
+[2026-09-09 12:42:26] SKIP  CDC/P1/r1/F4 (allaqachon bajarilgan)
+[2026-09-09 12:42:26] SKIP  HYBRID/P1/r1/F4 (allaqachon bajarilgan)
+[2026-09-09 12:42:26] SKIP  CDC/P1/r1/F5 (allaqachon bajarilgan)
+[2026-09-09 12:42:26] SKIP  HYBRID/P1/r1/F5 (allaqachon bajarilgan)
+[2026-09-09 12:42:26] --- fault takror 2/3 ---
+[2026-09-09 12:42:26] SKIP  WRAPPER_B1/P1/r2/F1 (allaqachon bajarilgan)
+[2026-09-09 12:42:26] SKIP  WRAPPER_B2/P1/r2/F1 (allaqachon bajarilgan)
+[2026-09-09 12:42:26] SKIP  WRAPPER_B3/P1/r2/F1 (allaqachon bajarilgan)
+[2026-09-09 12:42:26] SKIP  AQ/P1/r2/F1 (allaqachon bajarilgan)
+[2026-09-09 12:42:26] SKIP  CDC/P1/r2/F1 (allaqachon bajarilgan)
+[2026-09-09 12:42:26] SKIP  HYBRID/P1/r2/F1 (allaqachon bajarilgan)
+[2026-09-09 12:42:26] SKIP  WRAPPER_B1/P1/r2/F2 (allaqachon bajarilgan)
+[2026-09-09 12:42:26] SKIP  WRAPPER_B2/P1/r2/F2 (allaqachon bajarilgan)
+[2026-09-09 12:42:26] SKIP  WRAPPER_B3/P1/r2/F2 (allaqachon bajarilgan)
+[2026-09-09 12:42:26] SKIP  AQ/P1/r2/F2 (allaqachon bajarilgan)
+[2026-09-09 12:42:26] SKIP  CDC/P1/r2/F2 (allaqachon bajarilgan)
+[2026-09-09 12:42:26] SKIP  HYBRID/P1/r2/F2 (allaqachon bajarilgan)
+[2026-09-09 12:42:26] SKIP  AQ/P1/r2/F8 (allaqachon bajarilgan)
+[2026-09-09 12:42:26] SKIP  WRAPPER_B3/P1/r2/F11 (allaqachon bajarilgan)
+[2026-09-09 12:42:26] SKIP  AQ/P1/r2/F11 (allaqachon bajarilgan)
+[2026-09-09 12:42:26] SKIP  CDC/P1/r2/F11 (allaqachon bajarilgan)
+[2026-09-09 12:42:26] SKIP  HYBRID/P1/r2/F11 (allaqachon bajarilgan)
+[2026-09-09 12:42:26] SKIP  CDC/P1/r2/F4 (allaqachon bajarilgan)
+[2026-09-09 12:42:26] SKIP  HYBRID/P1/r2/F4 (allaqachon bajarilgan)
+[2026-09-09 12:42:27] SKIP  CDC/P1/r2/F5 (allaqachon bajarilgan)
+[2026-09-09 12:42:27] SKIP  HYBRID/P1/r2/F5 (allaqachon bajarilgan)
+[2026-09-09 12:42:27] --- fault takror 3/3 ---
+[2026-09-09 12:42:27] SKIP  WRAPPER_B1/P1/r3/F1 (allaqachon bajarilgan)
+[2026-09-09 12:42:27] SKIP  WRAPPER_B2/P1/r3/F1 (allaqachon bajarilgan)
+[2026-09-09 12:42:27] SKIP  WRAPPER_B3/P1/r3/F1 (allaqachon bajarilgan)
+[2026-09-09 12:42:27] SKIP  AQ/P1/r3/F1 (allaqachon bajarilgan)
+[2026-09-09 12:42:27] SKIP  CDC/P1/r3/F1 (allaqachon bajarilgan)
+[2026-09-09 12:42:27] SKIP  HYBRID/P1/r3/F1 (allaqachon bajarilgan)
+[2026-09-09 12:42:27] SKIP  WRAPPER_B1/P1/r3/F2 (allaqachon bajarilgan)
+[2026-09-09 12:42:27] SKIP  WRAPPER_B2/P1/r3/F2 (allaqachon bajarilgan)
+[2026-09-09 12:42:27] SKIP  WRAPPER_B3/P1/r3/F2 (allaqachon bajarilgan)
+[2026-09-09 12:42:27] SKIP  AQ/P1/r3/F2 (allaqachon bajarilgan)
+[2026-09-09 12:42:27] SKIP  CDC/P1/r3/F2 (allaqachon bajarilgan)
+[2026-09-09 12:42:27] SKIP  HYBRID/P1/r3/F2 (allaqachon bajarilgan)
+[2026-09-09 12:42:27] SKIP  AQ/P1/r3/F8 (allaqachon bajarilgan)
+[2026-09-09 12:42:27] SKIP  WRAPPER_B3/P1/r3/F11 (allaqachon bajarilgan)
+[2026-09-09 12:42:27] SKIP  AQ/P1/r3/F11 (allaqachon bajarilgan)
+[2026-09-09 12:42:27] SKIP  CDC/P1/r3/F11 (allaqachon bajarilgan)
+[2026-09-09 12:42:27] SKIP  HYBRID/P1/r3/F11 (allaqachon bajarilgan)
+[2026-09-09 12:42:27] SKIP  CDC/P1/r3/F4 (allaqachon bajarilgan)
+[2026-09-09 12:42:27] SKIP  HYBRID/P1/r3/F4 (allaqachon bajarilgan)
+[2026-09-09 12:42:27] SKIP  CDC/P1/r3/F5 (allaqachon bajarilgan)
+[2026-09-09 12:42:27] SKIP  HYBRID/P1/r3/F5 (allaqachon bajarilgan)
+[2026-09-09 12:42:27] === MATRITSA TUGADI (0 daqiqa) ===
+[2026-09-09 16:40:37] === PHASE C: tuzatilgan fault qayta ishlashlari, 3 takror ===
+[2026-09-09 16:40:37] --- tuzatilgan takror 1/3 ---
+[2026-09-09 16:40:37] RUN   WRAPPER_B1/P1/r1/F1R (duration=180s)
+[2026-09-09 16:46:12] OK    WRAPPER_B1/P1/r1/F1R
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-09 16:46:13] RUN   WRAPPER_B2/P1/r1/F1R (duration=180s)
+[2026-09-09 16:51:46] OK    WRAPPER_B2/P1/r1/F1R
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-09 16:51:47] RUN   WRAPPER_B3/P1/r1/F1R (duration=180s)
+[2026-09-09 16:56:53] OK    WRAPPER_B3/P1/r1/F1R
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-09 16:56:54] RUN   AQ/P1/r1/F1R (duration=180s)
+[2026-09-09 17:02:29] OK    AQ/P1/r1/F1R
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-09 17:02:31] RUN   CDC/P1/r1/F1R (duration=180s)
+[2026-09-09 17:08:09] OK    CDC/P1/r1/F1R
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-09 17:08:11] RUN   HYBRID/P1/r1/F1R (duration=180s)
+[2026-09-09 17:13:40] OK    HYBRID/P1/r1/F1R
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-09 17:13:41] RUN   WRAPPER_B3/P1/r1/F11B (duration=180s)
+[2026-09-09 17:19:07] OK    WRAPPER_B3/P1/r1/F11B
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-09 17:19:08] RUN   HYBRID/P1/r1/F11B (duration=180s)
+[2026-09-09 17:24:46] OK    HYBRID/P1/r1/F11B
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-09 17:24:47] RUN   CDC/P1/r1/F4R (duration=300s)
+[2026-09-09 17:32:18] OK    CDC/P1/r1/F4R
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-09 17:32:19] RUN   HYBRID/P1/r1/F4R (duration=300s)
+[2026-09-09 17:39:31] OK    HYBRID/P1/r1/F4R
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-09 17:39:32] RUN   CDC/P1/r1/F5R (duration=420s)
+[2026-09-09 17:48:42] OK    CDC/P1/r1/F5R
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-09 17:48:43] RUN   HYBRID/P1/r1/F5R (duration=420s)
+[2026-09-09 17:57:58] OK    HYBRID/P1/r1/F5R
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-09 17:57:59] --- tuzatilgan takror 2/3 ---
+[2026-09-09 17:57:59] RUN   WRAPPER_B1/P1/r2/F1R (duration=180s)
+[2026-09-09 18:03:06] OK    WRAPPER_B1/P1/r2/F1R
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-09 18:03:08] RUN   WRAPPER_B2/P1/r2/F1R (duration=180s)
+[2026-09-09 18:08:27] OK    WRAPPER_B2/P1/r2/F1R
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-09 18:08:28] RUN   WRAPPER_B3/P1/r2/F1R (duration=180s)
+[2026-09-09 18:13:46] OK    WRAPPER_B3/P1/r2/F1R
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-09 18:13:48] RUN   AQ/P1/r2/F1R (duration=180s)
+[2026-09-09 18:19:27] OK    AQ/P1/r2/F1R
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-09 18:19:29] RUN   CDC/P1/r2/F1R (duration=180s)
+[2026-09-09 18:25:12] OK    CDC/P1/r2/F1R
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-09 18:25:14] RUN   HYBRID/P1/r2/F1R (duration=180s)
+[2026-09-09 18:30:04] OK    HYBRID/P1/r2/F1R
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-09 18:30:06] RUN   WRAPPER_B3/P1/r2/F11B (duration=180s)
+[2026-09-09 18:34:42] OK    WRAPPER_B3/P1/r2/F11B
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-09 18:34:44] RUN   HYBRID/P1/r2/F11B (duration=180s)
+[2026-09-09 18:39:45] OK    HYBRID/P1/r2/F11B
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-09 18:39:47] RUN   CDC/P1/r2/F4R (duration=300s)
+[2026-09-09 18:46:40] OK    CDC/P1/r2/F4R
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-09 18:46:42] RUN   HYBRID/P1/r2/F4R (duration=300s)
+[2026-09-09 18:53:23] OK    HYBRID/P1/r2/F4R
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-09 18:53:25] RUN   CDC/P1/r2/F5R (duration=420s)
+[2026-09-09 19:02:01] OK    CDC/P1/r2/F5R
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-09 19:02:03] RUN   HYBRID/P1/r2/F5R (duration=420s)
+[2026-09-09 19:10:39] OK    HYBRID/P1/r2/F5R
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-09 19:10:40] --- tuzatilgan takror 3/3 ---
+[2026-09-09 19:10:40] RUN   WRAPPER_B1/P1/r3/F1R (duration=180s)
+[2026-09-09 19:15:32] OK    WRAPPER_B1/P1/r3/F1R
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-09 19:15:33] RUN   WRAPPER_B2/P1/r3/F1R (duration=180s)
+[2026-09-09 19:20:08] OK    WRAPPER_B2/P1/r3/F1R
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-09 19:20:09] RUN   WRAPPER_B3/P1/r3/F1R (duration=180s)
+[2026-09-09 19:25:01] OK    WRAPPER_B3/P1/r3/F1R
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-09 19:25:02] RUN   AQ/P1/r3/F1R (duration=180s)
+[2026-09-09 19:29:39] OK    AQ/P1/r3/F1R
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-09 19:29:40] RUN   CDC/P1/r3/F1R (duration=180s)
+[2026-09-09 19:34:38] OK    CDC/P1/r3/F1R
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-09 19:34:39] RUN   HYBRID/P1/r3/F1R (duration=180s)
+[2026-09-09 19:39:27] OK    HYBRID/P1/r3/F1R
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-09 19:39:28] RUN   WRAPPER_B3/P1/r3/F11B (duration=180s)
+[2026-09-09 19:44:14] OK    WRAPPER_B3/P1/r3/F11B
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-09 19:44:16] RUN   HYBRID/P1/r3/F11B (duration=180s)
+[2026-09-09 19:49:11] OK    HYBRID/P1/r3/F11B
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-09 19:49:12] RUN   CDC/P1/r3/F4R (duration=300s)
+[2026-09-09 19:55:54] OK    CDC/P1/r3/F4R
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-09 19:55:56] RUN   HYBRID/P1/r3/F4R (duration=300s)
+[2026-09-09 20:02:32] OK    HYBRID/P1/r3/F4R
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-09 20:02:34] RUN   CDC/P1/r3/F5R (duration=420s)
+[2026-09-09 20:11:11] OK    CDC/P1/r3/F5R
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-09 20:11:13] RUN   HYBRID/P1/r3/F5R (duration=420s)
+[2026-09-09 20:19:54] OK    HYBRID/P1/r3/F5R
+lingering transactions killed: 0
+[repair] PKG_A1_EVENT V8 dan tiklanmoqda
+[repair] holat: INVALID:0 OPENTX:0 
+[repair] tiklandi
+[2026-09-09 20:19:56] === MATRITSA TUGADI (219 daqiqa) ===

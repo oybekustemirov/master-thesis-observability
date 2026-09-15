@@ -1,0 +1,52 @@
+[10:34:41] === RUN CDC-C2WIDE-r2-20260910103441 ===
+[10:34:41] mode=CDC profile=C2WIDE rep=2 tps=50 duration=180s fault=none
+[10:34:41] jar: target/master-thesis-observability-0.0.1-SNAPSHOT.jar
+[10:34:41] arxiv redo tozalanmoqda
+[10:34:41] workload tozalanmoqda (reference saqlanadi)
+workload reset; reference data preserved
+AQ backlog purged: 0 -> 0
+[10:34:45] Kafka topigi qayta yaratilmoqda
+[10:34:54] ilova ishga tushirilmoqda (mode=CDC)
+[10:35:06] ilova tayyor (pid 946040)
+[10:35:06] Debezium konnektori ro'yxatdan o'tkazilmoqda (CDC, prefix=obsv_cdc_c2wide_r2_20260910103441)
+C2 shabloni ishlatilmoqda: docker/connect/connectors/cdc-wide.json.tmpl
+konnektor ro'yxatdan o'tkazilmoqda: a1-cdc-obsv_cdc_c2wide_r2_20260910103441 (prefix=obsv_cdc_c2wide_r2_20260910103441)
+konnektor RUNNING (2s)
+streaming tasdiqlanmoqda (heartbeat topigi: __debezium-heartbeat.obsv_cdc_c2wide_r2_20260910103441)
+streaming tasdiqlandi (1 urinish)
+[10:35:14] k6 yuklamasi boshlandi
+[10:38:15] k6 iteratsiyalari: 8837
+[10:38:15] qat'iy settle: 45s (o'lchov oynasi ikkala qo'lda bir xil)
+[10:39:00] pipeline bo'shashi kutilmoqda (maks 120s)
+[10:39:53] pipeline bo'sh (33s, sink=64 / gt=26511)
+[10:40:03] ground truth eksport qilinmoqda
+[10:40:04] Kafka topigi eksport qilinmoqda
+[10:40:14] tahlil
+{
+  "mode": "CDC",
+  "profile": "C2WIDE",
+  "rep": "2",
+  "fault": "none",
+  "ground_truth_transitions": 26511,
+  "delivered_distinct": 64,
+  "delivered_total": 64,
+  "matched": 64,
+  "missing": 26447,
+  "phantom": 0,
+  "malformed": 0,
+  "loss_rate": 0.99758591,
+  "loss_rate_ppm": 997585.91,
+  "duplicate_rate": 0.0,
+  "ordering_violation_rate": 0.0,
+  "txns_split_across_partitions": 0,
+  "latency_ms_p50": 5174,
+  "latency_ms_p95": 5476,
+  "latency_ms_p99": 5686,
+  "latency_ms_max": 5686,
+  "latency_ms_mean": 4664.2,
+  "latency_samples": 64,
+  "latency_negative_samples": 0
+}
+[10:40:14] ilova va konnektor to'xtatilmoqda
+connector o'chirilmoqda: a1-cdc-obsv_cdc_c2wide_r2_20260910103441
+[10:40:26] === TUGADI: results/CDC-C2WIDE-r2-20260910103441 ===

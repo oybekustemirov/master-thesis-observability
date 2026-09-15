@@ -1,0 +1,9 @@
+[16:33:49] === RUN AQ-P1-r90-20260903163349 ===
+[16:33:49] mode=AQ profile=P1 rep=90 tps=50 duration=60s fault=none
+[16:33:49] jar: target/master-thesis-observability-0.0.1-SNAPSHOT.jar
+[16:33:49] workload tozalanmoqda (reference saqlanadi)
+workload reset; reference data preserved
+AQ backlog purged: 0 -> 0
+[16:33:50] Kafka topigi qayta yaratilmoqda
+[16:33:59] ilova ishga tushirilmoqda (mode=AQ)
+[16:36:11] XATO: ilova ko'tarilmadi

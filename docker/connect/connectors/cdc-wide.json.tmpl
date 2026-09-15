@@ -1,0 +1,45 @@
+{
+  "name": "__NAME__",
+  "config": {
+    "connector.class": "io.debezium.connector.oracle.OracleConnector",
+    "tasks.max": "1",
+
+    "database.hostname": "oracle",
+    "database.port": "1521",
+    "database.user": "c##dbzuser",
+    "database.password": "Dbz_Th3sis_2026",
+    "database.dbname": "FREE",
+    "database.pdb.name": "OBSVPDB",
+
+    "topic.prefix": "__PREFIX__",
+    "schema.history.internal.kafka.bootstrap.servers": "kafka-1:9092,kafka-2:9092,kafka-3:9092",
+    "schema.history.internal.kafka.topic": "_schema_history.__PREFIX__",
+
+    "table.include.list": "OBSV.TXN_A1,OBSV.REDO_NOISE",
+
+    "snapshot.mode": "no_data",
+    "snapshot.locking.mode": "none",
+    "log.mining.strategy": "online_catalog",
+    "log.mining.transaction.retention.ms": "180000",
+
+    "heartbeat.interval.ms": "1000",
+    "heartbeat.action.query": "UPDATE OBSV.DBZ_HEARTBEAT SET TS = SYSTIMESTAMP WHERE ID = 1",
+
+    "decimal.handling.mode": "string",
+    "time.precision.mode": "connect",
+    "tombstones.on.delete": "false",
+
+    "predicates": "isA1",
+    "predicates.isA1.type": "org.apache.kafka.connect.transforms.predicates.TopicNameMatches",
+    "predicates.isA1.pattern": "__PREFIX__\\.OBSV\\.TXN_A1",
+
+    "transforms": "unwrap,route",
+    "transforms.unwrap.type": "io.debezium.transforms.ExtractNewRecordState",
+    "transforms.unwrap.predicate": "isA1",
+    "transforms.unwrap.delete.tombstone.handling.mode": "drop",
+    "transforms.route.type": "org.apache.kafka.connect.transforms.RegexRouter",
+    "transforms.route.predicate": "isA1",
+    "transforms.route.regex": ".*",
+    "transforms.route.replacement": "bank.a1.transaction.events"
+  }
+}

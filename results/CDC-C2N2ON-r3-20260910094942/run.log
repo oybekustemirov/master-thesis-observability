@@ -1,0 +1,52 @@
+[09:49:42] === RUN CDC-C2N2ON-r3-20260910094942 ===
+[09:49:42] mode=CDC profile=C2N2ON rep=3 tps=50 duration=180s fault=none
+[09:49:42] jar: target/master-thesis-observability-0.0.1-SNAPSHOT.jar
+[09:49:42] arxiv redo tozalanmoqda
+[09:49:42] workload tozalanmoqda (reference saqlanadi)
+workload reset; reference data preserved
+AQ backlog purged: 0 -> 0
+[09:49:43] Kafka topigi qayta yaratilmoqda
+[09:49:52] ilova ishga tushirilmoqda (mode=CDC)
+[09:50:04] ilova tayyor (pid 413840)
+[09:50:04] Debezium konnektori ro'yxatdan o'tkazilmoqda (CDC, prefix=obsv_cdc_c2n2on_r3_20260910094942)
+konnektor ro'yxatdan o'tkazilmoqda: a1-cdc-obsv_cdc_c2n2on_r3_20260910094942 (prefix=obsv_cdc_c2n2on_r3_20260910094942)
+konnektor RUNNING (2s)
+streaming tasdiqlanmoqda (heartbeat topigi: __debezium-heartbeat.obsv_cdc_c2n2on_r3_20260910094942)
+streaming tasdiqlandi (1 urinish)
+[09:50:11] k6 yuklamasi boshlandi
+[09:53:12] k6 iteratsiyalari: 9001
+[09:53:12] qat'iy settle: 45s (o'lchov oynasi ikkala qo'lda bir xil)
+[09:53:57] pipeline bo'shashi kutilmoqda (maks 120s)
+[09:54:18] pipeline bo'sh (15s, sink=27003 / gt=27003)
+[09:54:28] ground truth eksport qilinmoqda
+[09:54:28] Kafka topigi eksport qilinmoqda
+[09:54:39] tahlil
+{
+  "mode": "CDC",
+  "profile": "C2N2ON",
+  "rep": "3",
+  "fault": "none",
+  "ground_truth_transitions": 27003,
+  "delivered_distinct": 27003,
+  "delivered_total": 27003,
+  "matched": 27003,
+  "missing": 0,
+  "phantom": 0,
+  "malformed": 0,
+  "loss_rate": 0.0,
+  "loss_rate_ppm": 0.0,
+  "duplicate_rate": 0.0,
+  "ordering_violation_rate": 0.0,
+  "txns_split_across_partitions": 0,
+  "latency_ms_p50": 3684,
+  "latency_ms_p95": 5849,
+  "latency_ms_p99": 6442,
+  "latency_ms_max": 7195,
+  "latency_ms_mean": 3683.4,
+  "latency_samples": 27003,
+  "latency_negative_samples": 0,
+  "loss_rate_upper_bound_95_ppm": 111.1
+}
+[09:54:39] ilova va konnektor to'xtatilmoqda
+connector o'chirilmoqda: a1-cdc-obsv_cdc_c2n2on_r3_20260910094942
+[09:54:49] === TUGADI: results/CDC-C2N2ON-r3-20260910094942 ===

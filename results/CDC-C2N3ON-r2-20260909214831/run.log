@@ -1,0 +1,52 @@
+[21:48:31] === RUN CDC-C2N3ON-r2-20260909214831 ===
+[21:48:31] mode=CDC profile=C2N3ON rep=2 tps=50 duration=180s fault=none
+[21:48:31] jar: target/master-thesis-observability-0.0.1-SNAPSHOT.jar
+[21:48:31] arxiv redo tozalanmoqda
+[21:48:31] workload tozalanmoqda (reference saqlanadi)
+workload reset; reference data preserved
+AQ backlog purged: 0 -> 0
+[21:48:32] Kafka topigi qayta yaratilmoqda
+[21:48:42] ilova ishga tushirilmoqda (mode=CDC)
+[21:48:56] ilova tayyor (pid 3230105)
+[21:48:56] Debezium konnektori ro'yxatdan o'tkazilmoqda (CDC, prefix=obsv_cdc_c2n3on_r2_20260909214831)
+konnektor ro'yxatdan o'tkazilmoqda: a1-cdc-obsv_cdc_c2n3on_r2_20260909214831 (prefix=obsv_cdc_c2n3on_r2_20260909214831)
+konnektor RUNNING (2s)
+streaming tasdiqlanmoqda (heartbeat topigi: __debezium-heartbeat.obsv_cdc_c2n3on_r2_20260909214831)
+streaming tasdiqlandi (1 urinish)
+[21:49:03] k6 yuklamasi boshlandi
+[21:52:04] k6 iteratsiyalari: 9001
+[21:52:04] qat'iy settle: 45s (o'lchov oynasi ikkala qo'lda bir xil)
+[21:52:49] pipeline bo'shashi kutilmoqda (maks 120s)
+[21:53:12] pipeline bo'sh (15s, sink=27003 xabar)
+[21:53:22] ground truth eksport qilinmoqda
+[21:53:22] Kafka topigi eksport qilinmoqda
+[21:53:33] tahlil
+{
+  "mode": "CDC",
+  "profile": "C2N3ON",
+  "rep": "2",
+  "fault": "none",
+  "ground_truth_transitions": 27003,
+  "delivered_distinct": 27003,
+  "delivered_total": 27003,
+  "matched": 27003,
+  "missing": 0,
+  "phantom": 0,
+  "malformed": 0,
+  "loss_rate": 0.0,
+  "loss_rate_ppm": 0.0,
+  "duplicate_rate": 0.0,
+  "ordering_violation_rate": 0.0,
+  "txns_split_across_partitions": 0,
+  "latency_ms_p50": 4346,
+  "latency_ms_p95": 8894,
+  "latency_ms_p99": 10840,
+  "latency_ms_max": 12069,
+  "latency_ms_mean": 4667.3,
+  "latency_samples": 27003,
+  "latency_negative_samples": 0,
+  "loss_rate_upper_bound_95_ppm": 111.1
+}
+[21:53:34] ilova va konnektor to'xtatilmoqda
+connector o'chirilmoqda: a1-cdc-obsv_cdc_c2n3on_r2_20260909214831
+[21:53:45] === TUGADI: results/CDC-C2N3ON-r2-20260909214831 ===

@@ -1,0 +1,52 @@
+[20:56:41] === RUN CDC-C2N3ON-r1-20260909205641 ===
+[20:56:41] mode=CDC profile=C2N3ON rep=1 tps=50 duration=180s fault=none
+[20:56:41] jar: target/master-thesis-observability-0.0.1-SNAPSHOT.jar
+[20:56:41] arxiv redo tozalanmoqda
+[20:56:41] workload tozalanmoqda (reference saqlanadi)
+workload reset; reference data preserved
+AQ backlog purged: 0 -> 0
+[20:56:42] Kafka topigi qayta yaratilmoqda
+[20:56:51] ilova ishga tushirilmoqda (mode=CDC)
+[20:57:08] ilova tayyor (pid 2649421)
+[20:57:08] Debezium konnektori ro'yxatdan o'tkazilmoqda (CDC, prefix=obsv_cdc_c2n3on_r1_20260909205641)
+konnektor ro'yxatdan o'tkazilmoqda: a1-cdc-obsv_cdc_c2n3on_r1_20260909205641 (prefix=obsv_cdc_c2n3on_r1_20260909205641)
+konnektor RUNNING (2s)
+streaming tasdiqlanmoqda (heartbeat topigi: __debezium-heartbeat.obsv_cdc_c2n3on_r1_20260909205641)
+streaming tasdiqlandi (1 urinish)
+[20:57:15] k6 yuklamasi boshlandi
+[21:00:16] k6 iteratsiyalari: 9000
+[21:00:16] qat'iy settle: 45s (o'lchov oynasi ikkala qo'lda bir xil)
+[21:01:01] pipeline bo'shashi kutilmoqda (maks 120s)
+[21:01:24] pipeline bo'sh (15s, sink=27000 xabar)
+[21:01:34] ground truth eksport qilinmoqda
+[21:01:35] Kafka topigi eksport qilinmoqda
+[21:01:53] tahlil
+{
+  "mode": "CDC",
+  "profile": "C2N3ON",
+  "rep": "1",
+  "fault": "none",
+  "ground_truth_transitions": 27000,
+  "delivered_distinct": 27000,
+  "delivered_total": 27000,
+  "matched": 27000,
+  "missing": 0,
+  "phantom": 0,
+  "malformed": 0,
+  "loss_rate": 0.0,
+  "loss_rate_ppm": 0.0,
+  "duplicate_rate": 0.0,
+  "ordering_violation_rate": 0.0,
+  "txns_split_across_partitions": 0,
+  "latency_ms_p50": 4366,
+  "latency_ms_p95": 8055,
+  "latency_ms_p99": 10870,
+  "latency_ms_max": 11769,
+  "latency_ms_mean": 4597.0,
+  "latency_samples": 27000,
+  "latency_negative_samples": 0,
+  "loss_rate_upper_bound_95_ppm": 111.11
+}
+[21:01:54] ilova va konnektor to'xtatilmoqda
+connector o'chirilmoqda: a1-cdc-obsv_cdc_c2n3on_r1_20260909205641
+[21:02:04] === TUGADI: results/CDC-C2N3ON-r1-20260909205641 ===

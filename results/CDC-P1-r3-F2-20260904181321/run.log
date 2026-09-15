@@ -1,0 +1,53 @@
+[18:13:21] === RUN CDC-P1-r3-F2-20260904181321 ===
+[18:13:21] mode=CDC profile=P1 rep=3 tps=50 duration=180s fault=F2
+[18:13:21] jar: target/master-thesis-observability-0.0.1-SNAPSHOT.jar
+[18:13:21] workload tozalanmoqda (reference saqlanadi)
+workload reset; reference data preserved
+AQ backlog purged: 0 -> 0
+[18:13:22] Kafka topigi qayta yaratilmoqda
+[18:13:35] ilova ishga tushirilmoqda (mode=CDC)
+[18:13:49] ilova tayyor (pid 89390)
+[18:13:49] Debezium konnektori ro'yxatdan o'tkazilmoqda (CDC, prefix=obsv_cdc_p1_r3_f2_20260904181321)
+konnektor ro'yxatdan o'tkazilmoqda: a1-cdc-obsv_cdc_p1_r3_f2_20260904181321 (prefix=obsv_cdc_p1_r3_f2_20260904181321)
+konnektor RUNNING (2s)
+streaming tasdiqlanmoqda (heartbeat topigi: __debezium-heartbeat.obsv_cdc_p1_r3_f2_20260904181321)
+streaming tasdiqlandi (1 urinish)
+[18:13:56] fault F2 60s dan keyin yuboriladi
+[18:13:56] k6 yuklamasi boshlandi
+[fault 18:15:02] kafka-2 va kafka-3 to'xtatilmoqda (90s)
+[fault 18:16:45] brokerlar qaytarilmoqda
+[fault 18:16:46] F2 tugadi
+[18:17:14] pipeline bo'shashi kutilmoqda (maks 120s)
+[18:17:28] pipeline bo'sh (5s, sink=27000 xabar)
+[18:17:41] ground truth eksport qilinmoqda
+[18:17:42] Kafka topigi eksport qilinmoqda
+[18:18:09] tahlil
+{
+  "mode": "CDC",
+  "profile": "P1",
+  "rep": "3",
+  "fault": "F2",
+  "ground_truth_transitions": 27000,
+  "delivered_distinct": 27000,
+  "delivered_total": 27000,
+  "matched": 27000,
+  "missing": 0,
+  "phantom": 0,
+  "malformed": 0,
+  "loss_rate": 0.0,
+  "loss_rate_ppm": 0.0,
+  "duplicate_rate": 0.0,
+  "ordering_violation_rate": 0.0,
+  "txns_split_across_partitions": 0,
+  "latency_ms_p50": 3695,
+  "latency_ms_p95": 7203,
+  "latency_ms_p99": 8602,
+  "latency_ms_max": 9247,
+  "latency_ms_mean": 3863.3,
+  "latency_samples": 27000,
+  "latency_negative_samples": 0,
+  "loss_rate_upper_bound_95_ppm": 111.11
+}
+[18:18:09] ilova va konnektor to'xtatilmoqda
+connector o'chirilmoqda: a1-cdc-obsv_cdc_p1_r3_f2_20260904181321
+[18:18:16] === TUGADI: results/CDC-P1-r3-F2-20260904181321 ===

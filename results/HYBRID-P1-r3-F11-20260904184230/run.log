@@ -1,0 +1,53 @@
+[18:42:30] === RUN HYBRID-P1-r3-F11-20260904184230 ===
+[18:42:30] mode=HYBRID profile=P1 rep=3 tps=50 duration=180s fault=F11
+[18:42:30] jar: target/master-thesis-observability-0.0.1-SNAPSHOT.jar
+[18:42:30] workload tozalanmoqda (reference saqlanadi)
+workload reset; reference data preserved
+AQ backlog purged: 0 -> 0
+[18:42:31] Kafka topigi qayta yaratilmoqda
+[18:42:40] ilova ishga tushirilmoqda (mode=HYBRID)
+[18:42:55] ilova tayyor (pid 386109)
+[18:42:55] Debezium konnektori ro'yxatdan o'tkazilmoqda (HYBRID, prefix=obsv_hybrid_p1_r3_f11_20260904184230)
+konnektor ro'yxatdan o'tkazilmoqda: a1-hybrid-obsv_hybrid_p1_r3_f11_20260904184230 (prefix=obsv_hybrid_p1_r3_f11_20260904184230)
+konnektor RUNNING (2s)
+streaming tasdiqlanmoqda (heartbeat topigi: __debezium-heartbeat.obsv_hybrid_p1_r3_f11_20260904184230)
+streaming tasdiqlandi (1 urinish)
+[18:43:02] fault F11 60s dan keyin yuboriladi
+[18:43:02] k6 yuklamasi boshlandi
+[fault 18:44:08] 20000 tranzaksiya ilovadan chetlab yaratilmoqda (PL/SQL batch)
+PL/SQL procedure successfully completed.
+
+[fault 18:44:22] F11 tugadi
+[18:46:18] pipeline bo'shashi kutilmoqda (maks 120s)
+[18:46:33] pipeline bo'sh (5s, sink=27000 xabar)
+[18:46:44] ground truth eksport qilinmoqda
+[18:46:45] Kafka topigi eksport qilinmoqda
+[18:47:37] tahlil
+{
+  "mode": "HYBRID",
+  "profile": "P1",
+  "rep": "3",
+  "fault": "F11",
+  "ground_truth_transitions": 86988,
+  "delivered_distinct": 27000,
+  "delivered_total": 27000,
+  "matched": 27000,
+  "missing": 59988,
+  "phantom": 0,
+  "malformed": 0,
+  "loss_rate": 0.68961236,
+  "loss_rate_ppm": 689612.36,
+  "duplicate_rate": 0.0,
+  "ordering_violation_rate": 0.0,
+  "txns_split_across_partitions": 0,
+  "latency_ms_p50": 3799,
+  "latency_ms_p95": 7492,
+  "latency_ms_p99": 8720,
+  "latency_ms_max": 9464,
+  "latency_ms_mean": 4045.7,
+  "latency_samples": 27000,
+  "latency_negative_samples": 0
+}
+[18:47:38] ilova va konnektor to'xtatilmoqda
+connector o'chirilmoqda: a1-hybrid-obsv_hybrid_p1_r3_f11_20260904184230
+[18:47:42] === TUGADI: results/HYBRID-P1-r3-F11-20260904184230 ===

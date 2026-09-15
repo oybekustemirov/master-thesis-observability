@@ -1,0 +1,63 @@
+{
+  "points": [
+    {
+      "level": 0,
+      "redo_total_gb": 0.09889325127005577,
+      "redo_captured_gb": 0.0989040344953537,
+      "redo_discarded_gb": 0.0,
+      "cost_s": 4.47,
+      "admissible": true
+    },
+    {
+      "level": 1,
+      "redo_total_gb": 0.4624120593070984,
+      "redo_captured_gb": 0.0989040344953537,
+      "redo_discarded_gb": 0.3635080248117447,
+      "cost_s": 11.24,
+      "admissible": true
+    },
+    {
+      "level": 2,
+      "redo_total_gb": 0.8273962661623955,
+      "redo_captured_gb": 0.0989040344953537,
+      "redo_discarded_gb": 0.7284922316670418,
+      "cost_s": 13.38,
+      "admissible": true
+    },
+    {
+      "level": 3,
+      "redo_total_gb": 1.5676673389971256,
+      "redo_captured_gb": 0.0989040344953537,
+      "redo_discarded_gb": 1.4687633045017718,
+      "cost_s": 24.32,
+      "admissible": true
+    },
+    {
+      "level": 4,
+      "redo_total_gb": 2.948179543018341,
+      "redo_captured_gb": 0.09812387824058533,
+      "redo_discarded_gb": 2.8500556647777557,
+      "cost_s": 12.55,
+      "admissible": false
+    }
+  ],
+  "admissible": 4,
+  "slope_cpu_s_per_gb_discarded": 13.009596917441877,
+  "slope_ci": [
+    5.863267395699756,
+    18.62407302701524
+  ],
+  "intercept_s": 5.023874567692463,
+  "c2_supported": true,
+  "levels_in_fit": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "c2b": {
+    "valid": false,
+    "redo_gap": 0.5245968917808136,
+    "tps_gap": 0.22139912402336182
+  }
+}

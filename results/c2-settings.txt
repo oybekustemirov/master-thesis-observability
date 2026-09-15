@@ -1,0 +1,1 @@
+reps=3 tps=50 duration=180s window=420 levels=default

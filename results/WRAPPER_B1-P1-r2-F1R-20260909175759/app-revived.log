@@ -1,0 +1,52 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.1)
+
+2026-09-09T18:01:32.111+05:00  INFO 634529 --- [a1-observability] [           main] u.m.MasterThesisObservabilityApplication : Starting MasterThesisObservabilityApplication v0.0.1-SNAPSHOT using Java 21.0.12 with PID 634529 (/mnt/c/Users/O.Ustemirov/IdeaProjects/master-thesis-observability/target/master-thesis-observability-0.0.1-SNAPSHOT.jar started by stemirovustemirov in /mnt/c/Users/O.Ustemirov/IdeaProjects/master-thesis-observability)
+2026-09-09T18:01:32.123+05:00  INFO 634529 --- [a1-observability] [           main] u.m.MasterThesisObservabilityApplication : No active profile set, falling back to 1 default profile: "default"
+2026-09-09T18:01:33.680+05:00  INFO 634529 --- [a1-observability] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-09-09T18:01:33.780+05:00  INFO 634529 --- [a1-observability] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 70 ms. Found 2 JPA repository interfaces.
+2026-09-09T18:01:35.320+05:00  INFO 634529 --- [a1-observability] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8095 (http)
+2026-09-09T18:01:35.343+05:00  INFO 634529 --- [a1-observability] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-09-09T18:01:35.344+05:00  INFO 634529 --- [a1-observability] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.24]
+2026-09-09T18:01:35.386+05:00  INFO 634529 --- [a1-observability] [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 3156 ms
+2026-09-09T18:01:36.075+05:00  INFO 634529 --- [a1-observability] [           main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-09-09T18:01:36.205+05:00  INFO 634529 --- [a1-observability] [           main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.4.5.Final
+2026-09-09T18:01:37.156+05:00  INFO 634529 --- [a1-observability] [           main] com.zaxxer.hikari.HikariDataSource       : a1-oltp - Starting...
+2026-09-09T18:01:37.595+05:00  INFO 634529 --- [a1-observability] [           main] com.zaxxer.hikari.pool.HikariPool        : a1-oltp - Added connection oracle.jdbc.driver.T4CConnection@416c1b0
+2026-09-09T18:01:37.601+05:00  INFO 634529 --- [a1-observability] [           main] com.zaxxer.hikari.HikariDataSource       : a1-oltp - Start completed.
+2026-09-09T18:01:38.100+05:00  WARN 634529 --- [a1-observability] [           main] org.hibernate.orm.jdbc                   : HHH100123: Low default JDBC fetch size: 10 (consider setting 'hibernate.jdbc.fetch_size')
+2026-09-09T18:01:38.110+05:00  INFO 634529 --- [a1-observability] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:oracle:thin:@//localhost:1521/OBSVPDB]
+	Database driver: Oracle JDBC driver
+	Database dialect: OracleDialect
+	Database version: 23.26.3
+	Default catalog/schema: undefined/OBSV
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: 10
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-09-09T18:01:39.380+05:00  INFO 634529 --- [a1-observability] [           main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-09-09T18:01:39.386+05:00  INFO 634529 --- [a1-observability] [           main] org.hibernate.orm.jdbc.batch             : HHH100501: Automatic JDBC statement batching enabled (maximum batch size 50)
+2026-09-09T18:01:39.737+05:00  INFO 634529 --- [a1-observability] [           main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-09-09T18:01:40.826+05:00  INFO 634529 --- [a1-observability] [           main] i.u.m.config.EventEmitterConfiguration   : observability.mode=WRAPPER_B1 -> emitter=DirectKafkaEventEmitter
+2026-09-09T18:01:41.440+05:00  INFO 634529 --- [a1-observability] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 4 endpoints beneath base path '/actuator'
+2026-09-09T18:01:41.521+05:00  INFO 634529 --- [a1-observability] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8095 (http) with context path '/'
+2026-09-09T18:01:41.533+05:00  INFO 634529 --- [a1-observability] [           main] u.m.MasterThesisObservabilityApplication : Started MasterThesisObservabilityApplication in 10.268 seconds (process running for 11.287)
+2026-09-09T18:01:41.540+05:00  INFO 634529 --- [a1-observability] [           main] i.u.m.harness.EnvironmentAssertions      : environment ok: mode=WRAPPER_B1 oltpPool=a1-oltp maxSize=32
+2026-09-09T18:01:41.565+05:00  INFO 634529 --- [a1-observability] [           main] i.u.m.harness.ModeActivator              : mode=WRAPPER_B1 activated: groundTruth=true aqCapture=false supplementalLogging=none
+2026-09-09T18:01:42.363+05:00  INFO 634529 --- [a1-observability] [nio-8095-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-09-09T18:01:42.364+05:00  INFO 634529 --- [a1-observability] [nio-8095-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-09-09T18:01:42.366+05:00  INFO 634529 --- [a1-observability] [nio-8095-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-09-09T18:03:05.748+05:00  INFO 634529 --- [a1-observability] [ionShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-09-09T18:03:05.754+05:00  INFO 634529 --- [a1-observability] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-09-09T18:03:05.764+05:00  INFO 634529 --- [a1-observability] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : a1-oltp - Shutdown initiated...
+2026-09-09T18:03:05.777+05:00  INFO 634529 --- [a1-observability] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : a1-oltp - Shutdown completed.

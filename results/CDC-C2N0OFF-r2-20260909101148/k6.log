@@ -1,0 +1,1 @@
+time="2026-09-09T10:12:21+05:00" level=error msg="could not initialize 'harness/k6/a1-workload.js': could not load JS test 'file:///mnt/c/Users/O.Ustemirov/IdeaProjects/master-thesis-observability/harness/k6/a1-workload.js': scenario 'a1' doesn't have a specified executor type"

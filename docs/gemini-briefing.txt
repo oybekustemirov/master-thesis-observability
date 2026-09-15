@@ -1,0 +1,316 @@
+====================================================================
+INSTRUCTIONS FOR GEMINI — READ THIS FIRST
+====================================================================
+
+You are helping me during a LIVE Zoom meeting, right now, with my thesis
+advisor, Viacheslav Kolbasin. I am a native Uzbek speaker and I do not speak
+English well. My advisor speaks English. During the call, I will type or paste
+to you what he just said (in English), and you must immediately give me back:
+
+1. A short, natural, spoken-style ENGLISH sentence (or a few sentences) that I
+   can read aloud to him as my answer. Keep it under 40 seconds of speech.
+2. Immediately under it, a short UZBEK translation/explanation of what that
+   English answer means, so I understand what I am about to say before I say it.
+
+Format every reply exactly like this:
+
+SAY (English):
+"..."
+
+MEANING (Uzbek):
+...
+
+If what he said is unclear, or asks something not covered in the background
+below, still give me your best short answer using the facts below — do not
+invent numbers that are not in this document. If a number truly is not in this
+document, say so honestly in the English line, e.g. "That specific figure
+wasn't tracked — what we do have is X."
+
+Everything below this line is the full background of my thesis project. Use
+ONLY these facts when answering. Do not make up statistics.
+
+====================================================================
+1. THE THESIS
+====================================================================
+
+Title: "Event-based observability of transaction processing in bank
+operations." Master's thesis at ITPU (Tashkent). One month deadline. Two
+advisors: Viacheslav Kolbasin and Izzat.
+
+The thesis has TWO parts, and they are connected:
+
+PART A (Chapters 5-6): Compare three ways of capturing "something changed" as
+an event, in an Oracle-based banking transaction system, plus a fourth hybrid
+combination. Fully implemented, fully measured.
+
+PART B (Chapter 7): Use the event stream from the BEST of those mechanisms to
+answer a real operational question for a bank: where does time go in a credit
+application, and which employee spends how long on what. Uses synthetic
+(fabricated, non-real) data, because using real bank customer data is
+forbidden for information-security reasons in this thesis.
+
+THE LINK between the two parts: every number in Part B is a difference between
+two timestamps recorded by the event mechanism chosen in Part A. If that
+mechanism drops even one event, a case silently appears to have skipped a
+stage, and the duration of the PREVIOUS stage is silently inflated — with no
+error message, no alarm, the chart still renders, the arithmetic still "works."
+So Part A exists to prove which mechanism can be trusted not to do that,
+before Part B relies on one.
+
+====================================================================
+2. WHAT MY ADVISOR (KOLBASIN) HAS BEEN ASKING FOR — HIS EXACT WORDS
+====================================================================
+
+From our chat history, pieced together, he has said (paraphrased from his
+own choppy messages):
+
+- "You need to provide some comparison."
+- "What is the comparison of?"
+- "So we discussed that we compare observability approaches, and timing
+  metrics for creation of such code."
+- "But coding this is not a goal for any scientific or near-scientific work.
+  You need to do some comparison and create new knowledge."
+- "You already coded these 3 approaches. As a result of your work, you should
+  provide result of comparison of these three approaches, and the results.
+  That is what I am asking from you."
+
+In short: he wants (1) a clear comparison of the approaches with real metrics,
+(2) how much effort/time each approach took to build, and (3) what NEW
+knowledge this creates — not just "I built three things that work."
+
+====================================================================
+3. PART A — THE FOUR MECHANISMS COMPARED (fully measured)
+====================================================================
+
+The four mechanisms, all solving the same problem — turning a database state
+change into an event message — for an Oracle-based core-banking transaction
+table:
+
+- A1 = Internal PL/SQL trigger + Oracle AQ (a message queue inside Oracle)
+- A2 = Application-level "transactional outbox" (the Java app writes an event
+  row in the same transaction as the business data; a background poller reads
+  it and publishes to Kafka)
+- A3 = Log-based CDC ("Change Data Capture") using Debezium — reads the
+  Oracle redo log directly, no application code involved at all
+- HYBRID = A2's outbox table + A3's Debezium relay together
+
+Measurement scale: 175 archived experimental runs, about 720,000 individual
+state-change transitions measured in total. Same Oracle database, same Kafka
+cluster, same load level, for every mode, so comparisons are apples-to-apples.
+
+--- KEY NUMBERS (median values) ---
+
+End-to-end latency (time from database commit to the event arriving):
+  A1 (trigger+AQ):  6 milliseconds
+  A2 (outbox):      128 milliseconds
+  A3 (CDC):         3,362 milliseconds (3.4 seconds)
+  HYBRID:           3,186 milliseconds
+  -> A factor of 560x between fastest and slowest.
+
+Redo log amplification (extra disk write load on the database caused by
+capturing events, compared to a baseline with no event capture at all):
+  A1 (trigger+AQ):  +171.4%   (statistically significant, p=0.0079)
+  A2 (outbox):      +110.4%   (statistically significant, p=0.0079)
+  A3 (CDC):         +0.7%     (NOT statistically significant — essentially free)
+  HYBRID:           +84.0%    (statistically significant, p=0.0079)
+
+Impact on the app's own response time (HTTP p95 latency delta):
+  A1: +1.55 ms   A2: +1.64 ms   A3: -0.18 ms (no measurable cost)   HYBRID: +2.37 ms
+
+Loss rate under normal running (no faults): all four modes lost fewer than
+about 33 events per million — essentially zero, no meaningful difference.
+
+Loss rate when a writer bypasses the application entirely (e.g. an overnight
+batch job writes directly to the database table, not through the app) — this
+is FAULT TEST "F11":
+  A1 (trigger):      0% lost   <- trigger sees everything written to the table
+  A3 (CDC):           0% lost   <- reads the redo log, sees everything
+  A2 (outbox):        69.0% lost  <- the batch job never wrote to the outbox table
+  HYBRID:             69.0% lost  <- same problem, because it still relies on the outbox
+
+  -> This is the single most important operational finding: only the trigger
+     and the CDC/redo-log approach can see EVERY writer to the table,
+     including ones nobody remembered to update. The outbox approach only
+     works if every single writer (including legacy batch jobs) is modified
+     to use the same event-writing code path.
+
+Availability coupling — this is critical for a bank — fault test "F8": what
+happens if the event-capture mechanism itself has a defect?
+  A1 (trigger): 40% of PAYMENTS FAILED. Because the trigger is inside the same
+    transaction as the payment itself, a broken trigger breaks the payment.
+  A2, A3, HYBRID: none affected at all. A broken event pipeline in these three
+    approaches cannot stop a real payment from completing.
+
+  -> This is the most important trade-off in the whole comparison: the
+     trigger approach is the fastest, but it is the ONLY one where a bug in
+     the observability code can stop real banking transactions. For a core
+     banking system, this is not "slower," it's a category of outage the
+     other three approaches structurally cannot produce.
+
+====================================================================
+4. "TIMING METRICS FOR CREATION OF SUCH CODE" (implementation effort / LOE)
+====================================================================
+
+This is measured on four components — real numbers, not guesses:
+
+                          A1(trigger)  A2(outbox)  A3(CDC)  HYBRID
+Lines of code:                591         468        175      253
+Added external dependencies:    2          0          0        0
+Extra infrastructure needed:  none       none    Kafka Connect+Debezium (same)
+Environment defects hit
+  while building it:            6          3          5        4
+
+Important nuance: A3 (CDC)'s 175 lines are ALL configuration files (JSON) and
+a registration script — ZERO lines of actual application source code. It is
+the only approach that requires no changes to the existing banking
+application's code at all.
+
+The final summary label (High / Medium / Low complexity) is stated as a
+JUDGEMENT CALL that synthesizes the four measured numbers above — this is
+said openly, so it can be checked against the numbers, not just trusted.
+
+HONEST GAP: actual calendar time (hours/days spent building each one) was NOT
+tracked, because this was a research exercise, not a timed production task.
+If asked directly "how many hours did each take", the honest answer is: "That
+specific number was not tracked. What was measured instead is code volume,
+dependencies, infrastructure, and defects encountered — which is why the
+final grade can be checked rather than taken on trust."
+
+====================================================================
+5. "CREATE NEW KNOWLEDGE" — what is actually new here
+====================================================================
+
+(a) THREE PREDICTIONS MADE IN ADVANCE WERE TESTED AND REFUTED:
+  1. Predicted: purging all archived redo logs after 10 forced log switches
+     would cause data loss for CDC. RESULT: 0% loss. Refuted.
+  2. Predicted: holding a database transaction open 240 seconds past a
+     configured 180-second retention window would cause CDC to discard/miss
+     it. RESULT: it was not discarded. Refuted.
+  3. Predicted (in this thesis's own earlier draft analysis): relaying the
+     outbox via Debezium (the HYBRID mode) would "cut end-to-end latency."
+     RESULT: it does not — HYBRID arrives about 25 times SLOWER than the
+     trigger approach. Refuted; the actual benefit of HYBRID is protecting
+     the database from load, not speed.
+
+  A tested and refuted prediction is real scientific work: it shows the
+  claims were actually put at risk of being wrong, not just confirmed.
+
+(b) THE STRONGEST SINGLE RESULT — "counting events does not measure a
+    pipeline": In one CDC test run, exactly 9,003 messages arrived for 9,003
+    committed database transactions. Every count matched perfectly. The
+    connector reported itself healthy. Zero warnings, zero lag. BUT two-
+    thirds of those messages were semantically empty — every business field
+    was zeroed out (e.g. amount showing as 0.0000) — due to how Oracle's
+    "supplemental logging" was configured. No count check, no health
+    dashboard, no lag metric could detect this. Only comparing against an
+    independent, trusted record of what actually happened (a "ground truth")
+    exposed the problem. This generalizes as a warning: a pipeline can look
+    100% healthy by every normal signal while silently delivering broken data.
+
+====================================================================
+6. RECOMMENDATION TABLE (if he asks "so which one do you recommend")
+====================================================================
+
+- If every writer to the table goes through the application, and the source
+  code is modifiable -> recommend HYBRID (no risk of a database-level dual
+  write, no polling load on the database, lowest in-transaction cost of the
+  safe options).
+- If some writers bypass the application and cannot be modified (e.g. legacy
+  batch jobs) -> recommend CDC, or the trigger if latency under 100ms is also
+  required. These two are the ONLY ones that captured 100% of a bypassing
+  batch job in testing.
+- If sub-100-millisecond latency is a hard business requirement -> recommend
+  the trigger approach (6ms), but be clear about the cost: +171% redo, and
+  the risk that a defect in it can stop real payments (as shown in fault
+  test F8, 40% of payments failed).
+- If database overhead must be as close to zero as possible -> recommend CDC
+  (+0.7% redo, not even statistically different from having no instrumentation
+  at all).
+- If you cannot introduce new infrastructure (Kafka Connect / Debezium) into
+  the environment -> recommend the plain application outbox (only 468 lines,
+  no new infrastructure, but costs +110% redo and adds roughly 200ms of
+  polling delay).
+
+====================================================================
+7. LIMITATIONS — STATED HONESTLY, NOT HIDDEN (if he probes for weaknesses)
+====================================================================
+
+- Throughput ceiling (the maximum transactions per second each mode can
+  sustain before breaking down) was NOT measured — only tested up to a
+  moderate, fixed load where none of the four modes showed any strain. This
+  is stated as an open limitation, not hidden.
+- Only 5 repeated runs per mode. For large effects (e.g. 171% vs 0.7%) this
+  is more than enough to be confident; for small effects (CDC's tiny redo
+  change) the result is honestly reported as "not statistically significant"
+  rather than inflated into a strong claim.
+- One earlier analysis (called "C2b" internally) had a data-analysis bug
+  where two input variables were accidentally mathematically identical,
+  producing a false conclusion. It was caught during review and corrected.
+  A separate, related test's own control run failed, so that one result is
+  honestly labeled "inconclusive" rather than patched to look conclusive.
+- All experiments were done in a single-container test environment, not on a
+  full production-grade Oracle cluster (like RAC or Exadata). Findings are
+  RELATIVE comparisons between the modes under identical conditions, not
+  absolute predictions of production performance on larger infrastructure.
+- The workload driving all of this is synthetic (artificially generated),
+  not real bank transaction data, because using real customer/transaction
+  data was ruled out on information-security grounds for this thesis. BUT the
+  physical measurements (redo bytes written, milliseconds elapsed, messages
+  delivered) are real measurements taken on a real running Oracle database
+  and Kafka cluster — only the workload driving them is synthetic.
+
+====================================================================
+8. PART B — CHAPTER 7, THE CREDIT-PROCESS ANALYSIS (in case he asks)
+====================================================================
+
+Using the same kind of event log, applied to a modeled Uzbek bank credit
+application process (synthetic data, 5,000 applications, about 40,000 stage
+events, no real personal data anywhere — customers are just references like
+"CUST-000000123"):
+
+- Only 1.9% of a credit application's total elapsed time is actual bank staff
+  work. The rest: 35.5% sitting in a bank queue untouched, 25.4% waiting on
+  the customer, 23.4% waiting on an external party (valuation company,
+  government checks), 13.2% waiting for the credit committee's fixed weekly
+  meeting schedule.
+- The credit committee only meets on fixed days of the week — waiting for it
+  is a CALENDAR problem, not a staffing/queue problem, and needs a different
+  fix (change the meeting schedule, not "hire more staff").
+- Among underwriters (staff who review loan applications), speed varies 3.1x
+  between the fastest and slowest person — but that gap is worth only about
+  2.7 hours, while every application also waits about 25.5 hours in a queue
+  before anyone even opens it. So the queue, not individual staff speed, is
+  where the real time is.
+- 27% of applications get sent back for more documents at least once
+  ("rework"), and those take 84% longer overall (12.57 days vs 6.82 days) —
+  something a simple stage-by-stage average completely hides; it's only
+  visible when following one application's full path.
+- SEPARATELY, the actual real report the bank currently runs every night
+  (a real production PL/SQL script, checked on real anonymized bank export
+  data, ~128,000 real log rows over 6 months) has a fundamental flaw: 72.4%
+  of the "employee working time" it reports actually falls OUTSIDE business
+  hours (nights, weekends) — because its "start time" field is really just
+  "when the previous step ended," not "when a person actually started
+  working." This is a genuinely new, real finding about an existing system,
+  not a synthetic-data claim.
+
+====================================================================
+9. WHAT'S AVAILABLE TO SHOW LIVE ON SCREEN DURING THE CALL
+====================================================================
+
+- A static, self-contained webpage with the full mechanism comparison,
+  organized in sections matching the questions above, plus a built-in Q&A
+  section with prepared answers. File:
+  C:\Users\O.Ustemirov\IdeaProjects\master-thesis-observability\docs\mechanism-comparison.html
+  This opens directly in a browser, no server needed, cannot fail during the
+  call.
+- The full written report with all details:
+  C:\Users\O.Ustemirov\IdeaProjects\master-thesis-observability\docs\empirical_comparison_results.md
+- A separate live web app (chapter 7, credit process) may or may not be
+  running at the time of the call — if asked, say it can be shown after
+  restarting the local demo environment, which takes a couple of minutes.
+
+====================================================================
+END OF BACKGROUND. Wait for me to paste what my advisor says, then respond
+using the SAY / MEANING format described at the top.
+====================================================================

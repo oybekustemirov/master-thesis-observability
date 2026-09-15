@@ -1,0 +1,43 @@
+[11:52:27] === RUN OFF-P1-r3-20260904115227 ===
+[11:52:27] mode=OFF profile=P1 rep=3 tps=50 duration=120s fault=none
+[11:52:27] jar: target/master-thesis-observability-0.0.1-SNAPSHOT.jar
+[11:52:27] workload tozalanmoqda (reference saqlanadi)
+workload reset; reference data preserved
+AQ backlog purged: 0 -> 0
+[11:52:28] Kafka topigi qayta yaratilmoqda
+[11:52:37] ilova ishga tushirilmoqda (mode=OFF)
+[11:52:47] ilova tayyor (pid 30108)
+[11:52:50] k6 yuklamasi boshlandi
+[11:55:03] pipeline bo'shashi kutilmoqda (maks 120s)
+[11:55:12] pipeline bo'sh (4s, sink=0 xabar)
+[11:55:25] ground truth eksport qilinmoqda
+[11:55:26] Kafka topigi eksport qilinmoqda
+[11:55:52] tahlil
+{
+  "mode": "OFF",
+  "profile": "P1",
+  "rep": "3",
+  "fault": "none",
+  "ground_truth_transitions": 0,
+  "delivered_distinct": 0,
+  "delivered_total": 0,
+  "matched": 0,
+  "missing": 0,
+  "phantom": null,
+  "malformed": 0,
+  "loss_rate": null,
+  "loss_rate_ppm": null,
+  "duplicate_rate": null,
+  "ordering_violation_rate": null,
+  "txns_split_across_partitions": 0,
+  "latency_ms_p50": null,
+  "latency_ms_p95": null,
+  "latency_ms_p99": null,
+  "latency_ms_max": null,
+  "latency_ms_mean": null,
+  "latency_samples": 0,
+  "latency_negative_samples": 0,
+  "pipeline": "none (baseline mode)"
+}
+[11:55:52] ilova va konnektor to'xtatilmoqda
+[11:55:59] === TUGADI: results/OFF-P1-r3-20260904115227 ===

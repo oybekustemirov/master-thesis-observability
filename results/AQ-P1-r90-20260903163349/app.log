@@ -1,0 +1,91 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.1)
+
+2026-09-03T16:34:03.708+05:00  INFO 1406890 --- [a1-observability] [           main] u.m.MasterThesisObservabilityApplication : Starting MasterThesisObservabilityApplication v0.0.1-SNAPSHOT using Java 21.0.12 with PID 1406890 (/mnt/c/Users/O.Ustemirov/IdeaProjects/master-thesis-observability/target/master-thesis-observability-0.0.1-SNAPSHOT.jar started by stemirovustemirov in /mnt/c/Users/O.Ustemirov/IdeaProjects/master-thesis-observability)
+2026-09-03T16:34:03.715+05:00  INFO 1406890 --- [a1-observability] [           main] u.m.MasterThesisObservabilityApplication : No active profile set, falling back to 1 default profile: "default"
+2026-09-03T16:34:05.151+05:00  INFO 1406890 --- [a1-observability] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-09-03T16:34:05.218+05:00  INFO 1406890 --- [a1-observability] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 50 ms. Found 2 JPA repository interfaces.
+2026-09-03T16:34:06.221+05:00  INFO 1406890 --- [a1-observability] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8095 (http)
+2026-09-03T16:34:06.238+05:00  INFO 1406890 --- [a1-observability] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-09-03T16:34:06.239+05:00  INFO 1406890 --- [a1-observability] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.24]
+2026-09-03T16:34:06.270+05:00  INFO 1406890 --- [a1-observability] [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 2452 ms
+2026-09-03T16:34:06.631+05:00  INFO 1406890 --- [a1-observability] [           main] com.zaxxer.hikari.HikariDataSource       : a1-aq-bridge - Starting...
+2026-09-03T16:34:07.015+05:00  INFO 1406890 --- [a1-observability] [           main] com.zaxxer.hikari.pool.HikariPool        : a1-aq-bridge - Added connection oracle.jdbc.driver.T4CConnection@4de91056
+2026-09-03T16:34:07.018+05:00  INFO 1406890 --- [a1-observability] [           main] com.zaxxer.hikari.HikariDataSource       : a1-aq-bridge - Start completed.
+2026-09-03T16:34:07.148+05:00  INFO 1406890 --- [a1-observability] [           main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-09-03T16:34:07.245+05:00  INFO 1406890 --- [a1-observability] [           main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.4.5.Final
+2026-09-03T16:34:08.516+05:00  WARN 1406890 --- [a1-observability] [           main] org.hibernate.orm.jdbc                   : HHH100123: Low default JDBC fetch size: 10 (consider setting 'hibernate.jdbc.fetch_size')
+2026-09-03T16:34:08.523+05:00  INFO 1406890 --- [a1-observability] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:oracle:thin:@//localhost:1521/OBSVPDB]
+	Database driver: Oracle JDBC driver
+	Database dialect: OracleDialect
+	Database version: 23.26.3
+	Default catalog/schema: undefined/OBSV
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: 10
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-09-03T16:34:09.652+05:00  INFO 1406890 --- [a1-observability] [           main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-09-03T16:34:09.658+05:00  INFO 1406890 --- [a1-observability] [           main] org.hibernate.orm.jdbc.batch             : HHH100501: Automatic JDBC statement batching enabled (maximum batch size 50)
+2026-09-03T16:34:10.125+05:00  INFO 1406890 --- [a1-observability] [           main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-09-03T16:34:11.052+05:00  INFO 1406890 --- [a1-observability] [           main] i.u.m.aq.AqJmsConfiguration              : AQ JMS connection factory bound to OBSV.A1_EVT_Q as durable subscriber OBSERVABILITY_BRIDGE
+2026-09-03T16:34:11.241+05:00  INFO 1406890 --- [a1-observability] [           main] i.u.m.config.EventEmitterConfiguration   : observability.mode=AQ -> emitter=NoOpEventEmitter
+2026-09-03T16:34:11.813+05:00  INFO 1406890 --- [a1-observability] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 4 endpoints beneath base path '/actuator'
+2026-09-03T16:34:11.888+05:00  INFO 1406890 --- [a1-observability] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8095 (http) with context path '/'
+2026-09-03T16:34:11.909+05:00  INFO 1406890 --- [a1-observability] [           main] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-09-03T16:34:11.915+05:00  INFO 1406890 --- [a1-observability] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-09-03T16:34:11.936+05:00  WARN 1406890 --- [a1-observability] [           main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'aqToKafkaBridge'
+2026-09-03T16:34:11.941+05:00  INFO 1406890 --- [a1-observability] [           main] com.zaxxer.hikari.HikariDataSource       : a1-aq-bridge - Shutdown initiated...
+2026-09-03T16:34:11.945+05:00  INFO 1406890 --- [a1-observability] [           main] com.zaxxer.hikari.HikariDataSource       : a1-aq-bridge - Shutdown completed.
+2026-09-03T16:34:11.961+05:00  INFO 1406890 --- [a1-observability] [           main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-09-03T16:34:12.008+05:00 ERROR 1406890 --- [a1-observability] [           main] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.context.ApplicationContextException: Failed to start bean 'aqToKafkaBridge'
+	at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:423) ~[spring-context-7.0.9.jar!/:7.0.9]
+	at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:409) ~[spring-context-7.0.9.jar!/:7.0.9]
+	at org.springframework.context.support.DefaultLifecycleProcessor$LifecycleGroup.start(DefaultLifecycleProcessor.java:613) ~[spring-context-7.0.9.jar!/:7.0.9]
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75) ~[na:na]
+	at org.springframework.context.support.DefaultLifecycleProcessor.startBeans(DefaultLifecycleProcessor.java:379) ~[spring-context-7.0.9.jar!/:7.0.9]
+	at org.springframework.context.support.DefaultLifecycleProcessor.onRefresh(DefaultLifecycleProcessor.java:306) ~[spring-context-7.0.9.jar!/:7.0.9]
+	at org.springframework.context.support.AbstractApplicationContext.finishRefresh(AbstractApplicationContext.java:1013) ~[spring-context-7.0.9.jar!/:7.0.9]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:624) ~[spring-context-7.0.9.jar!/:7.0.9]
+	at org.springframework.boot.web.server.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:143) ~[spring-boot-web-server-4.1.1.jar!/:4.1.1]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:756) ~[spring-boot-4.1.1.jar!/:4.1.1]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:445) ~[spring-boot-4.1.1.jar!/:4.1.1]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:321) ~[spring-boot-4.1.1.jar!/:4.1.1]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1365) ~[spring-boot-4.1.1.jar!/:4.1.1]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354) ~[spring-boot-4.1.1.jar!/:4.1.1]
+	at itpu.uz.masterthesisobservability.MasterThesisObservabilityApplication.main(MasterThesisObservabilityApplication.java:12) ~[!/:0.0.1-SNAPSHOT]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:106) ~[master-thesis-observability-0.0.1-SNAPSHOT.jar:0.0.1-SNAPSHOT]
+	at org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:64) ~[master-thesis-observability-0.0.1-SNAPSHOT.jar:0.0.1-SNAPSHOT]
+	at org.springframework.boot.loader.launch.JarLauncher.main(JarLauncher.java:40) ~[master-thesis-observability-0.0.1-SNAPSHOT.jar:0.0.1-SNAPSHOT]
+Caused by: java.lang.IllegalStateException: cannot open the AQ connection
+	at itpu.uz.masterthesisobservability.aq.AqToKafkaBridge.start(AqToKafkaBridge.java:111) ~[!/:0.0.1-SNAPSHOT]
+	at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:420) ~[spring-context-7.0.9.jar!/:7.0.9]
+	... 19 common frames omitted
+Caused by: oracle.jakarta.jms.AQjmsException: Error creating the db_connection
+	at oracle.jakarta.jms.AQjmsDBConnMgr.getConnection(AQjmsDBConnMgr.java:710) ~[aqapi-jakarta-23.9.0.0.jar!/:na]
+	at oracle.jakarta.jms.AQjmsDBConnMgr.<init>(AQjmsDBConnMgr.java:468) ~[aqapi-jakarta-23.9.0.0.jar!/:na]
+	at oracle.jakarta.jms.AQjmsConnection.<init>(AQjmsConnection.java:272) ~[aqapi-jakarta-23.9.0.0.jar!/:na]
+	at oracle.jakarta.jms.AQjmsConnectionFactory.createConnection(AQjmsConnectionFactory.java:531) ~[aqapi-jakarta-23.9.0.0.jar!/:na]
+	at itpu.uz.masterthesisobservability.aq.AqToKafkaBridge.start(AqToKafkaBridge.java:103) ~[!/:0.0.1-SNAPSHOT]
+	... 20 common frames omitted
+Caused by: java.lang.ClassCastException: class com.zaxxer.hikari.pool.HikariProxyConnection cannot be cast to class oracle.jdbc.internal.OracleConnection (com.zaxxer.hikari.pool.HikariProxyConnection and oracle.jdbc.internal.OracleConnection are in unnamed module of loader org.springframework.boot.loader.launch.LaunchedClassLoader @568db2f2)
+	at oracle.jakarta.jms.AQjmsGeneralDBConnection.getProviderKey(AQjmsGeneralDBConnection.java:99) ~[aqapi-jakarta-23.9.0.0.jar!/:na]
+	at oracle.jakarta.jms.AQjmsGeneralDBConnection.<init>(AQjmsGeneralDBConnection.java:68) ~[aqapi-jakarta-23.9.0.0.jar!/:na]
+	at oracle.jakarta.jms.AQjmsDBConnMgr.getConnection(AQjmsDBConnMgr.java:638) ~[aqapi-jakarta-23.9.0.0.jar!/:na]
+	... 24 common frames omitted
+

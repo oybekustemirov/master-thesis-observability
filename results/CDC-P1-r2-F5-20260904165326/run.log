@@ -1,0 +1,54 @@
+[16:53:26] === RUN CDC-P1-r2-F5-20260904165326 ===
+[16:53:26] mode=CDC profile=P1 rep=2 tps=50 duration=420s fault=F5
+[16:53:26] jar: target/master-thesis-observability-0.0.1-SNAPSHOT.jar
+[16:53:26] workload tozalanmoqda (reference saqlanadi)
+workload reset; reference data preserved
+AQ backlog purged: 0 -> 0
+[16:53:28] Kafka topigi qayta yaratilmoqda
+[16:53:37] ilova ishga tushirilmoqda (mode=CDC)
+[16:53:50] ilova tayyor (pid 3350789)
+[16:53:50] Debezium konnektori ro'yxatdan o'tkazilmoqda (CDC, prefix=obsv_cdc_p1_r2_f5_20260904165326)
+konnektor ro'yxatdan o'tkazilmoqda: a1-cdc-obsv_cdc_p1_r2_f5_20260904165326 (prefix=obsv_cdc_p1_r2_f5_20260904165326)
+konnektor RUNNING (2s)
+streaming tasdiqlanmoqda (heartbeat topigi: __debezium-heartbeat.obsv_cdc_p1_r2_f5_20260904165326)
+streaming tasdiqlandi (1 urinish)
+[16:53:57] fault F5 30s dan keyin yuboriladi
+[16:53:57] k6 yuklamasi boshlandi
+[fault 16:54:30] bitta ochiq tranzaksiyada 5000 satr, 240 soniya ushlab turiladi
+[fault 16:54:30] F5 tugadi
+PL/SQL procedure successfully completed.
+
+[17:01:36] pipeline bo'shashi kutilmoqda (maks 120s)
+[17:01:48] pipeline bo'sh (5s, sink=77991 xabar)
+[17:01:58] ground truth eksport qilinmoqda
+[17:01:59] Kafka topigi eksport qilinmoqda
+[17:02:29] tahlil
+{
+  "mode": "CDC",
+  "profile": "P1",
+  "rep": "2",
+  "fault": "F5",
+  "ground_truth_transitions": 77991,
+  "delivered_distinct": 77991,
+  "delivered_total": 77991,
+  "matched": 77991,
+  "missing": 0,
+  "phantom": 0,
+  "malformed": 0,
+  "loss_rate": 0.0,
+  "loss_rate_ppm": 0.0,
+  "duplicate_rate": 0.0,
+  "ordering_violation_rate": 0.0,
+  "txns_split_across_partitions": 0,
+  "latency_ms_p50": 3593,
+  "latency_ms_p95": 6477,
+  "latency_ms_p99": 8430,
+  "latency_ms_max": 9346,
+  "latency_ms_mean": 3737.4,
+  "latency_samples": 77991,
+  "latency_negative_samples": 0,
+  "loss_rate_upper_bound_95_ppm": 38.47
+}
+[17:02:30] ilova va konnektor to'xtatilmoqda
+connector o'chirilmoqda: a1-cdc-obsv_cdc_p1_r2_f5_20260904165326
+[17:02:37] === TUGADI: results/CDC-P1-r2-F5-20260904165326 ===

@@ -1,0 +1,52 @@
+[09:17:49] === RUN CDC-C2N4ON-r2-20260910091749 ===
+[09:17:49] mode=CDC profile=C2N4ON rep=2 tps=50 duration=180s fault=none
+[09:17:49] jar: target/master-thesis-observability-0.0.1-SNAPSHOT.jar
+[09:17:49] arxiv redo tozalanmoqda
+[09:17:49] workload tozalanmoqda (reference saqlanadi)
+workload reset; reference data preserved
+AQ backlog purged: 0 -> 0
+[09:17:54] Kafka topigi qayta yaratilmoqda
+[09:18:04] ilova ishga tushirilmoqda (mode=CDC)
+[09:18:22] ilova tayyor (pid 48685)
+[09:18:22] Debezium konnektori ro'yxatdan o'tkazilmoqda (CDC, prefix=obsv_cdc_c2n4on_r2_20260910091749)
+connector o'chirilmoqda: a1-cdc-obsv_cdc_c2n4on_r2_20260909215856
+konnektor ro'yxatdan o'tkazilmoqda: a1-cdc-obsv_cdc_c2n4on_r2_20260910091749 (prefix=obsv_cdc_c2n4on_r2_20260910091749)
+konnektor RUNNING (2s)
+streaming tasdiqlanmoqda (heartbeat topigi: __debezium-heartbeat.obsv_cdc_c2n4on_r2_20260910091749)
+streaming tasdiqlandi (8 urinish)
+[09:18:58] k6 yuklamasi boshlandi
+[09:22:00] k6 iteratsiyalari: 8897
+[09:22:00] qat'iy settle: 45s (o'lchov oynasi ikkala qo'lda bir xil)
+[09:22:46] pipeline bo'shashi kutilmoqda (maks 120s)
+[09:23:36] pipeline bo'sh (33s, sink=5750 / gt=26691)
+[09:23:46] ground truth eksport qilinmoqda
+[09:23:47] Kafka topigi eksport qilinmoqda
+[09:24:05] tahlil
+{
+  "mode": "CDC",
+  "profile": "C2N4ON",
+  "rep": "2",
+  "fault": "none",
+  "ground_truth_transitions": 26691,
+  "delivered_distinct": 5750,
+  "delivered_total": 5750,
+  "matched": 5750,
+  "missing": 20941,
+  "phantom": 0,
+  "malformed": 0,
+  "loss_rate": 0.78457158,
+  "loss_rate_ppm": 784571.58,
+  "duplicate_rate": 0.0,
+  "ordering_violation_rate": 0.0,
+  "txns_split_across_partitions": 0,
+  "latency_ms_p50": 4329,
+  "latency_ms_p95": 7207,
+  "latency_ms_p99": 7892,
+  "latency_ms_max": 8129,
+  "latency_ms_mean": 4576.3,
+  "latency_samples": 5750,
+  "latency_negative_samples": 0
+}
+[09:24:05] ilova va konnektor to'xtatilmoqda
+connector o'chirilmoqda: a1-cdc-obsv_cdc_c2n4on_r2_20260910091749
+[09:24:15] === TUGADI: results/CDC-C2N4ON-r2-20260910091749 ===

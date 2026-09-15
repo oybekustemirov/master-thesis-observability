@@ -1,0 +1,23 @@
+global:
+  scrape_interval: 5s          # experiment runs are minutes, not hours — sample finely
+  evaluation_interval: 15s
+  external_labels:
+    stack: thesis-observability
+
+scrape_configs:
+  - job_name: prometheus
+    static_configs: [{targets: ["localhost:9090"]}]
+
+  # Debezium connector and Kafka Connect worker metrics via the JMX agent:
+  # MilliSecondsBehindSource, CurrentScn, NumberOfLargeTransactions, task state.
+  - job_name: connect
+    static_configs: [{targets: ["connect:9404"]}]
+
+  # The Spring Boot application under test. It runs on the HOST rather than in compose so
+  # the fault harness can SIGKILL and restart the JVM directly (fault case F1).
+  # Port 8095 avoids a collision with the user's unrelated bn-gateway stack on 8080.
+  # This one endpoint also publishes the Oracle gauges (redo delta, queue depth,
+  # outbox backlog, mining lag) exported by OracleMetricsBinder.
+  - job_name: a1-app
+    metrics_path: /actuator/prometheus
+    static_configs: [{targets: ["host.docker.internal:8095"]}]

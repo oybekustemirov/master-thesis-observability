@@ -1,0 +1,52 @@
+[21:27:58] === RUN CDC-C2N1ON-r2-20260909212758 ===
+[21:27:58] mode=CDC profile=C2N1ON rep=2 tps=50 duration=180s fault=none
+[21:27:58] jar: target/master-thesis-observability-0.0.1-SNAPSHOT.jar
+[21:27:58] arxiv redo tozalanmoqda
+[21:27:58] workload tozalanmoqda (reference saqlanadi)
+workload reset; reference data preserved
+AQ backlog purged: 0 -> 0
+[21:27:59] Kafka topigi qayta yaratilmoqda
+[21:28:08] ilova ishga tushirilmoqda (mode=CDC)
+[21:28:23] ilova tayyor (pid 2999089)
+[21:28:23] Debezium konnektori ro'yxatdan o'tkazilmoqda (CDC, prefix=obsv_cdc_c2n1on_r2_20260909212758)
+konnektor ro'yxatdan o'tkazilmoqda: a1-cdc-obsv_cdc_c2n1on_r2_20260909212758 (prefix=obsv_cdc_c2n1on_r2_20260909212758)
+konnektor RUNNING (2s)
+streaming tasdiqlanmoqda (heartbeat topigi: __debezium-heartbeat.obsv_cdc_c2n1on_r2_20260909212758)
+streaming tasdiqlandi (1 urinish)
+[21:28:30] k6 yuklamasi boshlandi
+[21:31:30] k6 iteratsiyalari: 9000
+[21:31:30] qat'iy settle: 45s (o'lchov oynasi ikkala qo'lda bir xil)
+[21:32:16] pipeline bo'shashi kutilmoqda (maks 120s)
+[21:32:37] pipeline bo'sh (15s, sink=27000 xabar)
+[21:32:47] ground truth eksport qilinmoqda
+[21:32:48] Kafka topigi eksport qilinmoqda
+[21:32:58] tahlil
+{
+  "mode": "CDC",
+  "profile": "C2N1ON",
+  "rep": "2",
+  "fault": "none",
+  "ground_truth_transitions": 27000,
+  "delivered_distinct": 27000,
+  "delivered_total": 27000,
+  "matched": 27000,
+  "missing": 0,
+  "phantom": 0,
+  "malformed": 0,
+  "loss_rate": 0.0,
+  "loss_rate_ppm": 0.0,
+  "duplicate_rate": 0.0,
+  "ordering_violation_rate": 0.0,
+  "txns_split_across_partitions": 0,
+  "latency_ms_p50": 3431,
+  "latency_ms_p95": 5646,
+  "latency_ms_p99": 6222,
+  "latency_ms_max": 6742,
+  "latency_ms_mean": 3450.6,
+  "latency_samples": 27000,
+  "latency_negative_samples": 0,
+  "loss_rate_upper_bound_95_ppm": 111.11
+}
+[21:32:59] ilova va konnektor to'xtatilmoqda
+connector o'chirilmoqda: a1-cdc-obsv_cdc_c2n1on_r2_20260909212758
+[21:33:10] === TUGADI: results/CDC-C2N1ON-r2-20260909212758 ===

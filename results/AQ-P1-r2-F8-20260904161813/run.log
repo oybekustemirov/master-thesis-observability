@@ -1,0 +1,50 @@
+[16:18:13] === RUN AQ-P1-r2-F8-20260904161813 ===
+[16:18:13] mode=AQ profile=P1 rep=2 tps=50 duration=180s fault=F8
+[16:18:13] jar: target/master-thesis-observability-0.0.1-SNAPSHOT.jar
+[16:18:13] workload tozalanmoqda (reference saqlanadi)
+workload reset; reference data preserved
+AQ backlog purged: 0 -> 0
+[16:18:15] Kafka topigi qayta yaratilmoqda
+[16:18:24] ilova ishga tushirilmoqda (mode=AQ)
+[16:18:39] ilova tayyor (pid 2986448)
+[16:18:43] fault F8 60s dan keyin yuboriladi
+[16:18:43] k6 yuklamasi boshlandi
+[fault 16:19:46] AQ triggerini sindirmoqdamiz (PKG_A1_EVENT yaroqsiz qilinadi)
+Warning: Package Body created with compilation errors.
+
+[fault 16:19:49] paket endi yaroqsiz — AQ rejimida DML yiqilishi kerak
+[fault 16:19:49] F8 tugadi
+[16:21:58] k6 nolga teng bo'lmagan kod bilan tugadi (natija baribir tahlil qilinadi)
+[16:21:58] pipeline bo'shashi kutilmoqda (maks 120s)
+[16:22:11] pipeline bo'sh (4s, sink=8995 xabar)
+[16:22:21] ground truth eksport qilinmoqda
+[16:22:21] Kafka topigi eksport qilinmoqda
+[16:23:13] tahlil
+{
+  "mode": "AQ",
+  "profile": "P1",
+  "rep": "2",
+  "fault": "F8",
+  "ground_truth_transitions": 8995,
+  "delivered_distinct": 8995,
+  "delivered_total": 8995,
+  "matched": 8995,
+  "missing": 0,
+  "phantom": 0,
+  "malformed": 0,
+  "loss_rate": 0.0,
+  "loss_rate_ppm": 0.0,
+  "duplicate_rate": 0.0,
+  "ordering_violation_rate": 0.0,
+  "txns_split_across_partitions": 0,
+  "latency_ms_p50": 6,
+  "latency_ms_p95": 14,
+  "latency_ms_p99": 1190,
+  "latency_ms_max": 2942,
+  "latency_ms_mean": 35.3,
+  "latency_samples": 8995,
+  "latency_negative_samples": 0,
+  "loss_rate_upper_bound_95_ppm": 333.52
+}
+[16:23:13] ilova va konnektor to'xtatilmoqda
+[16:23:20] === TUGADI: results/AQ-P1-r2-F8-20260904161813 ===

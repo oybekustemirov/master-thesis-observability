@@ -1,0 +1,772 @@
+[2026-09-09 09:51:31] === noise pool urug'lantirilmoqda (50000 satr) ===
+REDO_NOISE seeded with 50000 rows
+
+PL/SQL procedure successfully completed.
+
+[2026-09-09 09:51:34] === C2/seed TUGADI ===
+[2026-09-09 09:51:34] === kalibratsiya: yangilanish boshiga redo bayt ===
+[2026-09-09 09:51:35] redo bytes per noise update: SELECTTO_CHAR(PKG_REDO_NOISE.calibrate(20000),'FM999999990.00')FROMdual*ERRORatline1:ORA-14551:cannotperformaDMLoperationinsideaqueryORA-06512:at"OBSV.PKG_REDO_NOISE",line99ORA-06512:atline1Help:https://docs.oracle.com/error-help/db/ora-14551/
+[2026-09-09 09:51:35]   level 0/s  ->   MB/s redo
+[2026-09-09 09:51:35]   level 1500/s  ->   MB/s redo
+[2026-09-09 09:51:35]   level 3000/s  ->   MB/s redo
+[2026-09-09 09:51:35]   level 6000/s  ->   MB/s redo
+[2026-09-09 09:51:35]   level 12000/s  ->   MB/s redo
+[2026-09-09 09:51:35] === C2/calibrate TUGADI ===
+[2026-09-09 09:51:35] === C2a: 5 daraja x {ON,OFF} x 3 takror ===
+[2026-09-09 09:51:35] --- takror 1/3 ---
+[2026-09-09 09:51:35] RUN   C2N0OFF/r1  (noise=0/s, connector=off)
+noise sessions killed: 0
+[2026-09-09 09:53:07] OK    C2N0OFF/r1
+noise sessions killed: 0
+[2026-09-09 09:53:07] RUN   C2N0ON/r1  (noise=0/s, connector=on)
+noise sessions killed: 0
+[2026-09-09 09:55:48] OK    C2N0ON/r1
+noise sessions killed: 0
+[2026-09-09 09:55:48] RUN   C2N1OFF/r1  (noise=1500/s, connector=off)
+noise sessions killed: 0
+[2026-09-09 09:57:14] OK    C2N1OFF/r1
+could not kill 73: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 09:57:14] RUN   C2N1ON/r1  (noise=1500/s, connector=on)
+noise sessions killed: 0
+[2026-09-09 09:59:51] OK    C2N1ON/r1
+could not kill 73: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 09:59:51] RUN   C2N2OFF/r1  (noise=3000/s, connector=off)
+noise sessions killed: 0
+[2026-09-09 10:01:22] OK    C2N2OFF/r1
+could not kill 73: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 10:01:22] RUN   C2N2ON/r1  (noise=3000/s, connector=on)
+noise sessions killed: 0
+[2026-09-09 10:04:10] OK    C2N2ON/r1
+could not kill 73: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 10:04:11] RUN   C2N3OFF/r1  (noise=6000/s, connector=off)
+noise sessions killed: 0
+[2026-09-09 10:05:30] OK    C2N3OFF/r1
+could not kill 73: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 10:05:30] RUN   C2N3ON/r1  (noise=6000/s, connector=on)
+noise sessions killed: 0
+[2026-09-09 10:07:55] OK    C2N3ON/r1
+could not kill 73: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 10:07:55] RUN   C2N4OFF/r1  (noise=12000/s, connector=off)
+noise sessions killed: 0
+[2026-09-09 10:09:18] OK    C2N4OFF/r1
+could not kill 54: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 10:09:18] RUN   C2N4ON/r1  (noise=12000/s, connector=on)
+noise sessions killed: 0
+[2026-09-09 10:11:47] OK    C2N4ON/r1
+could not kill 82: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 10:11:47] --- takror 2/3 ---
+[2026-09-09 10:11:47] RUN   C2N0OFF/r2  (noise=0/s, connector=off)
+noise sessions killed: 0
+[2026-09-09 10:13:14] OK    C2N0OFF/r2
+noise sessions killed: 0
+[2026-09-09 10:13:14] RUN   C2N0ON/r2  (noise=0/s, connector=on)
+noise sessions killed: 0
+[2026-09-09 10:15:19] OK    C2N0ON/r2
+noise sessions killed: 0
+[2026-09-09 10:15:19] RUN   C2N1OFF/r2  (noise=1500/s, connector=off)
+noise sessions killed: 0
+[2026-09-09 10:16:40] OK    C2N1OFF/r2
+could not kill 67: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 10:16:40] RUN   C2N1ON/r2  (noise=1500/s, connector=on)
+noise sessions killed: 0
+[2026-09-09 10:18:36] OK    C2N1ON/r2
+could not kill 67: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 10:18:37] RUN   C2N2OFF/r2  (noise=3000/s, connector=off)
+noise sessions killed: 0
+[2026-09-09 10:19:58] OK    C2N2OFF/r2
+could not kill 233: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 10:19:58] RUN   C2N2ON/r2  (noise=3000/s, connector=on)
+noise sessions killed: 0
+[2026-09-09 10:21:58] OK    C2N2ON/r2
+could not kill 233: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 10:21:59] RUN   C2N3OFF/r2  (noise=6000/s, connector=off)
+noise sessions killed: 0
+[2026-09-09 10:23:20] OK    C2N3OFF/r2
+could not kill 221: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 10:23:20] RUN   C2N3ON/r2  (noise=6000/s, connector=on)
+noise sessions killed: 0
+[2026-09-09 10:25:05] OK    C2N3ON/r2
+could not kill 235: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 10:25:06] RUN   C2N4OFF/r2  (noise=12000/s, connector=off)
+noise sessions killed: 0
+[2026-09-09 10:26:27] OK    C2N4OFF/r2
+could not kill 223: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 10:26:27] RUN   C2N4ON/r2  (noise=12000/s, connector=on)
+noise sessions killed: 0
+[2026-09-09 10:28:08] OK    C2N4ON/r2
+could not kill 223: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 10:28:08] --- takror 3/3 ---
+[2026-09-09 10:28:08] RUN   C2N0OFF/r3  (noise=0/s, connector=off)
+noise sessions killed: 0
+[2026-09-09 10:29:29] OK    C2N0OFF/r3
+noise sessions killed: 0
+[2026-09-09 10:29:29] RUN   C2N0ON/r3  (noise=0/s, connector=on)
+noise sessions killed: 0
+[2026-09-09 10:31:13] OK    C2N0ON/r3
+noise sessions killed: 0
+[2026-09-09 10:31:14] RUN   C2N1OFF/r3  (noise=1500/s, connector=off)
+noise sessions killed: 0
+[2026-09-09 10:32:34] OK    C2N1OFF/r3
+could not kill 73: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 10:32:35] RUN   C2N1ON/r3  (noise=1500/s, connector=on)
+noise sessions killed: 0
+[2026-09-09 10:34:21] OK    C2N1ON/r3
+could not kill 73: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 10:34:22] RUN   C2N2OFF/r3  (noise=3000/s, connector=off)
+noise sessions killed: 0
+[2026-09-09 10:35:42] OK    C2N2OFF/r3
+could not kill 62: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 10:35:42] RUN   C2N2ON/r3  (noise=3000/s, connector=on)
+noise sessions killed: 0
+[2026-09-09 10:37:30] OK    C2N2ON/r3
+could not kill 223: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 10:37:31] RUN   C2N3OFF/r3  (noise=6000/s, connector=off)
+noise sessions killed: 0
+[2026-09-09 10:38:53] OK    C2N3OFF/r3
+could not kill 223: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 10:38:53] RUN   C2N3ON/r3  (noise=6000/s, connector=on)
+noise sessions killed: 0
+[2026-09-09 10:40:23] OK    C2N3ON/r3
+could not kill 223: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 10:40:24] RUN   C2N4OFF/r3  (noise=12000/s, connector=off)
+noise sessions killed: 0
+[2026-09-09 10:41:45] OK    C2N4OFF/r3
+could not kill 223: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 10:41:45] RUN   C2N4ON/r3  (noise=12000/s, connector=on)
+noise sessions killed: 0
+[2026-09-09 10:43:15] OK    C2N4ON/r3
+could not kill 223: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 10:43:15] === C2a: 5 daraja x {ON,OFF} x 3 takror ===
+[2026-09-09 10:43:15] --- takror 1/3 ---
+[2026-09-09 10:43:15] SKIP  C2N0OFF/r1
+[2026-09-09 10:43:15] SKIP  C2N0ON/r1
+[2026-09-09 10:43:15] SKIP  C2N1OFF/r1
+[2026-09-09 10:43:15] SKIP  C2N1ON/r1
+[2026-09-09 10:43:15] SKIP  C2N2OFF/r1
+[2026-09-09 10:43:15] SKIP  C2N2ON/r1
+[2026-09-09 10:43:15] SKIP  C2N3OFF/r1
+[2026-09-09 10:43:15] SKIP  C2N3ON/r1
+[2026-09-09 10:43:15] SKIP  C2N4OFF/r1
+[2026-09-09 10:43:15] SKIP  C2N4ON/r1
+[2026-09-09 10:43:15] --- takror 2/3 ---
+[2026-09-09 10:43:15] SKIP  C2N0OFF/r2
+[2026-09-09 10:43:15] SKIP  C2N0ON/r2
+[2026-09-09 10:43:15] SKIP  C2N1OFF/r2
+[2026-09-09 10:43:15] SKIP  C2N1ON/r2
+[2026-09-09 10:43:15] SKIP  C2N2OFF/r2
+[2026-09-09 10:43:16] SKIP  C2N2ON/r2
+[2026-09-09 10:43:16] SKIP  C2N3OFF/r2
+[2026-09-09 10:43:16] SKIP  C2N3ON/r2
+[2026-09-09 10:43:16] SKIP  C2N4OFF/r2
+[2026-09-09 10:43:16] SKIP  C2N4ON/r2
+[2026-09-09 10:43:16] --- takror 3/3 ---
+[2026-09-09 10:43:16] SKIP  C2N0OFF/r3
+[2026-09-09 10:43:16] SKIP  C2N0ON/r3
+[2026-09-09 10:43:16] SKIP  C2N1OFF/r3
+[2026-09-09 10:43:16] SKIP  C2N1ON/r3
+[2026-09-09 10:43:16] SKIP  C2N2OFF/r3
+[2026-09-09 10:43:16] SKIP  C2N2ON/r3
+[2026-09-09 10:43:16] SKIP  C2N3OFF/r3
+[2026-09-09 10:43:16] SKIP  C2N3ON/r3
+[2026-09-09 10:43:16] SKIP  C2N4OFF/r3
+[2026-09-09 10:43:16] SKIP  C2N4ON/r3
+[2026-09-09 10:43:16] === C2/a TUGADI ===
+[2026-09-09 10:43:16] === C2b: qamrov kengligi, shovqin 12000/s da qat'iy, 3 takror ===
+[2026-09-09 10:43:16] REDO_NOISE supplemental logging -> on
+[2026-09-09 10:43:16] --- takror 1/3 ---
+[2026-09-09 10:43:16] RUN   C2NARROW/r1  (noise=12000/s, connector=on)
+noise sessions killed: 0
+[2026-09-09 10:44:46] OK    C2NARROW/r1
+could not kill 221: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 10:44:46] RUN   C2WIDE/r1  (noise=12000/s, connector=on)
+noise sessions killed: 0
+[2026-09-09 10:46:24] OK    C2WIDE/r1
+could not kill 221: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 10:46:24] --- takror 2/3 ---
+[2026-09-09 10:46:24] RUN   C2NARROW/r2  (noise=12000/s, connector=on)
+could not kill 221: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 10:48:08] OK    C2NARROW/r2
+could not kill 221: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 10:48:08] RUN   C2WIDE/r2  (noise=12000/s, connector=on)
+could not kill 221: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 10:49:54] OK    C2WIDE/r2
+could not kill 238: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 10:49:55] --- takror 3/3 ---
+[2026-09-09 10:49:55] RUN   C2NARROW/r3  (noise=12000/s, connector=on)
+noise sessions killed: 0
+[2026-09-09 10:51:40] OK    C2NARROW/r3
+could not kill 233: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 10:51:40] RUN   C2WIDE/r3  (noise=12000/s, connector=on)
+noise sessions killed: 0
+[2026-09-09 11:12:49] === kalibratsiya: yangilanish boshiga redo bayt ===
+[2026-09-09 11:12:52] redo bytes per noise update: 1570.37
+[2026-09-09 11:12:52]   level 0/s  ->  0.00 MB/s redo
+[2026-09-09 11:12:52]   level 1500/s  ->  2.25 MB/s redo
+[2026-09-09 11:12:52]   level 3000/s  ->  4.49 MB/s redo
+[2026-09-09 11:12:52]   level 6000/s  ->  8.99 MB/s redo
+[2026-09-09 11:12:52]   level 12000/s  ->  17.97 MB/s redo
+[2026-09-09 11:12:52] === C2/calibrate TUGADI ===
+[2026-09-09 11:13:08] === noise pool urug'lantirilmoqda (50000 satr) ===
+REDO_NOISE seeded with 50000 rows
+
+PL/SQL procedure successfully completed.
+
+[2026-09-09 11:13:16] === C2/seed TUGADI ===
+[2026-09-09 11:13:16] === kalibratsiya: yangilanish boshiga redo bayt ===
+[2026-09-09 11:13:17] redo bytes per noise update: 1561.37
+[2026-09-09 11:13:17]   level 0/s  ->  0.00 MB/s redo
+[2026-09-09 11:13:17]   level 1500/s  ->  2.23 MB/s redo
+[2026-09-09 11:13:17]   level 3000/s  ->  4.47 MB/s redo
+[2026-09-09 11:13:17]   level 6000/s  ->  8.93 MB/s redo
+[2026-09-09 11:13:17]   level 12000/s  ->  17.87 MB/s redo
+[2026-09-09 11:13:17] === C2/calibrate TUGADI ===
+[2026-09-09 11:13:17] === C2a: 5 daraja x {ON,OFF} x 3 takror ===
+[2026-09-09 11:13:17] --- takror 1/3 ---
+[2026-09-09 11:13:17] RUN   C2N0OFF/r1  (noise=0/s, connector=off)
+noise sessions killed: 0
+[2026-09-09 11:23:43] OK    C2N0OFF/r1
+noise sessions killed: 0
+[2026-09-09 11:23:43] RUN   C2N0ON/r1  (noise=0/s, connector=on)
+noise sessions killed: 0
+[2026-09-09 11:29:33] OK    C2N0ON/r1
+noise sessions killed: 0
+[2026-09-09 11:29:33] RUN   C2N1OFF/r1  (noise=1500/s, connector=off)
+noise sessions killed: 0
+[2026-09-09 11:39:29] OK    C2N1OFF/r1
+noise sessions killed: 0
+[2026-09-09 11:39:30] RUN   C2N1ON/r1  (noise=1500/s, connector=on)
+noise sessions killed: 0
+[2026-09-09 11:44:53] OK    C2N1ON/r1
+could not kill 162: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 11:44:54] RUN   C2N2OFF/r1  (noise=3000/s, connector=off)
+noise sessions killed: 0
+[2026-09-09 11:55:21] OK    C2N2OFF/r1
+noise sessions killed: 0
+[2026-09-09 11:55:21] RUN   C2N2ON/r1  (noise=3000/s, connector=on)
+noise sessions killed: 0
+[2026-09-09 12:00:29] OK    C2N2ON/r1
+could not kill 176: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 12:00:29] RUN   C2N3OFF/r1  (noise=6000/s, connector=off)
+noise sessions killed: 0
+[2026-09-09 12:06:56] FAIL  C2N3OFF/r1 (davom etilmoqda)
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+[2026-09-09 12:06:57] RUN   C2N3ON/r1  (noise=6000/s, connector=on)
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+[2026-09-09 12:07:02] FAIL  C2N3ON/r1 (davom etilmoqda)
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+[2026-09-09 12:07:02] RUN   C2N4OFF/r1  (noise=12000/s, connector=off)
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+[2026-09-09 12:07:03] FAIL  C2N4OFF/r1 (davom etilmoqda)
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+[2026-09-09 12:07:03] RUN   C2N4ON/r1  (noise=12000/s, connector=on)
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+[2026-09-09 12:07:03] FAIL  C2N4ON/r1 (davom etilmoqda)
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+[2026-09-09 12:07:03] --- takror 2/3 ---
+[2026-09-09 12:07:03] RUN   C2N0OFF/r2  (noise=0/s, connector=off)
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+[2026-09-09 12:07:04] FAIL  C2N0OFF/r2 (davom etilmoqda)
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+[2026-09-09 12:07:04] RUN   C2N0ON/r2  (noise=0/s, connector=on)
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+[2026-09-09 12:07:04] FAIL  C2N0ON/r2 (davom etilmoqda)
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+[2026-09-09 12:07:04] RUN   C2N1OFF/r2  (noise=1500/s, connector=off)
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+[2026-09-09 12:07:05] FAIL  C2N1OFF/r2 (davom etilmoqda)
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+[2026-09-09 12:07:05] RUN   C2N1ON/r2  (noise=1500/s, connector=on)
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+[2026-09-09 12:07:05] FAIL  C2N1ON/r2 (davom etilmoqda)
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+[2026-09-09 12:07:06] RUN   C2N2OFF/r2  (noise=3000/s, connector=off)
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+[2026-09-09 12:07:06] FAIL  C2N2OFF/r2 (davom etilmoqda)
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+[2026-09-09 12:07:06] RUN   C2N2ON/r2  (noise=3000/s, connector=on)
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+[2026-09-09 12:07:07] FAIL  C2N2ON/r2 (davom etilmoqda)
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+[2026-09-09 12:07:07] RUN   C2N3OFF/r2  (noise=6000/s, connector=off)
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+[2026-09-09 12:07:07] FAIL  C2N3OFF/r2 (davom etilmoqda)
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+[2026-09-09 12:07:08] RUN   C2N3ON/r2  (noise=6000/s, connector=on)
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+[2026-09-09 12:07:08] FAIL  C2N3ON/r2 (davom etilmoqda)
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+[2026-09-09 12:07:08] RUN   C2N4OFF/r2  (noise=12000/s, connector=off)
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+[2026-09-09 12:07:09] FAIL  C2N4OFF/r2 (davom etilmoqda)
+[2026-09-09 12:07:13] FAIL  C2N2OFF/r3 (davom etilmoqda)
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+[2026-09-09 12:07:13] RUN   C2N2ON/r3  (noise=3000/s, connector=on)
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+[2026-09-09 12:07:13] FAIL  C2N2ON/r3 (davom etilmoqda)
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+[2026-09-09 12:07:14] RUN   C2N3OFF/r3  (noise=6000/s, connector=off)
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+[2026-09-09 12:07:14] FAIL  C2N3OFF/r3 (davom etilmoqda)
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+[2026-09-09 12:07:14] RUN   C2N3ON/r3  (noise=6000/s, connector=on)
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+[2026-09-09 12:07:15] FAIL  C2N3ON/r3 (davom etilmoqda)
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+[2026-09-09 12:07:15] RUN   C2N4OFF/r3  (noise=12000/s, connector=off)
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+[2026-09-09 12:07:15] FAIL  C2N4OFF/r3 (davom etilmoqda)
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+[2026-09-09 12:07:16] RUN   C2N4ON/r3  (noise=12000/s, connector=on)
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+[2026-09-09 12:07:16] FAIL  C2N4ON/r3 (davom etilmoqda)
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+[2026-09-09 12:07:16] === C2/a TUGADI ===
+[2026-09-09 12:07:16] === C2b: qamrov kengligi, shovqin 12000/s da qat'iy, 3 takror ===
+[2026-09-09 12:07:16] REDO_NOISE supplemental logging -> on
+[2026-09-09 12:07:16] --- takror 1/3 ---
+[2026-09-09 12:07:16] RUN   C2NARROW/r1  (noise=12000/s, connector=on)
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+[2026-09-09 12:07:17] FAIL  C2NARROW/r1 (davom etilmoqda)
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+[2026-09-09 12:07:17] RUN   C2WIDE/r1  (noise=12000/s, connector=on)
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+[2026-09-09 12:07:18] FAIL  C2WIDE/r1 (davom etilmoqda)
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+[2026-09-09 12:07:18] --- takror 2/3 ---
+[2026-09-09 12:07:18] RUN   C2NARROW/r2  (noise=12000/s, connector=on)
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+[2026-09-09 12:07:18] FAIL  C2NARROW/r2 (davom etilmoqda)
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+[2026-09-09 12:07:18] RUN   C2WIDE/r2  (noise=12000/s, connector=on)
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+[2026-09-09 12:07:19] FAIL  C2WIDE/r2 (davom etilmoqda)
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+[2026-09-09 12:07:19] --- takror 3/3 ---
+[2026-09-09 12:07:19] RUN   C2NARROW/r3  (noise=12000/s, connector=on)
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+[2026-09-09 12:07:19] FAIL  C2NARROW/r3 (davom etilmoqda)
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+[2026-09-09 12:07:20] RUN   C2WIDE/r3  (noise=12000/s, connector=on)
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+[2026-09-09 12:07:20] FAIL  C2WIDE/r3 (davom etilmoqda)
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+[2026-09-09 12:07:20] REDO_NOISE supplemental logging -> off
+[2026-09-09 12:07:20] === C2/b TUGADI ===
+[2026-09-09 12:42:28] === noise pool urug'lantirilmoqda (50000 satr) ===
+REDO_NOISE seeded with 50000 rows
+
+PL/SQL procedure successfully completed.
+
+[2026-09-09 12:42:32] === C2/seed TUGADI ===
+[2026-09-09 12:42:32] === kalibratsiya: yangilanish boshiga redo bayt ===
+[2026-09-09 12:42:34] redo bytes per noise update: 1561.34
+[2026-09-09 12:42:34]   level 0/s  ->  0.00 MB/s redo
+[2026-09-09 12:42:34]   level 1500/s  ->  2.23 MB/s redo
+[2026-09-09 12:42:34]   level 3000/s  ->  4.47 MB/s redo
+[2026-09-09 12:42:34]   level 6000/s  ->  8.93 MB/s redo
+[2026-09-09 12:42:34]   level 12000/s  ->  17.87 MB/s redo
+[2026-09-09 12:42:35] === C2/calibrate TUGADI ===
+[2026-09-09 12:42:35] === C2a: 5 daraja x {ON,OFF} x 3 takror ===
+[2026-09-09 12:42:35] --- takror 1/3 ---
+[2026-09-09 12:42:35] SKIP  C2N0OFF/r1
+[2026-09-09 12:42:35] SKIP  C2N0ON/r1
+[2026-09-09 12:42:35] SKIP  C2N1OFF/r1
+[2026-09-09 12:42:35] SKIP  C2N1ON/r1
+[2026-09-09 12:42:35] SKIP  C2N2OFF/r1
+[2026-09-09 12:42:35] SKIP  C2N2ON/r1
+[2026-09-09 12:42:35] RUN   C2N3OFF/r1  (noise=6000/s, connector=off)
+noise sessions killed: 0
+[2026-09-09 12:53:10] OK    C2N3OFF/r1
+noise sessions killed: 0
+[2026-09-09 12:53:10] RUN   C2N3ON/r1  (noise=6000/s, connector=on)
+noise sessions killed: 0
+[2026-09-09 13:03:55] OK    C2N3ON/r1
+noise sessions killed: 0
+[2026-09-09 13:03:55] RUN   C2N4OFF/r1  (noise=12000/s, connector=off)
+noise sessions killed: 0
+[2026-09-09 13:14:22] OK    C2N4OFF/r1
+noise sessions killed: 0
+[2026-09-09 13:14:22] RUN   C2N4ON/r1  (noise=12000/s, connector=on)
+noise sessions killed: 0
+[2026-09-09 13:19:38] OK    C2N4ON/r1
+could not kill 162: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 13:19:38] --- takror 2/3 ---
+[2026-09-09 13:19:38] RUN   C2N0OFF/r2  (noise=0/s, connector=off)
+noise sessions killed: 0
+[2026-09-09 13:30:13] OK    C2N0OFF/r2
+noise sessions killed: 0
+[2026-09-09 13:30:13] RUN   C2N0ON/r2  (noise=0/s, connector=on)
+noise sessions killed: 0
+[2026-09-09 13:35:41] OK    C2N0ON/r2
+noise sessions killed: 0
+[2026-09-09 13:35:42] RUN   C2N1OFF/r2  (noise=1500/s, connector=off)
+noise sessions killed: 0
+[2026-09-09 13:45:45] OK    C2N1OFF/r2
+noise sessions killed: 0
+[2026-09-09 13:45:46] RUN   C2N1ON/r2  (noise=1500/s, connector=on)
+noise sessions killed: 0
+[2026-09-09 13:50:57] OK    C2N1ON/r2
+could not kill 88: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 13:50:58] RUN   C2N2OFF/r2  (noise=3000/s, connector=off)
+noise sessions killed: 0
+[2026-09-09 14:00:55] OK    C2N2OFF/r2
+noise sessions killed: 0
+[2026-09-09 14:00:56] RUN   C2N2ON/r2  (noise=3000/s, connector=on)
+noise sessions killed: 0
+[2026-09-09 14:06:02] OK    C2N2ON/r2
+could not kill 177: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 14:06:02] RUN   C2N3OFF/r2  (noise=6000/s, connector=off)
+noise sessions killed: 0
+[2026-09-09 14:16:01] OK    C2N3OFF/r2
+noise sessions killed: 0
+[2026-09-09 14:16:01] RUN   C2N3ON/r2  (noise=6000/s, connector=on)
+noise sessions killed: 0
+[2026-09-09 14:21:35] OK    C2N3ON/r2
+could not kill 63: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 14:21:35] RUN   C2N4OFF/r2  (noise=12000/s, connector=off)
+noise sessions killed: 0
+[2026-09-09 14:32:12] OK    C2N4OFF/r2
+noise sessions killed: 0
+[2026-09-09 14:32:13] RUN   C2N4ON/r2  (noise=12000/s, connector=on)
+noise sessions killed: 0
+[2026-09-09 14:37:31] OK    C2N4ON/r2
+could not kill 21: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 14:37:31] --- takror 3/3 ---
+[2026-09-09 14:37:31] RUN   C2N0OFF/r3  (noise=0/s, connector=off)
+noise sessions killed: 0
+[2026-09-09 14:48:23] OK    C2N0OFF/r3
+noise sessions killed: 0
+[2026-09-09 14:48:24] RUN   C2N0ON/r3  (noise=0/s, connector=on)
+noise sessions killed: 0
+[2026-09-09 14:53:36] OK    C2N0ON/r3
+noise sessions killed: 0
+[2026-09-09 14:53:36] RUN   C2N1OFF/r3  (noise=1500/s, connector=off)
+noise sessions killed: 0
+[2026-09-09 15:04:43] OK    C2N1OFF/r3
+noise sessions killed: 0
+[2026-09-09 15:04:43] RUN   C2N1ON/r3  (noise=1500/s, connector=on)
+noise sessions killed: 0
+[2026-09-09 15:09:55] OK    C2N1ON/r3
+could not kill 232: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 15:09:55] RUN   C2N2OFF/r3  (noise=3000/s, connector=off)
+noise sessions killed: 0
+[2026-09-09 15:20:28] OK    C2N2OFF/r3
+noise sessions killed: 0
+[2026-09-09 15:20:28] RUN   C2N2ON/r3  (noise=3000/s, connector=on)
+noise sessions killed: 0
+[2026-09-09 15:26:04] OK    C2N2ON/r3
+could not kill 94: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 15:26:05] RUN   C2N3OFF/r3  (noise=6000/s, connector=off)
+noise sessions killed: 0
+[2026-09-09 15:36:34] OK    C2N3OFF/r3
+noise sessions killed: 0
+[2026-09-09 15:36:35] RUN   C2N3ON/r3  (noise=6000/s, connector=on)
+noise sessions killed: 0
+[2026-09-09 15:41:46] OK    C2N3ON/r3
+could not kill 90: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 15:41:46] RUN   C2N4OFF/r3  (noise=12000/s, connector=off)
+noise sessions killed: 0
+[2026-09-09 15:51:49] OK    C2N4OFF/r3
+noise sessions killed: 0
+[2026-09-09 15:51:50] RUN   C2N4ON/r3  (noise=12000/s, connector=on)
+noise sessions killed: 0
+[2026-09-09 15:56:58] OK    C2N4ON/r3
+could not kill 251: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 15:56:58] === C2/a TUGADI ===
+[2026-09-09 15:56:58] === C2b: qamrov kengligi, shovqin 12000/s da qat'iy, 3 takror ===
+[2026-09-09 15:56:58] REDO_NOISE supplemental logging -> on
+[2026-09-09 15:56:58] --- takror 1/3 ---
+[2026-09-09 15:56:58] RUN   C2NARROW/r1  (noise=12000/s, connector=on)
+noise sessions killed: 0
+[2026-09-09 16:02:12] OK    C2NARROW/r1
+could not kill 251: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 16:02:13] RUN   C2WIDE/r1  (noise=12000/s, connector=on)
+noise sessions killed: 0
+[2026-09-09 16:07:26] OK    C2WIDE/r1
+could not kill 251: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 16:07:26] --- takror 2/3 ---
+[2026-09-09 16:07:26] RUN   C2NARROW/r2  (noise=12000/s, connector=on)
+noise sessions killed: 0
+[2026-09-09 16:12:42] OK    C2NARROW/r2
+could not kill 251: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 16:12:42] RUN   C2WIDE/r2  (noise=12000/s, connector=on)
+noise sessions killed: 0
+[2026-09-09 16:23:29] OK    C2WIDE/r2
+noise sessions killed: 0
+[2026-09-09 16:23:29] --- takror 3/3 ---
+[2026-09-09 16:23:29] RUN   C2NARROW/r3  (noise=12000/s, connector=on)
+noise sessions killed: 0
+[2026-09-09 16:33:49] OK    C2NARROW/r3
+noise sessions killed: 0
+[2026-09-09 16:33:49] RUN   C2WIDE/r3  (noise=12000/s, connector=on)
+noise sessions killed: 0
+[2026-09-09 16:39:35] OK    C2WIDE/r3
+could not kill 62: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 16:39:36] REDO_NOISE supplemental logging -> off
+[2026-09-09 16:39:36] === C2/b TUGADI ===
+[2026-09-09 16:40:36] === kalibratsiya: yangilanish boshiga redo bayt ===
+[2026-09-09 16:40:37] redo bytes per noise update: 1146.42
+[2026-09-09 16:40:37]   level 0/s  ->  0.00 MB/s redo
+[2026-09-09 16:40:37]   level 1500/s  ->  1.64 MB/s redo
+[2026-09-09 16:40:37]   level 3000/s  ->  3.28 MB/s redo
+[2026-09-09 16:40:37]   level 6000/s  ->  6.56 MB/s redo
+[2026-09-09 16:40:37]   level 12000/s  ->  13.12 MB/s redo
+[2026-09-09 16:40:37] === C2/calibrate TUGADI ===
+[2026-09-09 20:20:27] === C2a: 5 daraja x {ON,OFF} x 3 takror ===
+[2026-09-09 20:20:27] --- takror 1/3 ---
+[2026-09-09 20:20:27] RUN   C2N0OFF/r1  (noise=0/s, connector=off)
+noise sessions killed: 0
+[2026-09-09 20:25:44] OK    C2N0OFF/r1
+noise sessions killed: 0
+[2026-09-09 20:25:44] RUN   C2N0ON/r1  (noise=0/s, connector=on)
+noise sessions killed: 0
+[2026-09-09 20:31:04] OK    C2N0ON/r1
+noise sessions killed: 0
+[2026-09-09 20:31:04] RUN   C2N1OFF/r1  (noise=1500/s, connector=off)
+noise sessions killed: 0
+[2026-09-09 20:36:07] OK    C2N1OFF/r1
+could not kill 233: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 20:36:07] RUN   C2N1ON/r1  (noise=1500/s, connector=on)
+noise sessions killed: 0
+[2026-09-09 20:41:20] OK    C2N1ON/r1
+could not kill 233: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 20:41:20] RUN   C2N2OFF/r1  (noise=3000/s, connector=off)
+noise sessions killed: 0
+[2026-09-09 20:46:23] OK    C2N2OFF/r1
+could not kill 223: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 20:46:23] RUN   C2N2ON/r1  (noise=3000/s, connector=on)
+noise sessions killed: 0
+[2026-09-09 20:51:36] OK    C2N2ON/r1
+could not kill 223: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 20:51:36] RUN   C2N3OFF/r1  (noise=6000/s, connector=off)
+noise sessions killed: 0
+[2026-09-09 20:56:40] OK    C2N3OFF/r1
+could not kill 223: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 20:56:40] RUN   C2N3ON/r1  (noise=6000/s, connector=on)
+noise sessions killed: 0
+[2026-09-09 21:02:04] OK    C2N3ON/r1
+could not kill 21: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 21:02:05] RUN   C2N4OFF/r1  (noise=12000/s, connector=off)
+noise sessions killed: 0
+[2026-09-09 21:07:11] OK    C2N4OFF/r1
+could not kill 235: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 21:07:11] RUN   C2N4ON/r1  (noise=12000/s, connector=on)
+could not kill 235: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 21:12:27] OK    C2N4ON/r1
+could not kill 235: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 21:12:28] --- takror 2/3 ---
+[2026-09-09 21:12:28] RUN   C2N0OFF/r2  (noise=0/s, connector=off)
+noise sessions killed: 0
+[2026-09-09 21:17:32] OK    C2N0OFF/r2
+noise sessions killed: 0
+[2026-09-09 21:17:33] RUN   C2N0ON/r2  (noise=0/s, connector=on)
+noise sessions killed: 0
+[2026-09-09 21:22:53] OK    C2N0ON/r2
+noise sessions killed: 0
+[2026-09-09 21:22:54] RUN   C2N1OFF/r2  (noise=1500/s, connector=off)
+noise sessions killed: 0
+[2026-09-09 21:27:57] OK    C2N1OFF/r2
+could not kill 241: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 21:27:57] RUN   C2N1ON/r2  (noise=1500/s, connector=on)
+noise sessions killed: 0
+[2026-09-09 21:33:10] OK    C2N1ON/r2
+could not kill 241: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 21:33:10] RUN   C2N2OFF/r2  (noise=3000/s, connector=off)
+noise sessions killed: 0
+[2026-09-09 21:38:13] OK    C2N2OFF/r2
+could not kill 241: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 21:38:13] RUN   C2N2ON/r2  (noise=3000/s, connector=on)
+noise sessions killed: 0
+[2026-09-09 21:43:26] OK    C2N2ON/r2
+could not kill 241: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 21:43:27] RUN   C2N3OFF/r2  (noise=6000/s, connector=off)
+noise sessions killed: 0
+[2026-09-09 21:48:30] OK    C2N3OFF/r2
+could not kill 241: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 21:48:30] RUN   C2N3ON/r2  (noise=6000/s, connector=on)
+noise sessions killed: 0
+[2026-09-09 21:53:45] OK    C2N3ON/r2
+could not kill 241: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 21:53:45] RUN   C2N4OFF/r2  (noise=12000/s, connector=off)
+noise sessions killed: 0
+[2026-09-09 21:58:55] OK    C2N4OFF/r2
+could not kill 241: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-09 21:58:55] RUN   C2N4ON/r2  (noise=12000/s, connector=on)
+noise sessions killed: 0
+[2026-09-10 09:17:48] === C2a: 5 daraja x {ON,OFF} x 3 takror ===
+[2026-09-10 09:17:48] --- takror 1/3 ---
+[2026-09-10 09:17:48] SKIP  C2N0OFF/r1
+[2026-09-10 09:17:48] SKIP  C2N0ON/r1
+[2026-09-10 09:17:48] SKIP  C2N1OFF/r1
+[2026-09-10 09:17:48] SKIP  C2N1ON/r1
+[2026-09-10 09:17:48] SKIP  C2N2OFF/r1
+[2026-09-10 09:17:48] SKIP  C2N2ON/r1
+[2026-09-10 09:17:48] SKIP  C2N3OFF/r1
+[2026-09-10 09:17:48] SKIP  C2N3ON/r1
+[2026-09-10 09:17:48] SKIP  C2N4OFF/r1
+[2026-09-10 09:17:49] SKIP  C2N4ON/r1
+[2026-09-10 09:17:49] --- takror 2/3 ---
+[2026-09-10 09:17:49] SKIP  C2N0OFF/r2
+[2026-09-10 09:17:49] SKIP  C2N0ON/r2
+[2026-09-10 09:17:49] SKIP  C2N1OFF/r2
+[2026-09-10 09:17:49] SKIP  C2N1ON/r2
+[2026-09-10 09:17:49] SKIP  C2N2OFF/r2
+[2026-09-10 09:17:49] SKIP  C2N2ON/r2
+[2026-09-10 09:17:49] SKIP  C2N3OFF/r2
+[2026-09-10 09:17:49] SKIP  C2N3ON/r2
+[2026-09-10 09:17:49] SKIP  C2N4OFF/r2
+[2026-09-10 09:17:49] RUN   C2N4ON/r2  (noise=12000/s, connector=on)
+noise sessions killed: 0
+[2026-09-10 09:24:15] OK    C2N4ON/r2
+could not kill 61: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-10 09:24:15] --- takror 3/3 ---
+[2026-09-10 09:24:15] RUN   C2N0OFF/r3  (noise=0/s, connector=off)
+noise sessions killed: 0
+[2026-09-10 09:29:17] OK    C2N0OFF/r3
+noise sessions killed: 0
+[2026-09-10 09:29:17] RUN   C2N0ON/r3  (noise=0/s, connector=on)
+noise sessions killed: 0
+[2026-09-10 09:34:26] OK    C2N0ON/r3
+noise sessions killed: 0
+[2026-09-10 09:34:26] RUN   C2N1OFF/r3  (noise=1500/s, connector=off)
+noise sessions killed: 0
+[2026-09-10 09:39:26] OK    C2N1OFF/r3
+could not kill 74: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-10 09:39:27] RUN   C2N1ON/r3  (noise=1500/s, connector=on)
+noise sessions killed: 0
+[2026-09-10 09:44:43] OK    C2N1ON/r3
+could not kill 62: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-10 09:44:43] RUN   C2N2OFF/r3  (noise=3000/s, connector=off)
+noise sessions killed: 0
+[2026-09-10 09:49:41] OK    C2N2OFF/r3
+could not kill 232: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-10 09:49:42] RUN   C2N2ON/r3  (noise=3000/s, connector=on)
+noise sessions killed: 0
+[2026-09-10 09:54:49] OK    C2N2ON/r3
+could not kill 232: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-10 09:54:49] RUN   C2N3OFF/r3  (noise=6000/s, connector=off)
+noise sessions killed: 0
+[2026-09-10 09:59:48] OK    C2N3OFF/r3
+could not kill 232: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-10 09:59:49] RUN   C2N3ON/r3  (noise=6000/s, connector=on)
+noise sessions killed: 0
+[2026-09-10 10:06:50] OK    C2N3ON/r3
+could not kill 232: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-10 10:06:50] RUN   C2N4OFF/r3  (noise=12000/s, connector=off)
+noise sessions killed: 0
+[2026-09-10 10:12:01] OK    C2N4OFF/r3
+could not kill 232: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-10 10:12:02] RUN   C2N4ON/r3  (noise=12000/s, connector=on)
+noise sessions killed: 0
+[2026-09-10 10:18:00] OK    C2N4ON/r3
+could not kill 232: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-10 10:18:00] === C2/a TUGADI ===
+[2026-09-10 10:18:00] === C2b: qamrov kengligi, shovqin 12000/s da qat'iy, 3 takror ===
+[2026-09-10 10:18:01] REDO_NOISE supplemental logging -> on
+[2026-09-10 10:18:01] --- takror 1/3 ---
+[2026-09-10 10:18:01] RUN   C2NARROW/r1  (noise=12000/s, connector=on)
+noise sessions killed: 0
+[2026-09-10 10:23:21] OK    C2NARROW/r1
+could not kill 253: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-10 10:23:21] RUN   C2WIDE/r1  (noise=12000/s, connector=on)
+noise sessions killed: 0
+[2026-09-10 10:29:16] OK    C2WIDE/r1
+could not kill 253: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-10 10:29:16] --- takror 2/3 ---
+[2026-09-10 10:29:16] RUN   C2NARROW/r2  (noise=12000/s, connector=on)
+could not kill 253: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-10 10:34:40] OK    C2NARROW/r2
+could not kill 253: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-10 10:34:40] RUN   C2WIDE/r2  (noise=12000/s, connector=on)
+noise sessions killed: 0
+[2026-09-10 10:40:26] OK    C2WIDE/r2
+could not kill 253: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-10 10:40:26] --- takror 3/3 ---
+[2026-09-10 10:40:26] RUN   C2NARROW/r3  (noise=12000/s, connector=on)
+noise sessions killed: 0
+[2026-09-10 10:46:17] OK    C2NARROW/r3
+could not kill 253: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-10 10:46:18] RUN   C2WIDE/r3  (noise=12000/s, connector=on)
+noise sessions killed: 0
+[2026-09-10 10:52:03] OK    C2WIDE/r3
+could not kill 253: ORA-00031: session marked for kill
+noise sessions killed: 0
+[2026-09-10 10:52:03] REDO_NOISE supplemental logging -> off
+[2026-09-10 10:52:03] === C2/b TUGADI ===

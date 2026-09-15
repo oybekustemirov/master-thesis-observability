@@ -1,0 +1,1121 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kredit jarayoni — vaqt tahlili</title>
+<style>
+  :root {
+    --ground:#F1F3F5; --surface:#FFFFFF; --ink:#101317; --ink-2:#52514E; --ink-3:#85847F;
+    --rule:#DDE1E6; --rule-2:#B8BEC6; --accent:#1F5C8B; --accent-wash:#E8EFF5;
+    --bad:#A3302B; --good:#2C6A4E;
+    /* Kim vaqtni ushlab turibdi */
+    --c-queue:#eb6834;      /* bank navbati */
+    --c-work:#101317;       /* xodim ishlayapti */
+    --c-customer:#2a78d6;   /* mijoz */
+    --c-external:#1baf7a;   /* tashqi tomon */
+    --c-committee:#eda100;  /* qo'mita */
+    --c-auto:#9AA1A9;       /* avtomatik */
+    --f-display: ui-serif, Georgia, "Times New Roman", serif;
+    --f-body: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --f-mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ground:#121417; --surface:#1A1C20; --ink:#F2F4F6; --ink-2:#B9BDC4; --ink-3:#868B93;
+      --rule:#2C3138; --rule-2:#3E444C; --accent:#6FAAD9; --accent-wash:#1B2732;
+      --bad:#E07B73; --good:#6DBE96;
+      --c-queue:#d95926; --c-work:#F2F4F6; --c-customer:#3987e5;
+      --c-external:#199e70; --c-committee:#c98500; --c-auto:#767C84;
+    }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--ground); color:var(--ink); font-family:var(--f-body);
+         font-size:15px; line-height:1.55; -webkit-font-smoothing:antialiased; }
+  .wrap { max-width:78rem; margin:0 auto; padding:1.6rem 1.2rem 5rem; }
+
+  header.top { border-bottom:2px solid var(--ink); padding-bottom:1rem; margin-bottom:1.2rem; }
+  .eyebrow { font-family:var(--f-mono); font-size:.66rem; letter-spacing:.14em;
+             text-transform:uppercase; color:var(--ink-3); margin-bottom:.5rem; }
+  h1 { font-family:var(--f-display); font-weight:600; font-size:clamp(1.5rem,3.2vw,2.1rem);
+       margin:0 0 .3rem; letter-spacing:-.01em; }
+  .sub { color:var(--ink-2); margin:0; max-width:70ch; font-size:.95rem; }
+
+  nav.tabs { display:flex; gap:.25rem; flex-wrap:wrap; margin:1.2rem 0 1.4rem;
+             border-bottom:1px solid var(--rule); }
+  nav.tabs button { appearance:none; border:0; background:none; cursor:pointer;
+    font-family:var(--f-body); font-size:.92rem; font-weight:600; color:var(--ink-3);
+    padding:.6rem .9rem; border-bottom:2px solid transparent; margin-bottom:-1px; }
+  nav.tabs button:hover { color:var(--ink); }
+  nav.tabs button[aria-selected="true"] { color:var(--accent); border-bottom-color:var(--accent); }
+  nav.tabs button:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+  .panel[hidden] { display:none; }
+
+  .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(11rem,1fr)); gap:1px;
+           background:var(--rule); border:1px solid var(--rule); margin-bottom:1.4rem; }
+  .card { background:var(--surface); padding:.9rem 1rem 1rem; }
+  .card .lbl { font-family:var(--f-mono); font-size:.62rem; letter-spacing:.12em;
+               text-transform:uppercase; color:var(--ink-3); display:block; margin-bottom:.35rem; }
+  .card .fig { font-family:var(--f-display); font-size:1.9rem; line-height:1; display:block;
+               font-variant-numeric:tabular-nums; }
+  .card .hint { font-size:.78rem; color:var(--ink-2); margin:.4rem 0 0; }
+  .card.hero .fig { color:var(--bad); }
+
+  .box { background:var(--surface); border:1px solid var(--rule); padding:1.1rem 1.2rem;
+         margin-bottom:1.2rem; }
+  .box h2 { font-family:var(--f-display); font-size:1.15rem; margin:0 0 .2rem; font-weight:600; }
+  .box .note { color:var(--ink-2); font-size:.88rem; margin:0 0 1rem; max-width:72ch; }
+
+  .bar { display:flex; height:30px; border-radius:4px; overflow:hidden; background:var(--rule);
+         margin:.5rem 0 .3rem; }
+  .bar > span { display:block; }
+  .barkey { display:flex; flex-wrap:wrap; gap:.35rem 1.1rem; font-size:.8rem; color:var(--ink-2);
+            margin-top:.5rem; }
+  .barkey i { width:10px; height:10px; border-radius:2px; display:inline-block;
+              margin-right:.35rem; vertical-align:-1px; }
+
+  table { border-collapse:collapse; width:100%; font-size:.86rem; }
+  th, td { text-align:left; padding:.45rem .7rem; border-bottom:1px solid var(--rule);
+           vertical-align:baseline; }
+  thead th { font-family:var(--f-mono); font-size:.62rem; letter-spacing:.09em;
+             text-transform:uppercase; color:var(--ink-2); font-weight:500;
+             border-bottom:1px solid var(--rule-2); white-space:nowrap; }
+  tbody tr:last-child td { border-bottom:none; }
+  td.num, th.num { text-align:right; font-variant-numeric:tabular-nums; font-family:var(--f-mono); }
+  tbody tr.click { cursor:pointer; }
+  tbody tr.click:hover td { background:var(--accent-wash); }
+  .scroll { overflow-x:auto; }
+
+  .pill { display:inline-block; font-size:.72rem; padding:.1rem .45rem; border-radius:3px;
+          border:1px solid currentColor; white-space:nowrap; font-weight:600; }
+  .pill.ok { color:var(--good); } .pill.no { color:var(--bad); }
+  .pill.wip { color:var(--accent); } .pill.rw { color:var(--c-committee); }
+
+  .toolbar { display:flex; gap:.6rem; flex-wrap:wrap; align-items:center; margin-bottom:.9rem; }
+  input[type=search] { font:inherit; padding:.45rem .7rem; border:1px solid var(--rule-2);
+    border-radius:4px; background:var(--surface); color:var(--ink); min-width:16rem; }
+  input[type=search]:focus-visible { outline:2px solid var(--accent); outline-offset:1px; }
+
+  /* Ariza yo'li */
+  .step { display:grid; grid-template-columns:13rem 1fr auto; gap:.8rem; align-items:center;
+          padding:.55rem 0; border-bottom:1px solid var(--rule); }
+  .step:last-child { border-bottom:0; }
+  .step .nm { font-weight:600; font-size:.88rem; }
+  .step .nm small { display:block; font-weight:400; color:var(--ink-3); font-size:.75rem; }
+  .step .track { background:var(--rule); border-radius:4px; height:26px; position:relative;
+                 display:flex; overflow:hidden; }
+  .step .track span { display:block; }
+  .step .dur { font-family:var(--f-mono); font-size:.82rem; white-space:nowrap;
+               font-variant-numeric:tabular-nums; }
+  .who { font-size:.75rem; color:var(--ink-3); font-family:var(--f-mono); }
+
+  details { border:1px solid var(--rule); background:var(--surface); padding:.7rem .9rem;
+            margin-bottom:.6rem; border-radius:4px; }
+  details summary { cursor:pointer; font-weight:600; font-size:.9rem; }
+  details p, details li { color:var(--ink-2); font-size:.88rem; max-width:74ch; }
+  code { font-family:var(--f-mono); font-size:.85em; background:var(--accent-wash);
+         padding:.06em .3em; border-radius:2px; }
+  .muted { color:var(--ink-3); }
+  .err { color:var(--bad); font-size:.9rem; }
+  footer { margin-top:2.4rem; border-top:1px solid var(--rule-2); padding-top:.8rem;
+           font-family:var(--f-mono); font-size:.68rem; color:var(--ink-3);
+           display:flex; gap:.4rem 1.4rem; flex-wrap:wrap; }
+
+  /* Til almashtirgich / language switcher */
+  .topbar { display:flex; justify-content:space-between; align-items:flex-start; gap:1rem;
+            flex-wrap:wrap; }
+  .langbar { display:flex; border:1px solid var(--rule-2); border-radius:4px; overflow:hidden;
+             flex-shrink:0; }
+  .langbar button { appearance:none; border:0; background:var(--surface); cursor:pointer;
+    font-family:var(--f-mono); font-size:.7rem; letter-spacing:.08em; font-weight:600;
+    color:var(--ink-2); padding:.35rem .6rem; border-right:1px solid var(--rule); }
+  .langbar button:last-child { border-right:0; }
+  .langbar button:hover { color:var(--ink); }
+  .langbar button[aria-pressed="true"] { background:var(--accent); color:#fff; }
+  .langbar button:focus-visible { outline:2px solid var(--accent); outline-offset:1px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <div class="topbar">
+    <div>
+      <div class="eyebrow" data-i18n="eyebrow"></div>
+      <h1 data-i18n="h1"></h1>
+    </div>
+    <div class="langbar" role="group" data-i18n-label="langAria">
+      <button type="button" data-lang="uz" aria-pressed="true">UZ</button>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+      <button type="button" data-lang="ru" aria-pressed="false">RU</button>
+    </div>
+  </div>
+  <p class="sub" data-i18n-html="sub"></p>
+</header>
+
+<nav class="tabs" role="tablist">
+  <button role="tab" aria-selected="true"  data-tab="umumiy"  data-i18n="tab.overview"></button>
+  <button role="tab" aria-selected="false" data-tab="arizalar" data-i18n="tab.apps"></button>
+  <button role="tab" aria-selected="false" data-tab="ariza"    data-i18n="tab.case"></button>
+  <button role="tab" aria-selected="false" data-tab="xodim"    data-i18n="tab.staff"></button>
+  <button role="tab" aria-selected="false" data-tab="hujjat"   data-i18n="tab.docs"></button>
+</nav>
+
+<section class="panel" id="p-umumiy">
+  <div class="cards" id="kpi"></div>
+
+  <div class="box">
+    <h2 data-i18n="own.h2"></h2>
+    <p class="note" data-i18n="own.note"></p>
+    <div class="bar" id="own-bar"></div>
+    <div class="barkey" id="own-key"></div>
+    <div class="scroll" style="margin-top:1rem"><table id="own-tbl"></table></div>
+  </div>
+
+  <div class="box">
+    <h2 data-i18n="stage.h2"></h2>
+    <p class="note" data-i18n-html="stage.note"></p>
+    <div class="scroll"><table id="stage-tbl"></table></div>
+  </div>
+
+  <div class="box">
+    <h2 data-i18n="out.h2"></h2>
+    <div class="scroll"><table id="out-tbl"></table></div>
+  </div>
+</section>
+
+<section class="panel" id="p-arizalar" hidden>
+  <div class="box">
+    <h2 data-i18n="apps.h2"></h2>
+    <p class="note" data-i18n="apps.note"></p>
+    <div class="toolbar">
+      <input type="search" id="q" data-i18n-ph="apps.search">
+      <span class="muted" id="app-count"></span>
+    </div>
+    <div class="scroll"><table id="app-tbl"></table></div>
+  </div>
+</section>
+
+<section class="panel" id="p-ariza" hidden>
+  <div class="box">
+    <h2 id="app-title" data-i18n="case.h2"></h2>
+    <p class="note" id="app-meta" data-i18n="case.pick"></p>
+    <div id="app-steps"></div>
+    <div class="barkey" id="step-key" style="margin-top:1rem"></div>
+  </div>
+</section>
+
+<section class="panel" id="p-hujjat" hidden>
+  <div class="box">
+    <h2 data-i18n="docs.h2"></h2>
+    <p class="note" data-i18n="docs.note"></p>
+
+    <details open>
+      <summary data-i18n="d1.sum"></summary>
+      <div data-i18n-html="d1.body"></div>
+    </details>
+
+    <details>
+      <summary data-i18n="d2.sum"></summary>
+      <div data-i18n-html="d2.body"></div>
+    </details>
+
+    <details>
+      <summary data-i18n="d3.sum"></summary>
+      <div class="scroll"><table id="stage-def"></table></div>
+      <div data-i18n-html="d3.body" style="margin-top:.8rem"></div>
+    </details>
+
+    <details>
+      <summary data-i18n="d4.sum"></summary>
+      <div data-i18n-html="d4.body"></div>
+    </details>
+
+    <details>
+      <summary data-i18n="d5.sum"></summary>
+      <div data-i18n-html="d5.body"></div>
+    </details>
+
+    <details>
+      <summary data-i18n="d6.sum"></summary>
+      <div data-i18n-html="d6.body"></div>
+    </details>
+  </div>
+</section>
+
+<section class="panel" id="p-xodim" hidden>
+  <div class="cards" id="staff-kpi"></div>
+
+  <div class="box">
+    <h2 data-i18n="staff.roles.h2"></h2>
+    <p class="note" data-i18n-html="staff.roles.note"></p>
+    <div class="scroll"><table id="role-tbl"></table></div>
+  </div>
+
+  <div class="box">
+    <h2 data-i18n="staff.spread.h2"></h2>
+    <p class="note" data-i18n-html="staff.spread.note"></p>
+    <div class="scroll"><table id="spread-tbl"></table></div>
+  </div>
+
+  <div class="box">
+    <h2 data-i18n="staff.list.h2"></h2>
+    <p class="note" data-i18n="staff.list.note"></p>
+    <div class="toolbar">
+      <select id="role-filter"></select>
+      <span class="muted" id="staff-count"></span>
+    </div>
+    <div class="scroll"><table id="staff-tbl"></table></div>
+    <div id="staff-cases" style="margin-top:1.2rem"></div>
+  </div>
+
+  <div class="box">
+    <h2 data-i18n="staff.method.h2"></h2>
+    <p class="note" data-i18n="staff.method.note"></p>
+    <details><summary data-i18n="m1.sum"></summary><div data-i18n-html="m1.body"></div></details>
+    <details><summary data-i18n="m2.sum"></summary><div data-i18n-html="m2.body"></div></details>
+    <details><summary data-i18n="m3.sum"></summary><div data-i18n-html="m3.body"></div></details>
+    <details><summary data-i18n="m4.sum"></summary><div data-i18n-html="m4.body"></div></details>
+  </div>
+</section>
+
+<footer>
+  <span data-i18n="foot.source"></span>
+  <span id="foot-count"></span>
+  <span data-i18n="foot.thesis"></span>
+</footer>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════════ i18n ═══
+   Uchta til: o'zbek (asosiy), ingliz, rus. Sahifadagi matn ham, BAZADAN kelgan
+   nomlar ham tarjima qilinadi — aks holda tilni almashtirganda jadvallar
+   o'zbekcha qolib ketardi. Bazadagi nomlar barqaror KOD bo'yicha tarjima
+   qilinadi (STAGE_CODE), o'zbekcha matn bo'yicha emas: bosqich nomi bazada
+   o'zgarsa, tarjima buzilmaydi.
+
+   Three languages: Uzbek (primary), English, Russian. Both the page chrome and
+   the values coming FROM THE DATABASE are translated — otherwise switching
+   language would leave every table in Uzbek. Database values are keyed on the
+   stable STAGE_CODE rather than on the Uzbek text.                          */
+
+const T = {
+  uz: {
+    langAria:"Tilni tanlash", locale:"uz-UZ",
+    eyebrow:"Kredit jarayoni · hodisalar asosidagi kuzatuvchanlik",
+    h1:"Kredit arizasida vaqt qayerga ketmoqda",
+    sub:"Har bir raqam ariza bosqichlari o'rtasidagi vaqt farqidan olingan. Hech biri taxmin qilinmagan — manbasi <strong>Hujjatlar</strong> bo'limida bosqichma-bosqich tushuntirilgan.",
+    "tab.overview":"Umumiy manzara", "tab.apps":"Arizalar",
+    "tab.case":"Ariza yo'li", "tab.docs":"Hujjatlar",
+
+    "kpi.work":"Xodim ishlagan vaqt", "kpi.work.hint":"Qolgan vaqt kutishga ketadi",
+    "kpi.queue":"Bank navbati", "kpi.queue.hint":"Ariza kelgan, lekin hali ochilmagan",
+    "kpi.apps":"Arizalar", "kpi.apps.hint":"Jami kuzatilgan ariza",
+    "kpi.events":"Hodisalar", "kpi.events.hint":"Bosqich o'tishlari jurnalda",
+
+    "own.h2":"Vaqt kimning qo'lida",
+    "own.note":"Bank faqat o'z navbatini va xodimlarining ishini boshqaradi. Qolgan vaqt mijozda, tashqi tashkilotda yoki qo'mita kalendarida — ular boshqa yechim talab qiladi.",
+    "own.col.who":"Kim ushlab turibdi", "own.col.total":"Jami vaqt", "own.col.share":"Ulush",
+
+    "stage.h2":"Bosqichlar bo'yicha",
+    "stage.note":"Jami sarflangan soat bo'yicha tartiblangan. <strong>Navbat</strong> — ariza kutib turgan, lekin hech kim unga tegmayotgan vaqt. <strong>Ish</strong> — xodim aynan shu ariza bilan shug'ullangan vaqt.",
+    "stage.col.stage":"Bosqich", "stage.col.waiting":"Kim kutilmoqda",
+    "stage.col.transitions":"O'tishlar", "stage.col.queue":"Navbat (o'rta)",
+    "stage.col.work":"Ish (o'rta)", "stage.col.total":"Jami vaqt",
+
+    "out.h2":"Yakunlar", "out.col.outcome":"Yakun", "out.col.apps":"Arizalar",
+    "out.col.median":"O'rtacha davomiylik",
+
+    "apps.h2":"Arizalar ro'yxati",
+    "apps.note":"Qatorni bosing — o'sha arizaning to'liq yo'li ochiladi.",
+    "apps.search":"Ariza yoki mijoz raqami bo'yicha qidirish…",
+    "apps.count":"{n} ta ariza",
+    "apps.col.ref":"Ariza", "apps.col.customer":"Mijoz", "apps.col.product":"Mahsulot",
+    "apps.col.amount":"Summa", "apps.col.branch":"Filial", "apps.col.status":"Holat",
+    "apps.col.duration":"Davomiylik", "apps.col.steps":"Qadamlar",
+    "apps.rework":"{n} qayta",
+
+    "case.h2":"Ariza yo'li", "case.pick":"Arizalar bo'limidan bittasini tanlang.",
+    "case.title":"Ariza {ref}", "case.loading":"Yuklanmoqda…",
+    "case.none":"Bu ariza uchun hodisa topilmadi.", "case.error":"Xato: {msg}",
+    "case.meta":"Jami <strong>{total}</strong> · shundan bank xodimi ishlagan vaqt <strong>{work}</strong> ({pct} %) · {n} ta bosqich",
+    "case.rework":"qayta ko'rib chiqish",
+    "seg.queue":"Navbatda kutdi", "seg.work":"Xodim ishladi", "seg.wait":"Kutish",
+    "key.queue":"Bank navbati — hech kim tegmayapti", "key.work":"Xodim ishlayapti",
+    "key.customer":"Mijozni kutish", "key.external":"Tashqi tashkilot",
+    "key.committee":"Qo'mita yig'ilishi", "key.auto":"Avtomatik",
+
+    "docs.h2":"Har bir raqam qayerdan kelmoqda",
+    "docs.note":"Sahifada hisoblangan narsa yo'q: barcha qiymatlar bazadagi hodisalar jurnalidan olinadi. Quyida har bir tushuncha va uning manbasi.",
+    "d1.sum":"Hodisalar jurnali nima",
+    "d1.body":"<p>Ariza bir bosqichdan ikkinchisiga o'tganda <code>CREDIT_STAGE_EVENT</code> jadvaliga bitta qator yoziladi. Unda uchta vaqt bor:</p><ul><li><code>ENTERED_AT</code> — ariza shu bosqichga <strong>kirgan</strong> payt</li><li><code>PICKED_UP_AT</code> — xodim uni <strong>qo'liga olgan</strong> payt (avtomatik yoki tashqi bosqichlarda bo'sh)</li><li><code>COMPLETED_AT</code> — bosqich <strong>tugagan</strong> payt</li></ul><p>Bu qator arizaning holati o'zgarishi bilan <strong>bitta tranzaksiyada</strong> yoziladi. Agar ular alohida yozilsa, jurnal bo'shliq oladi va u aynan \"ariza bosqichni o'tkazib yubordi\"dek ko'rinadi — oldingi bosqichning davomiyligi esa jimgina oshib ketadi.</p>",
+    "d2.sum":"Navbat va ish qanday ajratiladi",
+    "d2.body":"<p>Faqat <strong>odam ishlaydigan</strong> bosqichda bu ikkisi ajraladi:</p><ul><li><strong>Navbat</strong> = <code>PICKED_UP_AT − ENTERED_AT</code> — ariza kelgan, lekin hali hech kim ochmagan</li><li><strong>Ish</strong> = <code>COMPLETED_AT − PICKED_UP_AT</code> — xodim aynan shu ariza bilan shug'ullangan</li></ul><p>Mijoz, tashqi tashkilot va qo'mita bosqichlarida <strong>ish vaqti yo'q</strong> — u yerda bank umuman ishlamaydi, balki boshqa tomonni kutadi. Ularni \"ish\" deb hisoblash eng oson yo'l bilan hisobotni teskari qilib qo'yadi.</p>",
+    "d3.sum":"Bosqich turlari",
+    "d3.body":"<p>Bosqichlar <code>CREDIT_STAGE</code> jadvalida saqlanadi, kodda emas. Boshqa bankning jarayoni boshqacha bo'lsa — jadvaldagi qatorlar almashtiriladi, dastur qayta yozilmaydi.</p>",
+    "def.col.stage":"Bosqich", "def.col.code":"Kod", "def.col.type":"Kim kutilmoqda",
+    "def.col.sla":"Maqsadli muddat",
+    "d4.sum":"Qo'mita nega alohida turda",
+    "d4.body":"<p>Kredit qo'mitasi haftada belgilangan kunlarda yig'iladi. Seshanba soat 14:30 da tayyor bo'lgan ariza payshanbagacha kutadi — <strong>hech kim band bo'lgani uchun emas</strong>, qo'mita xonada bo'lmagani uchun.</p><p>Buni oddiy navbat deb hisoblash xato bo'lardi: navbat xodim qo'shilsa qisqaradi, kalendar esa yangi yig'ilish belgilanmaguncha <strong>umuman qimirlamaydi</strong>. Ikki xil muammo, ikki xil yechim.</p>",
+    "d5.sum":"Bu ma'lumot qayerdan — haqiqiy bankdanmi?",
+    "d5.body":"<p><strong>Yo'q.</strong> Ma'lumot sintetik va <strong>shaxsiy ma'lumot umuman yo'q</strong>: mijozlar <code>CUST-000000123</code> ko'rinishidagi havolalar, xodimlar esa identifikator, rol va filialdan iborat. Haqiqiy bank ma'lumoti xavfsizlik sababli ishlatilmaydi.</p><p>Jarayon tuzilishi — bosqichlar va ularning tartibi — haqiqiy O'zbekiston bank amaliyotiga asoslangan. Davomiyliklar esa berilgan oraliqlarga moslangan farazlar (anderrayter 1–5 bank kuni, garov baholash 1–3 kun, notarius 1 kun).</p>",
+    "d6.sum":"Haqiqiy bankka qanday ulanadi",
+    "d6.body":"<ol><li><strong>Bosqichlarni almashtirish.</strong> <code>CREDIT_STAGE</code> jadvaliga bankning haqiqiy bosqichlari yoziladi — kod o'zgarmaydi.</li><li><strong>Hodisa manbasini ulash.</strong> Uchta yo'l bor va ular o'lchangan: ilova o'zi yozadi, baza triggeri yozadi, yoki Debezium tranzaksiya jurnalidan o'qiydi. Oxirgisi mavjud tizimga <strong>umuman tegmaydi</strong>.</li><li><strong>Tekshirish.</strong> Hodisalar soni bazadagi holat o'zgarishlari soniga teng ekani solishtiriladi. Bu qadam tashlab ketilsa, quvur hodisa yo'qotayotganini hech kim sezmaydi.</li></ol>",
+
+    "foot.source":"Manba: CREDIT_STAGE_EVENT", "foot.thesis":"ITPU magistrlik dissertatsiyasi",
+    "foot.count":"{a} ariza · {e} hodisa",
+    "load.error":"Ma'lumotni yuklab bo'lmadi: {msg}. Ilova ishlayaptimi?",
+    "u.min":"daqiqa", "u.hour":"soat", "u.day":"kun", "u.days":"kun",
+  },
+
+  en: {
+    langAria:"Choose language", locale:"en-GB",
+    eyebrow:"Credit process · event-based observability",
+    h1:"Where the time goes in a credit application",
+    sub:"Every figure is the difference between two stage timestamps. Nothing is estimated — the <strong>Documentation</strong> tab explains each one, step by step.",
+    "tab.overview":"Overview", "tab.apps":"Applications",
+    "tab.case":"Case path", "tab.docs":"Documentation",
+
+    "kpi.work":"Staff working time", "kpi.work.hint":"The rest of the time is waiting",
+    "kpi.queue":"Bank queue", "kpi.queue.hint":"Arrived, but nobody has opened it yet",
+    "kpi.apps":"Applications", "kpi.apps.hint":"Cases observed in total",
+    "kpi.events":"Events", "kpi.events.hint":"Stage transitions in the log",
+
+    "own.h2":"Whose time it is",
+    "own.note":"A bank controls only its own queue and the work of its staff. The rest of the clock runs on the customer, on an outside organisation, or on the committee calendar — each needs a different remedy.",
+    "own.col.who":"Who is holding it", "own.col.total":"Total time", "own.col.share":"Share",
+
+    "stage.h2":"By stage",
+    "stage.note":"Ordered by total hours spent. <strong>Queue</strong> is time the case waits with nobody touching it. <strong>Work</strong> is time a member of staff spends on this case.",
+    "stage.col.stage":"Stage", "stage.col.waiting":"Waiting on",
+    "stage.col.transitions":"Transitions", "stage.col.queue":"Queue (median)",
+    "stage.col.work":"Work (median)", "stage.col.total":"Total time",
+
+    "out.h2":"Outcomes", "out.col.outcome":"Outcome", "out.col.apps":"Applications",
+    "out.col.median":"Median duration",
+
+    "apps.h2":"Applications",
+    "apps.note":"Click a row to open that application's full path.",
+    "apps.search":"Search by application or customer reference…",
+    "apps.count":"{n} applications",
+    "apps.col.ref":"Application", "apps.col.customer":"Customer", "apps.col.product":"Product",
+    "apps.col.amount":"Amount", "apps.col.branch":"Branch", "apps.col.status":"Status",
+    "apps.col.duration":"Duration", "apps.col.steps":"Steps",
+    "apps.rework":"{n} rework",
+
+    "case.h2":"Case path", "case.pick":"Pick an application from the Applications tab.",
+    "case.title":"Application {ref}", "case.loading":"Loading…",
+    "case.none":"No events found for this application.", "case.error":"Error: {msg}",
+    "case.meta":"Total <strong>{total}</strong> · of which bank staff worked <strong>{work}</strong> ({pct} %) · {n} stages",
+    "case.rework":"rework",
+    "seg.queue":"Waited in the queue", "seg.work":"Staff worked", "seg.wait":"Waiting",
+    "key.queue":"Bank queue — nobody touching it", "key.work":"Staff working",
+    "key.customer":"Waiting on the customer", "key.external":"External organisation",
+    "key.committee":"Committee sitting", "key.auto":"Automated",
+
+    "docs.h2":"Where every number comes from",
+    "docs.note":"Nothing on this page is estimated: every value is read from the event log in the database. Below is each concept and its source.",
+    "d1.sum":"What the event log is",
+    "d1.body":"<p>When an application moves from one stage to the next, a single row is written to <code>CREDIT_STAGE_EVENT</code>. It carries three timestamps:</p><ul><li><code>ENTERED_AT</code> — when the case <strong>entered</strong> the stage</li><li><code>PICKED_UP_AT</code> — when a member of staff <strong>picked it up</strong> (empty for automated and external stages)</li><li><code>COMPLETED_AT</code> — when the stage <strong>finished</strong></li></ul><p>That row is written in <strong>the same transaction</strong> as the change of application state. Written separately, the log develops gaps — and a gap looks exactly like \"the case skipped a stage\", while the previous stage's duration is silently inflated.</p>",
+    "d2.sum":"How queue is separated from work",
+    "d2.body":"<p>The two separate only on a stage where <strong>a person acts</strong>:</p><ul><li><strong>Queue</strong> = <code>PICKED_UP_AT − ENTERED_AT</code> — the case has arrived, but nobody has opened it</li><li><strong>Work</strong> = <code>COMPLETED_AT − PICKED_UP_AT</code> — a member of staff is on this case</li></ul><p>Customer, external and committee stages carry <strong>no work time</strong> at all — there the bank is not working, it is waiting on somebody else. Counting those as \"work\" is the easiest possible way to produce a report that says the opposite of the truth.</p>",
+    "d3.sum":"Stage types",
+    "d3.body":"<p>Stages live in the <code>CREDIT_STAGE</code> table, not in code. A bank with a different process replaces the rows; the program is not rewritten.</p>",
+    "def.col.stage":"Stage", "def.col.code":"Code", "def.col.type":"Waiting on",
+    "def.col.sla":"Target",
+    "d4.sum":"Why the committee is a type of its own",
+    "d4.body":"<p>The credit committee sits on fixed days of the week. A case ready at 14:30 on Tuesday waits until Thursday — <strong>not because anyone is busy</strong>, but because the committee is not in the room.</p><p>Treating that as an ordinary queue would be wrong: a queue shortens when you add staff, whereas a calendar <strong>does not move at all</strong> until somebody schedules another sitting. Two different problems, two different remedies.</p>",
+    "d5.sum":"Where does this data come from — a real bank?",
+    "d5.body":"<p><strong>No.</strong> The data is synthetic and contains <strong>no personal data whatsoever</strong>: customers are references of the form <code>CUST-000000123</code>, and staff are an identifier, a role and a branch. Real bank data is not used, on information-security grounds.</p><p>The structure of the process — the stages and their order — follows actual Uzbek banking practice. The durations are assumptions calibrated to the stated ranges (underwriting 1–5 bank days, collateral valuation 1–3 days, notary 1 day).</p>",
+    "d6.sum":"How it connects to a real bank",
+    "d6.body":"<ol><li><strong>Replace the stages.</strong> The bank's real stages are written into <code>CREDIT_STAGE</code> — the code does not change.</li><li><strong>Connect an event source.</strong> There are three routes, and all three were measured: the application writes them itself, a database trigger writes them, or Debezium reads them from the transaction log. The last one <strong>does not touch the existing system at all</strong>.</li><li><strong>Reconcile.</strong> The event count is compared against the number of state changes in the database. Skip this step and nobody notices that the pipeline is losing events.</li></ol>",
+
+    "foot.source":"Source: CREDIT_STAGE_EVENT", "foot.thesis":"ITPU master's thesis",
+    "foot.count":"{a} applications · {e} events",
+    "load.error":"Could not load the data: {msg}. Is the application running?",
+    "u.min":"min", "u.hour":"h", "u.day":"d", "u.days":"d",
+  },
+
+  ru: {
+    langAria:"Выбор языка", locale:"ru-RU",
+    eyebrow:"Кредитный процесс · наблюдаемость на основе событий",
+    h1:"Куда уходит время в кредитной заявке",
+    sub:"Каждая цифра — это разница между двумя отметками времени этапов. Ничего не оценивается приблизительно: раздел <strong>Документация</strong> объясняет каждую из них по шагам.",
+    "tab.overview":"Общая картина", "tab.apps":"Заявки",
+    "tab.case":"Путь заявки", "tab.docs":"Документация",
+
+    "kpi.work":"Время работы сотрудника", "kpi.work.hint":"Остальное время уходит на ожидание",
+    "kpi.queue":"Очередь банка", "kpi.queue.hint":"Заявка поступила, но её ещё не открыли",
+    "kpi.apps":"Заявки", "kpi.apps.hint":"Всего наблюдаемых заявок",
+    "kpi.events":"События", "kpi.events.hint":"Переходы этапов в журнале",
+
+    "own.h2":"У кого находится время",
+    "own.note":"Банк управляет только своей очередью и работой своих сотрудников. Остальное время — у клиента, у внешней организации или в календаре комитета; каждое требует своего решения.",
+    "own.col.who":"Кто удерживает", "own.col.total":"Всего времени", "own.col.share":"Доля",
+
+    "stage.h2":"По этапам",
+    "stage.note":"Отсортировано по суммарным часам. <strong>Очередь</strong> — заявка ждёт, но ею никто не занимается. <strong>Работа</strong> — сотрудник занимается именно этой заявкой.",
+    "stage.col.stage":"Этап", "stage.col.waiting":"Кого ждём",
+    "stage.col.transitions":"Переходы", "stage.col.queue":"Очередь (медиана)",
+    "stage.col.work":"Работа (медиана)", "stage.col.total":"Всего времени",
+
+    "out.h2":"Итоги", "out.col.outcome":"Итог", "out.col.apps":"Заявки",
+    "out.col.median":"Медианная длительность",
+
+    "apps.h2":"Список заявок",
+    "apps.note":"Нажмите на строку — откроется полный путь этой заявки.",
+    "apps.search":"Поиск по номеру заявки или клиента…",
+    "apps.count":"заявок: {n}",
+    "apps.col.ref":"Заявка", "apps.col.customer":"Клиент", "apps.col.product":"Продукт",
+    "apps.col.amount":"Сумма", "apps.col.branch":"Филиал", "apps.col.status":"Статус",
+    "apps.col.duration":"Длительность", "apps.col.steps":"Шаги",
+    "apps.rework":"{n} повторно",
+
+    "case.h2":"Путь заявки", "case.pick":"Выберите заявку в разделе «Заявки».",
+    "case.title":"Заявка {ref}", "case.loading":"Загрузка…",
+    "case.none":"Для этой заявки события не найдены.", "case.error":"Ошибка: {msg}",
+    "case.meta":"Всего <strong>{total}</strong> · из них сотрудник банка работал <strong>{work}</strong> ({pct} %) · этапов: {n}",
+    "case.rework":"повторное рассмотрение",
+    "seg.queue":"Ждала в очереди", "seg.work":"Работал сотрудник", "seg.wait":"Ожидание",
+    "key.queue":"Очередь банка — никто не занимается", "key.work":"Сотрудник работает",
+    "key.customer":"Ожидание клиента", "key.external":"Внешняя организация",
+    "key.committee":"Заседание комитета", "key.auto":"Автоматически",
+
+    "docs.h2":"Откуда берётся каждое число",
+    "docs.note":"На этой странице ничего не вычисляется «на глаз»: все значения берутся из журнала событий в базе. Ниже — каждое понятие и его источник.",
+    "d1.sum":"Что такое журнал событий",
+    "d1.body":"<p>Когда заявка переходит с одного этапа на другой, в таблицу <code>CREDIT_STAGE_EVENT</code> записывается одна строка. В ней три отметки времени:</p><ul><li><code>ENTERED_AT</code> — когда заявка <strong>вошла</strong> в этап</li><li><code>PICKED_UP_AT</code> — когда сотрудник <strong>взял её в работу</strong> (пусто для автоматических и внешних этапов)</li><li><code>COMPLETED_AT</code> — когда этап <strong>завершился</strong></li></ul><p>Эта строка пишется <strong>в одной транзакции</strong> с изменением состояния заявки. Если писать их отдельно, в журнале появляются пропуски — а пропуск выглядит ровно как «заявка пропустила этап», при этом длительность предыдущего этапа незаметно увеличивается.</p>",
+    "d2.sum":"Как очередь отделяется от работы",
+    "d2.body":"<p>Эти два времени разделяются только на этапе, где <strong>действует человек</strong>:</p><ul><li><strong>Очередь</strong> = <code>PICKED_UP_AT − ENTERED_AT</code> — заявка поступила, но её ещё никто не открыл</li><li><strong>Работа</strong> = <code>COMPLETED_AT − PICKED_UP_AT</code> — сотрудник занимается именно этой заявкой</li></ul><p>На этапах клиента, внешней организации и комитета <strong>рабочего времени нет вовсе</strong> — там банк не работает, а ждёт другую сторону. Считать это «работой» — самый простой способ получить отчёт, утверждающий обратное истине.</p>",
+    "d3.sum":"Типы этапов",
+    "d3.body":"<p>Этапы хранятся в таблице <code>CREDIT_STAGE</code>, а не в коде. Если у другого банка процесс иной — заменяются строки таблицы, программа не переписывается.</p>",
+    "def.col.stage":"Этап", "def.col.code":"Код", "def.col.type":"Кого ждём",
+    "def.col.sla":"Целевой срок",
+    "d4.sum":"Почему комитет — отдельный тип",
+    "d4.body":"<p>Кредитный комитет собирается в установленные дни недели. Заявка, готовая во вторник в 14:30, ждёт до четверга — <strong>не потому, что кто-то занят</strong>, а потому, что комитета нет в зале.</p><p>Считать это обычной очередью было бы ошибкой: очередь сокращается, если добавить сотрудников, а календарь <strong>не сдвинется вовсе</strong>, пока не назначат новое заседание. Две разные проблемы — два разных решения.</p>",
+    "d5.sum":"Откуда эти данные — из реального банка?",
+    "d5.body":"<p><strong>Нет.</strong> Данные синтетические и <strong>не содержат персональных данных вообще</strong>: клиенты — это ссылки вида <code>CUST-000000123</code>, а сотрудники — идентификатор, роль и филиал. Реальные банковские данные не используются по соображениям информационной безопасности.</p><p>Структура процесса — этапы и их порядок — основана на реальной банковской практике Узбекистана. Длительности же — это допущения, откалиброванные по заданным диапазонам (андеррайтинг 1–5 банковских дней, оценка залога 1–3 дня, нотариус 1 день).</p>",
+    "d6.sum":"Как подключается к реальному банку",
+    "d6.body":"<ol><li><strong>Заменить этапы.</strong> В таблицу <code>CREDIT_STAGE</code> записываются реальные этапы банка — код не меняется.</li><li><strong>Подключить источник событий.</strong> Есть три пути, и все три измерены: приложение пишет само, пишет триггер базы, либо Debezium читает из журнала транзакций. Последний <strong>вообще не трогает существующую систему</strong>.</li><li><strong>Сверка.</strong> Количество событий сравнивается с количеством изменений состояния в базе. Если пропустить этот шаг, никто не заметит, что конвейер теряет события.</li></ol>",
+
+    "foot.source":"Источник: CREDIT_STAGE_EVENT", "foot.thesis":"Магистерская диссертация ITPU",
+    "foot.count":"заявок: {a} · событий: {e}",
+    "load.error":"Не удалось загрузить данные: {msg}. Приложение запущено?",
+    "u.min":"мин", "u.hour":"ч", "u.day":"дн", "u.days":"дн",
+  },
+};
+
+/* Bazadan keladigan nomlar / values that arrive from the database. */
+const V = {
+  stage: {
+    ARIZA_KIRITISH:   ["Ariza kiritish","Application intake","Ввод заявки"],
+    HUJJAT_KUTISH:    ["Hujjatlar mijozdan kutilmoqda","Waiting for customer documents","Ожидание документов от клиента"],
+    TASHQI_TEKSHIRUV: ["Skoring / KBI / MIB / Soliq tekshiruvi","Scoring / credit bureau / MIA / tax checks","Скоринг / КБИ / МВД / налоговая проверка"],
+    GAROV_BAHOLASH:   ["Garov mulkini baholash","Collateral valuation","Оценка залогового имущества"],
+    ANDERRAYTER:      ["Anderrayter tekshiruvi","Underwriting review","Проверка андеррайтера"],
+    QOMITA_KUTISH:    ["Kredit qo'mitasi yig'ilishini kutish","Waiting for the credit committee to sit","Ожидание заседания кредитного комитета"],
+    QOMITA_QARORI:    ["Kredit qo'mitasi qarori","Credit committee decision","Решение кредитного комитета"],
+    SUGURTA_NOTARIUS: ["Sug'urta va notarial taqiq","Insurance and notarial encumbrance","Страхование и нотариальный запрет"],
+    SHARTNOMA:        ["Shartnoma va kafillik imzolash","Contract and guarantee signing","Подписание договора и поручительства"],
+    AJRATISH:         ["Kredit mablag'ini ajratish","Disbursement","Выдача кредитных средств"],
+    MONITORING:       ["Maqsadli ishlatilish monitoringi","Target-use monitoring","Мониторинг целевого использования"],
+    RAD_ETILDI:       ["Rad etildi","Rejected","Отказано"],
+    QAYTARILDI:       ["Qo'mita qayta ko'rib chiqishga qaytardi","Returned by the committee for rework","Комитет вернул на доработку"],
+    BEKOR_QILINDI:    ["Mijoz voz kechdi","Withdrawn by the customer","Клиент отказался"],
+  },
+  type: {
+    HUMAN:     ["Bank xodimi","Bank staff","Сотрудник банка"],
+    CUSTOMER:  ["Mijoz","Customer","Клиент"],
+    EXTERNAL:  ["Tashqi tashkilot","External organisation","Внешняя организация"],
+    COMMITTEE: ["Qo'mita","Committee","Комитет"],
+    AUTOMATED: ["Avtomatik","Automated","Автоматически"],
+  },
+  /* OWNER bazadan o'zbekcha keladi, shuning uchun kalit ham o'zbekcha. */
+  owner: {
+    "Bank navbati":           ["Bank navbati","Bank queue","Очередь банка"],
+    "Bank xodimi ishlayapti": ["Bank xodimi ishlayapti","Bank staff working","Работа сотрудника банка"],
+    "Mijozni kutish":         ["Mijozni kutish","Waiting on the customer","Ожидание клиента"],
+    "Tashqi tomon":           ["Tashqi tomon","External party","Внешняя сторона"],
+    "Qo'mita kalendari":      ["Qo'mita kalendari","Committee calendar","Календарь комитета"],
+    "Avtomatik":              ["Avtomatik","Automated","Автоматически"],
+  },
+  outcome: {
+    AJRATILDI:     ["Ajratildi","Disbursed","Выдан"],
+    RAD_ETILDI:    ["Rad etildi","Rejected","Отказано"],
+    BEKOR_QILINDI: ["Mijoz voz kechdi","Withdrawn","Отказ клиента"],
+    JARAYONDA:     ["Jarayonda","In progress","В процессе"],
+    AJRATISH:      ["Ajratish bosqichida","At disbursement","На стадии выдачи"],
+  },
+  product: {
+    IPOTEKA:    ["Ipoteka","Mortgage","Ипотека"],
+    MIKROQARZ:  ["Mikroqarz","Microloan","Микрозайм"],
+    BIZNES:     ["Biznes","Business","Бизнес"],
+    KORPORATIV: ["Korporativ","Corporate","Корпоративный"],
+  },
+};
+
+/* ── Xodimlar bo'limi lug'ati. Alohida obyekt: mavjud bloklarni buzmaydi. ── */
+const TS = {
+  uz: {
+    "tab.staff":"Xodimlar",
+    "staff.kpi.work":"Xodimlar ishlagan vaqt", "staff.kpi.work.hint":"Barcha xodimlar, jami",
+    "staff.kpi.queue":"Navbatda o'tgan vaqt", "staff.kpi.queue.hint":"Ariza kelgan, lekin hali ochilmagan",
+    "staff.kpi.ratio":"Navbat / ish", "staff.kpi.ratio.hint":"Har bir ish soatiga shuncha navbat soati",
+    "staff.kpi.people":"Xodimlar", "staff.kpi.people.hint":"Arizaga tegishli ish bajarganlar",
+
+    "staff.roles.h2":"Rollar bo'yicha",
+    "staff.roles.note":"<strong>Ish</strong> — xodim aynan shu ariza bilan shug'ullangan vaqt. <strong>Navbat</strong> — ariza shu rolga kelgan, lekin hali hech kim ochmagan vaqt. Navbat xodimning ishlashiga emas, rolning sig'imiga bog'liq, shuning uchun u alohida turadi va hech kimga yozilmaydi.",
+    "staff.col.role":"Rol", "staff.col.people":"Xodim", "staff.col.apps":"Ariza",
+    "staff.col.transitions":"O'tish", "staff.col.workh":"Ish", "staff.col.queueh":"Navbat",
+    "staff.col.medwork":"Ish (o'rta)", "staff.col.medqueue":"Navbat (o'rta)", "staff.col.cost":"Tannarx",
+
+    "staff.spread.h2":"Rol ichidagi tarqoqlik",
+    "staff.spread.note":"Bir rol ichidagi eng tez va eng sekin xodimning o'rtacha ishi. Taqqoslash faqat <strong>bir rol ichida</strong> qilinadi: anderrayter bilan operatsion xodimni solishtirish odamni emas, lavozimni o'lchaydi.",
+    "staff.col.fastest":"Eng tez", "staff.col.slowest":"Eng sekin",
+    "staff.col.ratio":"Nisbat", "staff.col.gap":"Farq", "staff.col.queuecmp":"Shu roldagi navbat",
+
+    "staff.list.h2":"Xodimlar ro'yxati",
+    "staff.list.note":"Qatorni bosing — o'sha xodim qaysi arizaga qancha vaqt sarflagani ochiladi.",
+    "staff.col.id":"Xodim", "staff.col.branch":"Filial",
+    "staff.col.perapp":"Ariza boshiga", "staff.col.rework":"Qayta ishlash",
+    "staff.filter.all":"Barcha rollar", "staff.count":"{n} ta xodim",
+    "staff.cases.h2":"{id} — arizalar bo'yicha sarflangan vaqt",
+    "staff.cases.none":"Bu xodim uchun yozuv topilmadi.",
+    "staff.cases.more":"Eng so'nggi {n} ta ko'rsatilmoqda.",
+    "staff.col.app":"Ariza", "staff.col.stage":"Bosqich", "staff.col.when":"Tugagan",
+
+    "staff.method.h2":"Bu hisobot qanday hisoblanadi",
+    "staff.method.note":"Quyidagi to'rtta qaror bankda amalda ishlayotgan hisobotdan farq qiladi. Har biri o'sha hisobot javob bera olmaydigan savolga tegishli.",
+    "m1.sum":"1. Davomiylik hodisaning o'zida yoziladi",
+    "m1.body":"<p>Amaldagi hisobot hodisalarni guruhlab, bitta <code>LAST_EVENT_TIME</code> ustunini chiqaradi; ichkarida hisoblangan <code>user_op_begin</code> va <code>user_op_end</code> yakuniy tanlovda tashlab yuboriladi. Shu sababli davomiylikni keyinchalik ketma-ket qatorlarni ayirib tiklash kerak bo'ladi.</p><p>Aynan shu ayirish yo'qolgan hodisani jimgina yutib yuboradi: qator yo'qolsa, ayirma kattalashadi va natija baribir to'g'ridek ko'rinadi. Bu yerda oraliq hodisaning o'zida turadi — davomiylik <strong>tiklanmaydi, o'qiladi</strong>.</p>",
+    "m2.sum":"2. Navbat ishdan ajratiladi va xodimga yozilmaydi",
+    "m2.body":"<p>Ariza umumiy navbatda turgan vaqt — rolning sig'imi haqidagi ma'lumot, uni oxirida ochgan xodimning ishlashi haqida emas. Ikkalasi yonma-yon ko'rsatiladi, lekin <strong>hech qachon qo'shilmaydi</strong>.</p><p>Qo'shilsa, ta'minot muammosi xodimga qo'yilgan ayblovga aylanadi: anderrayter bosqichi 27 soat davom etadi, shundan xodim ishlagani 1.9 soat.</p>",
+    "m3.sum":"3. Kim ko'rsatilsa, xarajat ham o'shanga yoziladi",
+    "m3.body":"<p>Amaldagi hisobot xodim nomini <code>NVL(prev_user_id, modified_by)</code> dan oladi, lekin narxni faqat <code>modified_by</code> bo'yicha hisoblaydi. Bu ikkisi har xil bo'lganda amalning xarajati qatorda ko'rsatilgan xodimdan <strong>boshqasiga</strong> tushadi.</p><p>Bu yerda ikkalasi ham <code>ACTOR_ID</code> dan olinadi.</p>",
+    "m4.sum":"4. Noma'lum tannarx noma'lumligicha qoladi",
+    "m4.body":"<p>Amaldagi hisobot maosh topilmasa <code>NVL(ROUND(salary_user_min), 1000)</code> bilan 1000 raqamini qo'yadi — o'lchangan va to'qilgan qiymat bir ustunda aralashadi va ularni ajratish imkoni qolmaydi.</p><p>Bu yerda tannarx <code>CREDIT_ROLE_COST</code> jadvalidan olinadi. Ish soatlari (8 × 21 = 168) va qo'shimcha xarajat koeffitsiyenti ham o'sha jadvalda — ifoda ichida emas. Roli jadvalda bo'lmasa, natija <strong>—</strong> bo'ladi.</p>",
+  },
+
+  en: {
+    "tab.staff":"Staff",
+    "staff.kpi.work":"Staff working time", "staff.kpi.work.hint":"All employees, combined",
+    "staff.kpi.queue":"Time spent in queues", "staff.kpi.queue.hint":"Arrived, but nobody had opened it",
+    "staff.kpi.ratio":"Queue / work", "staff.kpi.ratio.hint":"Hours of queue per hour of work",
+    "staff.kpi.people":"Employees", "staff.kpi.people.hint":"People who did work on a case",
+
+    "staff.roles.h2":"By role",
+    "staff.roles.note":"<strong>Work</strong> is time a member of staff spends on this case. <strong>Queue</strong> is time the case waits in that role with nobody touching it. Queue is a property of the role's capacity rather than of anyone's performance, so it is kept separate and charged to nobody.",
+    "staff.col.role":"Role", "staff.col.people":"Staff", "staff.col.apps":"Cases",
+    "staff.col.transitions":"Transitions", "staff.col.workh":"Work", "staff.col.queueh":"Queue",
+    "staff.col.medwork":"Work (median)", "staff.col.medqueue":"Queue (median)", "staff.col.cost":"Cost",
+
+    "staff.spread.h2":"Spread within a role",
+    "staff.spread.note":"The median work of the fastest and the slowest member of each role. Comparison is made <strong>within a role only</strong>: ranking an underwriter against an operations clerk measures the job, not the person.",
+    "staff.col.fastest":"Fastest", "staff.col.slowest":"Slowest",
+    "staff.col.ratio":"Ratio", "staff.col.gap":"Gap", "staff.col.queuecmp":"Queue in that role",
+
+    "staff.list.h2":"Employees",
+    "staff.list.note":"Click a row to see how long that employee spent on each application.",
+    "staff.col.id":"Employee", "staff.col.branch":"Branch",
+    "staff.col.perapp":"Per case", "staff.col.rework":"Rework",
+    "staff.filter.all":"All roles", "staff.count":"{n} employees",
+    "staff.cases.h2":"{id} — time spent per application",
+    "staff.cases.none":"No records found for this employee.",
+    "staff.cases.more":"Showing the {n} most recent.",
+    "staff.col.app":"Application", "staff.col.stage":"Stage", "staff.col.when":"Completed",
+
+    "staff.method.h2":"How this report is computed",
+    "staff.method.note":"The four decisions below differ from the report a bank already runs. Each one concerns a question that report cannot answer.",
+    "m1.sum":"1. Duration is carried on the event itself",
+    "m1.body":"<p>The existing report groups its events and projects a single <code>LAST_EVENT_TIME</code>; the <code>user_op_begin</code> and <code>user_op_end</code> computed in an inner block are dropped from the final projection. Duration therefore has to be reconstructed downstream by subtracting consecutive rows.</p><p>That subtraction is exactly what absorbs a missing event: lose a row and the difference simply grows, while the result still looks correct. Here the interval sits on the event, so a duration is <strong>read, not inferred</strong>.</p>",
+    "m2.sum":"2. Queue is separated from work and not charged to the employee",
+    "m2.body":"<p>Time a case sits in a shared queue is information about the role's capacity, not about the performance of whoever eventually opened it. The two are shown side by side and <strong>never summed</strong>.</p><p>Summed, a staffing problem becomes an accusation: the underwriting stage takes 27 hours, of which 1.9 is an underwriter working.</p>",
+    "m3.sum":"3. The person charged is the person shown",
+    "m3.body":"<p>The existing report takes the employee name from <code>NVL(prev_user_id, modified_by)</code> but prices every action from <code>modified_by</code> alone. When those differ, the cost of an action lands on <strong>a different employee</strong> than the row displays.</p><p>Here both come from <code>ACTOR_ID</code>.</p>",
+    "m4.sum":"4. An unknown cost stays unknown",
+    "m4.body":"<p>The existing report substitutes the literal 1000 via <code>NVL(ROUND(salary_user_min), 1000)</code> when a salary is missing, mixing measured and invented values in one column with nothing to tell them apart.</p><p>Here cost comes from <code>CREDIT_ROLE_COST</code>. The working month (8 × 21 = 168 hours) and the overhead factor live in that table too, not inside an expression. A role with no row yields <strong>—</strong>.</p>",
+  },
+
+  ru: {
+    "tab.staff":"Сотрудники",
+    "staff.kpi.work":"Рабочее время сотрудников", "staff.kpi.work.hint":"Все сотрудники суммарно",
+    "staff.kpi.queue":"Время в очередях", "staff.kpi.queue.hint":"Заявка поступила, но её не открыли",
+    "staff.kpi.ratio":"Очередь / работа", "staff.kpi.ratio.hint":"Часов очереди на час работы",
+    "staff.kpi.people":"Сотрудники", "staff.kpi.people.hint":"Те, кто выполнял работу по заявке",
+
+    "staff.roles.h2":"По ролям",
+    "staff.roles.note":"<strong>Работа</strong> — время, которое сотрудник тратит именно на эту заявку. <strong>Очередь</strong> — время, когда заявка поступила в эту роль, но ею ещё никто не занялся. Очередь зависит от ёмкости роли, а не от работы сотрудника, поэтому она показана отдельно и никому не записывается.",
+    "staff.col.role":"Роль", "staff.col.people":"Сотрудников", "staff.col.apps":"Заявок",
+    "staff.col.transitions":"Переходов", "staff.col.workh":"Работа", "staff.col.queueh":"Очередь",
+    "staff.col.medwork":"Работа (медиана)", "staff.col.medqueue":"Очередь (медиана)", "staff.col.cost":"Стоимость",
+
+    "staff.spread.h2":"Разброс внутри роли",
+    "staff.spread.note":"Медианная работа самого быстрого и самого медленного сотрудника в каждой роли. Сравнение проводится <strong>только внутри роли</strong>: сопоставлять андеррайтера с операционным сотрудником — значит измерять должность, а не человека.",
+    "staff.col.fastest":"Самый быстрый", "staff.col.slowest":"Самый медленный",
+    "staff.col.ratio":"Отношение", "staff.col.gap":"Разница", "staff.col.queuecmp":"Очередь в этой роли",
+
+    "staff.list.h2":"Список сотрудников",
+    "staff.list.note":"Нажмите на строку — откроется, сколько времени этот сотрудник потратил на каждую заявку.",
+    "staff.col.id":"Сотрудник", "staff.col.branch":"Филиал",
+    "staff.col.perapp":"На заявку", "staff.col.rework":"Повторная работа",
+    "staff.filter.all":"Все роли", "staff.count":"сотрудников: {n}",
+    "staff.cases.h2":"{id} — время по заявкам",
+    "staff.cases.none":"Записи для этого сотрудника не найдены.",
+    "staff.cases.more":"Показаны последние {n}.",
+    "staff.col.app":"Заявка", "staff.col.stage":"Этап", "staff.col.when":"Завершено",
+
+    "staff.method.h2":"Как считается этот отчёт",
+    "staff.method.note":"Четыре решения ниже отличаются от отчёта, который банк уже выполняет. Каждое касается вопроса, на который тот отчёт ответить не может.",
+    "m1.sum":"1. Длительность хранится в самом событии",
+    "m1.body":"<p>Действующий отчёт группирует события и выводит одну колонку <code>LAST_EVENT_TIME</code>; вычисленные внутри <code>user_op_begin</code> и <code>user_op_end</code> в финальную выборку не попадают. Поэтому длительность приходится восстанавливать позже, вычитая соседние строки.</p><p>Именно это вычитание бесшумно поглощает потерянное событие: строка пропала — разность просто выросла, а результат по-прежнему выглядит правильным. Здесь интервал находится в самом событии, то есть длительность <strong>читается, а не восстанавливается</strong>.</p>",
+    "m2.sum":"2. Очередь отделена от работы и не записывается сотруднику",
+    "m2.body":"<p>Время, которое заявка провела в общей очереди, говорит о ёмкости роли, а не о работе того, кто её в итоге открыл. Обе величины показаны рядом и <strong>никогда не складываются</strong>.</p><p>Сложенные, они превращают проблему штата в обвинение сотрудника: этап андеррайтинга длится 27 часов, из которых работа андеррайтера — 1,9 часа.</p>",
+    "m3.sum":"3. Кто показан, тому и относится стоимость",
+    "m3.body":"<p>Действующий отчёт берёт имя сотрудника из <code>NVL(prev_user_id, modified_by)</code>, но стоимость считает только по <code>modified_by</code>. Когда эти значения различаются, стоимость действия достаётся <strong>другому сотруднику</strong>, а не тому, что показан в строке.</p><p>Здесь оба значения берутся из <code>ACTOR_ID</code>.</p>",
+    "m4.sum":"4. Неизвестная стоимость остаётся неизвестной",
+    "m4.body":"<p>Действующий отчёт при отсутствии зарплаты подставляет литерал 1000 через <code>NVL(ROUND(salary_user_min), 1000)</code>, смешивая измеренные и выдуманные значения в одной колонке без всякой возможности их различить.</p><p>Здесь стоимость берётся из <code>CREDIT_ROLE_COST</code>. Рабочий месяц (8 × 21 = 168 часов) и коэффициент накладных расходов тоже лежат в этой таблице, а не внутри выражения. Роль без строки даёт <strong>—</strong>.</p>",
+  },
+};
+for (const l in TS) Object.assign(T[l], TS[l]);
+
+V.role = {
+  ANDERRAYTER:        ["Anderrayter","Underwriter","Андеррайтер"],
+  KREDIT_MUTAXASSISI: ["Kredit mutaxassisi","Credit specialist","Кредитный специалист"],
+  OPERATSION_XODIM:   ["Operatsion xodim","Operations clerk","Операционный сотрудник"],
+  QOMITA_AZOSI:       ["Qo'mita a'zosi","Committee member","Член комитета"],
+};
+
+const LANG_ORDER = ["uz", "en", "ru"];
+let LANG = localStorage.getItem("lang") || "uz";
+if (!T[LANG]) LANG = "uz";
+
+/** Sahifa matni. {n} kabi o'rinbosarlar almashtiriladi. */
+function t(key, vars) {
+  let s = (T[LANG] && T[LANG][key]) !== undefined ? T[LANG][key] : (T.uz[key] !== undefined ? T.uz[key] : key);
+  if (vars) for (const k in vars) s = s.split("{" + k + "}").join(vars[k]);
+  return s;
+}
+/** Bazadan kelgan qiymat: V.stage / V.type / V.owner / V.outcome / V.product. */
+function tv(group, key) {
+  const row = V[group] && V[group][key];
+  return row ? row[LANG_ORDER.indexOf(LANG)] : key;
+}
+
+/** Soat -> "3 kun 4 soat" / "3 d 4 h" / "3 дн 4 ч". Raqamdan keyin birlik YOZILADI:
+    "20.0s" ko'rinishi soniya deb o'qilib, hisobotni 24 barobar kichik ko'rsatgan edi. */
+function dur(hours) {
+  const h = Number(hours) || 0;
+  if (h < 1)  return Math.round(h * 60) + " " + t("u.min");
+  if (h < 24) return h.toFixed(1).replace(/\.0$/, "") + " " + t("u.hour");
+  const d = Math.floor(h / 24), r = Math.round(h % 24);
+  return r ? `${d} ${t("u.day")} ${r} ${t("u.hour")}` : `${d} ${t("u.days")}`;
+}
+const num   = v => (Number(v) || 0).toLocaleString(t("locale"));
+const money = v => (Number(v) || 0).toLocaleString(t("locale"), {maximumFractionDigits:0});
+
+const OWNER_COLOUR = {
+  "Bank navbati":"--c-queue", "Bank xodimi ishlayapti":"--c-work",
+  "Mijozni kutish":"--c-customer", "Tashqi tomon":"--c-external",
+  "Qo'mita kalendari":"--c-committee", "Avtomatik":"--c-auto",
+};
+const TYPE_COLOUR = { HUMAN:"--c-queue", CUSTOMER:"--c-customer",
+  EXTERNAL:"--c-external", COMMITTEE:"--c-committee", AUTOMATED:"--c-auto" };
+
+async function get(url) {
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(url + " → " + r.status);
+  return r.json();
+}
+const el = (tag, c, txt) => { const e = document.createElement(tag);
+  if (c) e.className = c; if (txt !== undefined) e.textContent = txt; return e; };
+
+/* Olingan ma'lumot saqlanadi: til almashganda qayta so'ralmaydi, qayta chiziladi. */
+const DATA = { summary:null, apps:null, defs:null, steps:null, ref:null, query:"",
+               staff:null, staffId:null, staffCases:null };
+
+/* ------------------------------------------------------------- tabs ---- */
+document.querySelectorAll("nav.tabs button").forEach(b => {
+  b.addEventListener("click", () => {
+    document.querySelectorAll("nav.tabs button").forEach(x =>
+      x.setAttribute("aria-selected", String(x === b)));
+    document.querySelectorAll(".panel").forEach(p =>
+      p.hidden = p.id !== "p-" + b.dataset.tab);
+  });
+});
+const openTab = name =>
+  document.querySelector(`nav.tabs button[data-tab="${name}"]`).click();
+
+/* ------------------------------------------------------------- lang ---- */
+function applyStatic() {
+  document.documentElement.lang = LANG;
+  document.title = t("h1");
+  document.querySelectorAll("[data-i18n]").forEach(e =>
+    e.textContent = t(e.dataset.i18n));
+  document.querySelectorAll("[data-i18n-html]").forEach(e =>
+    e.innerHTML = t(e.dataset.i18nHtml));
+  document.querySelectorAll("[data-i18n-ph]").forEach(e =>
+    e.placeholder = t(e.dataset.i18nPh));
+  document.querySelectorAll("[data-i18n-label]").forEach(e =>
+    e.setAttribute("aria-label", t(e.dataset.i18nLabel)));
+  document.querySelectorAll(".langbar button").forEach(b =>
+    b.setAttribute("aria-pressed", String(b.dataset.lang === LANG)));
+}
+document.querySelectorAll(".langbar button").forEach(b => {
+  b.addEventListener("click", () => {
+    LANG = b.dataset.lang;
+    localStorage.setItem("lang", LANG);
+    applyStatic();
+    renderAll();
+  });
+});
+
+/* ----------------------------------------------------------- render ---- */
+function table(id, head, rows, numeric = []) {
+  const tbl = document.getElementById(id);
+  tbl.innerHTML = "";
+  const thead = el("thead"), tr = el("tr");
+  head.forEach((h, i) => tr.append(el("th", numeric.includes(i) ? "num" : null, h)));
+  thead.append(tr); tbl.append(thead);
+  const tb = el("tbody");
+  rows.forEach(r => {
+    const row = el("tr");
+    r.forEach((c, i) => {
+      const td = el("td", numeric.includes(i) ? "num" : null);
+      if (c instanceof Node) td.append(c); else td.textContent = c;
+      row.append(td);
+    });
+    tb.append(row);
+  });
+  tbl.append(tb);
+}
+
+function renderSummary() {
+  const s = DATA.summary; if (!s) return;
+  const own = s.ownership.map(r => ({ code:r.OWNER, name:tv("owner", r.OWNER), hours:Number(r.HOURS) }));
+  const total = own.reduce((a, r) => a + r.hours, 0) || 1;
+  const work  = own.find(r => r.code === "Bank xodimi ishlayapti");
+  const queue = own.find(r => r.code === "Bank navbati");
+
+  const kpi = document.getElementById("kpi");
+  kpi.innerHTML = "";
+  const card = (lbl, fig, hint, cls) => {
+    const c = el("div", "card" + (cls ? " " + cls : ""));
+    c.append(el("span", "lbl", lbl), el("span", "fig", fig), el("p", "hint", hint));
+    kpi.append(c);
+  };
+  card(t("kpi.work"),  ((work  ? work.hours  : 0) / total * 100).toFixed(1) + " %", t("kpi.work.hint"), "hero");
+  card(t("kpi.queue"), ((queue ? queue.hours : 0) / total * 100).toFixed(1) + " %", t("kpi.queue.hint"));
+  card(t("kpi.apps"),   num(s.totals.APPLICATIONS), t("kpi.apps.hint"));
+  card(t("kpi.events"), num(s.totals.EVENTS),       t("kpi.events.hint"));
+
+  const bar = document.getElementById("own-bar"), key = document.getElementById("own-key");
+  bar.innerHTML = ""; key.innerHTML = "";
+  own.forEach(r => {
+    const pct = (100 * r.hours / total).toFixed(1);
+    const colour = `var(${OWNER_COLOUR[r.code] || "--c-auto"})`;
+    const seg = el("span");
+    seg.style.width = (100 * r.hours / total) + "%";
+    seg.style.background = colour;
+    seg.title = `${r.name}: ${dur(r.hours)} (${pct} %)`;
+    bar.append(seg);
+    const k = el("span"), i = el("i");
+    i.style.background = colour;
+    k.append(i, document.createTextNode(`${r.name} — ${pct} %`));
+    key.append(k);
+  });
+
+  table("own-tbl", [t("own.col.who"), t("own.col.total"), t("own.col.share")],
+    own.map(r => [r.name, dur(r.hours), (100 * r.hours / total).toFixed(1) + " %"]), [1, 2]);
+
+  table("stage-tbl",
+    [t("stage.col.stage"), t("stage.col.waiting"), t("stage.col.transitions"),
+     t("stage.col.queue"), t("stage.col.work"), t("stage.col.total")],
+    s.stages.map(r => [
+      tv("stage", r.STAGE_CODE), tv("type", r.STAGE_TYPE), num(r.TRANSITIONS),
+      r.MEDIAN_QUEUE_H == null ? "—" : dur(r.MEDIAN_QUEUE_H),
+      r.MEDIAN_WORK_H  == null ? "—" : dur(r.MEDIAN_WORK_H),
+      dur(r.TOTAL_H),
+    ]), [2, 3, 4, 5]);
+
+  table("out-tbl", [t("out.col.outcome"), t("out.col.apps"), t("out.col.median")],
+    s.outcomes.map(r => [tv("outcome", r.OUTCOME), num(r.APPLICATIONS),
+                         dur(Number(r.MEDIAN_DAYS) * 24)]), [1, 2]);
+
+  document.getElementById("foot-count").textContent =
+    t("foot.count", { a:num(s.totals.APPLICATIONS), e:num(s.totals.EVENTS) });
+}
+
+function renderApps() {
+  const rows = DATA.apps; if (!rows) return;
+  document.getElementById("app-count").textContent = t("apps.count", { n:num(rows.length) });
+  const head = [t("apps.col.ref"), t("apps.col.customer"), t("apps.col.product"),
+                t("apps.col.amount"), t("apps.col.branch"), t("apps.col.status"),
+                t("apps.col.duration"), t("apps.col.steps")];
+  const tbl = document.getElementById("app-tbl");
+  tbl.innerHTML = "";
+  const thead = el("thead"), tr = el("tr");
+  head.forEach((h, i) => tr.append(el("th", (i === 3 || i === 6 || i === 7) ? "num" : null, h)));
+  thead.append(tr); tbl.append(thead);
+  const tb = el("tbody");
+  rows.forEach(r => {
+    const row = el("tr", "click");
+    row.addEventListener("click", () => showApp(r.APP_REF));
+    const outcome = r.OUTCOME || "JARAYONDA";
+    const pill = el("span", "pill " + (outcome === "AJRATILDI" ? "ok"
+                     : (outcome === "JARAYONDA" || outcome === "AJRATISH") ? "wip" : "no"),
+                    tv("outcome", outcome));
+    const cells = [
+      r.APP_REF, r.CUSTOMER_REF, tv("product", r.PRODUCT),
+      money(r.AMOUNT) + " " + r.CURRENCY, r.BRANCH_CODE, pill,
+      dur(Number(r.ELAPSED_DAYS) * 24),
+      r.REWORK_STEPS > 0 ? `${r.STEPS} (${t("apps.rework", { n:r.REWORK_STEPS })})`
+                         : String(r.STEPS),
+    ];
+    cells.forEach((c, i) => {
+      const td = el("td", (i === 3 || i === 6 || i === 7) ? "num" : null);
+      if (c instanceof Node) td.append(c); else td.textContent = c;
+      row.append(td);
+    });
+    tb.append(row);
+  });
+  tbl.append(tb);
+}
+
+function renderSteps() {
+  const host = document.getElementById("app-steps");
+  const steps = DATA.steps;
+  if (!DATA.ref) { host.innerHTML = ""; document.getElementById("step-key").innerHTML = ""; return; }
+  document.getElementById("app-title").textContent = t("case.title", { ref:DATA.ref });
+  if (!steps || !steps.length) {
+    host.innerHTML = `<p class='err'>${t("case.none")}</p>`; return;
+  }
+  const total = steps.reduce((a, s) => a + Number(s.TOTAL_H || 0), 0);
+  const max   = Math.max(...steps.map(s => Number(s.TOTAL_H || 0))) || 1;
+  const work  = steps.reduce((a, s) => a + Number(s.WORK_H || 0), 0);
+
+  document.getElementById("app-meta").innerHTML = t("case.meta", {
+    total: dur(total), work: dur(work),
+    pct: (100 * work / (total || 1)).toFixed(1), n: steps.length,
+  });
+
+  host.innerHTML = "";
+  steps.forEach(s => {
+    const row = el("div", "step"), nm = el("div", "nm");
+    nm.append(document.createTextNode(tv("stage", s.TO_STAGE)));
+    const who = el("small");
+    who.textContent = tv("type", s.STAGE_TYPE)
+      + (s.ACTOR_ID ? " · " + s.ACTOR_ID : "")
+      + (Number(s.IS_REWORK) ? " · " + t("case.rework") : "");
+    nm.append(who);
+
+    const track = el("div", "track");
+    const scale = 100 / max;
+    const seg = (val, colour, title) => {
+      if (val <= 0) return;
+      const sp = el("span");
+      sp.style.width = (val * scale) + "%";
+      sp.style.background = `var(${colour})`;
+      sp.title = title + ": " + dur(val);
+      track.append(sp);
+    };
+    seg(Number(s.QUEUE_H || 0), "--c-queue", t("seg.queue"));
+    seg(Number(s.WORK_H  || 0), "--c-work",  t("seg.work"));
+    seg(Number(s.OTHER_H || 0), TYPE_COLOUR[s.STAGE_TYPE] || "--c-auto",
+        tv("type", s.STAGE_TYPE) || t("seg.wait"));
+
+    row.append(nm, track, el("div", "dur", dur(Number(s.TOTAL_H || 0))));
+    host.append(row);
+  });
+
+  const key = document.getElementById("step-key");
+  key.innerHTML = "";
+  [["--c-queue","key.queue"], ["--c-work","key.work"], ["--c-customer","key.customer"],
+   ["--c-external","key.external"], ["--c-committee","key.committee"],
+   ["--c-auto","key.auto"]].forEach(([c, k]) => {
+    const s = el("span"), i = el("i");
+    i.style.background = `var(${c})`;
+    s.append(i, document.createTextNode(t(k)));
+    key.append(s);
+  });
+}
+
+function renderDefs() {
+  if (!DATA.defs) return;
+  table("stage-def",
+    [t("def.col.stage"), t("def.col.code"), t("def.col.type"), t("def.col.sla")],
+    DATA.defs.map(d => [tv("stage", d.STAGE_CODE), d.STAGE_CODE, tv("type", d.STAGE_TYPE),
+                        d.SLA_HOURS == null ? "—" : dur(d.SLA_HOURS)]), [3]);
+}
+
+
+/* ═══════════════════════════════════════════════════════ xodimlar ═══ */
+function renderStaff() {
+  const d = DATA.staff; if (!d) return;
+  const t0 = d.totals;
+  const workH = Number(t0.WORK_H), queueH = Number(t0.QUEUE_H);
+
+  const kpi = document.getElementById("staff-kpi");
+  kpi.innerHTML = "";
+  const card = (lbl, fig, hint, cls) => {
+    const c = el("div", "card" + (cls ? " " + cls : ""));
+    c.append(el("span", "lbl", lbl), el("span", "fig", fig), el("p", "hint", hint));
+    kpi.append(c);
+  };
+  card(t("staff.kpi.work"),  dur(workH),  t("staff.kpi.work.hint"));
+  card(t("staff.kpi.queue"), dur(queueH), t("staff.kpi.queue.hint"));
+  card(t("staff.kpi.ratio"), (queueH / (workH || 1)).toFixed(0) + "×",
+       t("staff.kpi.ratio.hint"), "hero");
+  card(t("staff.kpi.people"), num(t0.STAFF), t("staff.kpi.people.hint"));
+
+  const cost = r => r.COST == null ? "—" : money(r.COST) + " " + (r.CURRENCY || "");
+
+  table("role-tbl",
+    [t("staff.col.role"), t("staff.col.people"), t("staff.col.apps"), t("staff.col.transitions"),
+     t("staff.col.workh"), t("staff.col.queueh"), t("staff.col.medwork"),
+     t("staff.col.medqueue"), t("staff.col.cost")],
+    d.roles.map(r => [
+      tv("role", r.ACTOR_ROLE), num(r.STAFF), num(r.APPLICATIONS), num(r.TRANSITIONS),
+      dur(r.WORK_H), dur(r.QUEUE_H), dur(r.MEDIAN_WORK_H),
+      Number(r.MEDIAN_QUEUE_H) > 0 ? dur(r.MEDIAN_QUEUE_H) : "—", cost(r),
+    ]), [1, 2, 3, 4, 5, 6, 7, 8]);
+
+  // Tarqoqlik yonida o'sha roldagi navbat turadi: taqqoslash uchun.
+  const queueByRole = Object.fromEntries(d.roles.map(r => [r.ACTOR_ROLE, r.MEDIAN_QUEUE_H]));
+  table("spread-tbl",
+    [t("staff.col.role"), t("staff.col.fastest"), t("staff.col.slowest"),
+     t("staff.col.ratio"), t("staff.col.gap"), t("staff.col.queuecmp")],
+    d.spread.map(r => [
+      tv("role", r.ACTOR_ROLE), dur(r.FASTEST_H), dur(r.SLOWEST_H),
+      r.RATIO + "×", dur(r.GAP_H),
+      Number(queueByRole[r.ACTOR_ROLE]) > 0 ? dur(queueByRole[r.ACTOR_ROLE]) : "—",
+    ]), [1, 2, 3, 4, 5]);
+
+  const sel = document.getElementById("role-filter");
+  const keep = sel.value;
+  sel.innerHTML = "";
+  const all = el("option", null, t("staff.filter.all")); all.value = "";
+  sel.append(all);
+  d.roles.forEach(r => {
+    const o = el("option", null, tv("role", r.ACTOR_ROLE));
+    o.value = r.ACTOR_ROLE; sel.append(o);
+  });
+  sel.value = keep;
+
+  const rows = d.staff.filter(r => !sel.value || r.ACTOR_ROLE === sel.value);
+  document.getElementById("staff-count").textContent = t("staff.count", { n:num(rows.length) });
+
+  const tbl = document.getElementById("staff-tbl");
+  tbl.innerHTML = "";
+  const head = [t("staff.col.id"), t("staff.col.role"), t("staff.col.branch"),
+                t("staff.col.apps"), t("staff.col.workh"), t("staff.col.perapp"),
+                t("staff.col.medwork"), t("staff.col.medqueue"),
+                t("staff.col.rework"), t("staff.col.cost")];
+  const numeric = [3, 4, 5, 6, 7, 8, 9];
+  const thead = el("thead"), tr = el("tr");
+  head.forEach((h, i) => tr.append(el("th", numeric.includes(i) ? "num" : null, h)));
+  thead.append(tr); tbl.append(thead);
+  const tb = el("tbody");
+  rows.forEach(r => {
+    const row = el("tr", "click");
+    row.addEventListener("click", () => showStaffCases(r.ACTOR_ID));
+    [r.ACTOR_ID, tv("role", r.ACTOR_ROLE), r.BRANCH_CODE || "—",
+     num(r.APPLICATIONS), dur(r.WORK_H), dur(r.WORK_H_PER_APP),
+     dur(r.MEDIAN_WORK_H),
+     Number(r.MEDIAN_QUEUE_H) > 0 ? dur(r.MEDIAN_QUEUE_H) : "—",
+     Number(r.REWORK_PCT) > 0 ? Number(r.REWORK_PCT).toFixed(1) + " %" : "—",
+     cost(r),
+    ].forEach((c, i) => {
+      const td = el("td", numeric.includes(i) ? "num" : null);
+      td.textContent = c; row.append(td);
+    });
+    tb.append(row);
+  });
+  tbl.append(tb);
+  renderStaffCases();
+}
+document.getElementById("role-filter").addEventListener("change", renderStaff);
+
+const CASE_LIMIT = 100;
+
+function renderStaffCases() {
+  const host = document.getElementById("staff-cases");
+  if (!DATA.staffId) { host.innerHTML = ""; return; }
+  const rows = DATA.staffCases;
+  host.innerHTML = "";
+  host.append(el("h2", null, t("staff.cases.h2", { id:DATA.staffId })));
+  if (rows === null) { host.append(el("p", "muted", t("case.loading"))); return; }
+  if (!rows.length) { host.append(el("p", "err", t("staff.cases.none"))); return; }
+  if (rows.length > CASE_LIMIT) host.append(el("p", "note", t("staff.cases.more", { n:CASE_LIMIT })));
+
+  const tbl = el("table"); tbl.id = "staff-case-tbl";
+  const wrap = el("div", "scroll"); wrap.append(tbl); host.append(wrap);
+  table("staff-case-tbl",
+    [t("staff.col.app"), t("apps.col.product"), t("staff.col.stage"),
+     t("staff.col.workh"), t("staff.col.queueh"), t("staff.col.rework"), t("staff.col.when")],
+    rows.slice(0, CASE_LIMIT).map(r => [
+      r.APP_REF, tv("product", r.PRODUCT), tv("stage", r.TO_STAGE),
+      dur(r.WORK_H), dur(r.QUEUE_H),
+      Number(r.IS_REWORK) ? t("case.rework") : "—",
+      String(r.COMPLETED_AT || "").slice(0, 16).replace("T", " "),
+    ]), [3, 4]);
+}
+
+async function showStaffCases(id) {
+  DATA.staffId = id; DATA.staffCases = null;
+  renderStaffCases();
+  try {
+    DATA.staffCases = await get(`/api/credit/staff/${encodeURIComponent(id)}`);
+  } catch (e) {
+    DATA.staffCases = [];
+  }
+  renderStaffCases();
+  document.getElementById("staff-cases").scrollIntoView({ behavior:"smooth", block:"nearest" });
+}
+
+function renderAll() {
+  renderSummary(); renderApps(); renderSteps(); renderDefs(); renderStaff();
+}
+
+/* ------------------------------------------------------------ load ---- */
+async function loadApps(q) {
+  DATA.query = q || "";
+  DATA.apps = await get("/api/credit/applications?limit=200"
+                        + (q ? "&q=" + encodeURIComponent(q) : ""));
+  renderApps();
+}
+let searchTimer;
+document.getElementById("q").addEventListener("input", e => {
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(() => loadApps(e.target.value.trim()), 250);
+});
+
+async function showApp(ref) {
+  openTab("ariza");
+  DATA.ref = ref; DATA.steps = null;
+  document.getElementById("app-title").textContent = t("case.title", { ref });
+  document.getElementById("app-steps").innerHTML = `<p class='muted'>${t("case.loading")}</p>`;
+  try {
+    DATA.steps = await get(`/api/credit/${encodeURIComponent(ref)}/timeline`);
+    renderSteps();
+  } catch (e) {
+    document.getElementById("app-steps").innerHTML =
+      `<p class='err'>${t("case.error", { msg:e.message })}</p>`;
+  }
+}
+
+(async () => {
+  applyStatic();
+  try {
+    DATA.summary = await get("/api/credit/summary");
+    DATA.defs    = await get("/api/credit/stages");
+    DATA.staff   = await get("/api/credit/staff");
+    await loadApps("");
+    renderAll();
+  } catch (e) {
+    document.querySelector(".wrap").insertAdjacentHTML("afterbegin",
+      `<p class="err">${t("load.error", { msg:e.message })}</p>`);
+  }
+})();
+</script>
+</body>
+</html>

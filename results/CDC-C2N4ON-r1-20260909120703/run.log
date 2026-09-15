@@ -1,0 +1,4 @@
+[12:07:03] === RUN CDC-C2N4ON-r1-20260909120703 ===
+[12:07:03] mode=CDC profile=C2N4ON rep=1 tps=50 duration=180s fault=none
+[12:07:03] jar: target/master-thesis-observability-0.0.1-SNAPSHOT.jar
+[12:07:03] workload tozalanmoqda (reference saqlanadi)

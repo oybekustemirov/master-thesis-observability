@@ -1,0 +1,42 @@
+[16:49:20] === RUN WRAPPER_B3-P1-r91-20260903164920 ===
+[16:49:20] mode=WRAPPER_B3 profile=P1 rep=91 tps=50 duration=60s fault=none
+[16:49:20] jar: target/master-thesis-observability-0.0.1-SNAPSHOT.jar
+[16:49:20] workload tozalanmoqda (reference saqlanadi)
+workload reset; reference data preserved
+AQ backlog purged: 0 -> 0
+[16:49:21] Kafka topigi qayta yaratilmoqda
+[16:49:30] ilova ishga tushirilmoqda (mode=WRAPPER_B3)
+[16:49:42] ilova tayyor (pid 1563204)
+[16:49:43] k6 yuklamasi boshlandi
+[16:50:49] pipeline bo'shashi kutilmoqda (maks 120s)
+[16:50:50] pipeline bo'sh (1s)
+[16:51:00] ground truth eksport qilinmoqda
+[16:51:00] Kafka topigi eksport qilinmoqda
+[16:51:31] tahlil
+{
+  "mode": "WRAPPER_B3",
+  "profile": "P1",
+  "rep": "91",
+  "fault": "none",
+  "ground_truth_transitions": 9000,
+  "delivered_distinct": 9000,
+  "delivered_total": 9000,
+  "matched": 9000,
+  "missing": 0,
+  "phantom": 0,
+  "malformed": 0,
+  "loss_rate": 0.0,
+  "loss_rate_ppm": 0.0,
+  "duplicate_rate": 0.0,
+  "ordering_violation_rate": 0.0,
+  "txns_split_across_partitions": 0,
+  "latency_ms_p50": 125,
+  "latency_ms_p95": 229,
+  "latency_ms_p99": 1368,
+  "latency_ms_max": 3156,
+  "latency_ms_mean": 169.8,
+  "latency_samples": 9000,
+  "loss_rate_upper_bound_95_ppm": 333.33
+}
+[16:51:31] ilova to'xtatilmoqda
+[16:51:32] === TUGADI: results/WRAPPER_B3-P1-r91-20260903164920 ===

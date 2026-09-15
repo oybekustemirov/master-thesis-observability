@@ -1,0 +1,51 @@
+[16:07:27] === RUN CDC-C2NARROW-r2-20260909160727 ===
+[16:07:27] mode=CDC profile=C2NARROW rep=2 tps=50 duration=180s fault=none
+[16:07:27] jar: target/master-thesis-observability-0.0.1-SNAPSHOT.jar
+[16:07:27] arxiv redo tozalanmoqda
+[16:07:27] workload tozalanmoqda (reference saqlanadi)
+workload reset; reference data preserved
+AQ backlog purged: 0 -> 0
+[16:07:29] Kafka topigi qayta yaratilmoqda
+[16:07:38] ilova ishga tushirilmoqda (mode=CDC)
+[16:07:53] ilova tayyor (pid 3356495)
+[16:07:53] Debezium konnektori ro'yxatdan o'tkazilmoqda (CDC, prefix=obsv_cdc_c2narrow_r2_20260909160727)
+C2 shabloni ishlatilmoqda: docker/connect/connectors/cdc.json.tmpl
+konnektor ro'yxatdan o'tkazilmoqda: a1-cdc-obsv_cdc_c2narrow_r2_20260909160727 (prefix=obsv_cdc_c2narrow_r2_20260909160727)
+konnektor RUNNING (3s)
+streaming tasdiqlanmoqda (heartbeat topigi: __debezium-heartbeat.obsv_cdc_c2narrow_r2_20260909160727)
+streaming tasdiqlandi (2 urinish)
+[16:08:05] k6 yuklamasi boshlandi
+[16:11:06] k6 iteratsiyalari: 8846
+[16:11:06] pipeline bo'shashi kutilmoqda (maks 120s)
+[16:11:51] pipeline bo'sh (15s, sink=13948 xabar)
+[16:12:02] ground truth eksport qilinmoqda
+[16:12:02] Kafka topigi eksport qilinmoqda
+[16:12:30] tahlil
+{
+  "mode": "CDC",
+  "profile": "C2NARROW",
+  "rep": "2",
+  "fault": "none",
+  "ground_truth_transitions": 26538,
+  "delivered_distinct": 13948,
+  "delivered_total": 13948,
+  "matched": 13948,
+  "missing": 12590,
+  "phantom": 0,
+  "malformed": 0,
+  "loss_rate": 0.47441405,
+  "loss_rate_ppm": 474414.05,
+  "duplicate_rate": 0.0,
+  "ordering_violation_rate": 0.0,
+  "txns_split_across_partitions": 0,
+  "latency_ms_p50": 6674,
+  "latency_ms_p95": 12621,
+  "latency_ms_p99": 13590,
+  "latency_ms_max": 13945,
+  "latency_ms_mean": 7181.6,
+  "latency_samples": 13948,
+  "latency_negative_samples": 0
+}
+[16:12:30] ilova va konnektor to'xtatilmoqda
+connector o'chirilmoqda: a1-cdc-obsv_cdc_c2narrow_r2_20260909160727
+[16:12:42] === TUGADI: results/CDC-C2NARROW-r2-20260909160727 ===

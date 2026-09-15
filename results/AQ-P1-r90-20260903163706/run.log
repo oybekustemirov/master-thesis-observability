@@ -1,0 +1,42 @@
+[16:37:06] === RUN AQ-P1-r90-20260903163706 ===
+[16:37:06] mode=AQ profile=P1 rep=90 tps=50 duration=60s fault=none
+[16:37:06] jar: target/master-thesis-observability-0.0.1-SNAPSHOT.jar
+[16:37:06] workload tozalanmoqda (reference saqlanadi)
+workload reset; reference data preserved
+AQ backlog purged: 0 -> 0
+[16:37:06] Kafka topigi qayta yaratilmoqda
+[16:37:15] ilova ishga tushirilmoqda (mode=AQ)
+[16:37:29] ilova tayyor (pid 1438112)
+[16:37:30] k6 yuklamasi boshlandi
+[16:38:45] k6 nolga teng bo'lmagan kod bilan tugadi (natija baribir tahlil qilinadi)
+[16:38:45] pipeline bo'shashi kutilmoqda (maks 120s)
+[16:38:45] pipeline bo'sh (1s)
+[16:38:56] ground truth eksport qilinmoqda
+[16:38:56] Kafka topigi eksport qilinmoqda
+[16:39:23] tahlil
+{
+  "mode": "AQ",
+  "profile": "P1",
+  "rep": "90",
+  "fault": "none",
+  "ground_truth_transitions": 1446,
+  "delivered_distinct": 1446,
+  "delivered_total": 1446,
+  "matched": 1446,
+  "missing": 0,
+  "phantom": 0,
+  "malformed": 0,
+  "loss_rate": 0.0,
+  "loss_rate_ppm": 0.0,
+  "duplicate_rate": 0.0,
+  "ordering_violation_rate": 0.0,
+  "txns_split_across_partitions": 0,
+  "latency_ms_p50": 12,
+  "latency_ms_p95": 2187,
+  "latency_ms_p99": 4903,
+  "latency_ms_max": 5774,
+  "latency_ms_mean": 220.4,
+  "latency_samples": 1446,
+  "loss_rate_upper_bound_95_ppm": 2074.69
+}
+[16:39:23] === TUGADI: results/AQ-P1-r90-20260903163706 ===

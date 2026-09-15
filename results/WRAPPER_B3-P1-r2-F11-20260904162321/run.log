@@ -1,0 +1,47 @@
+[16:23:21] === RUN WRAPPER_B3-P1-r2-F11-20260904162321 ===
+[16:23:21] mode=WRAPPER_B3 profile=P1 rep=2 tps=50 duration=180s fault=F11
+[16:23:21] jar: target/master-thesis-observability-0.0.1-SNAPSHOT.jar
+[16:23:21] workload tozalanmoqda (reference saqlanadi)
+workload reset; reference data preserved
+AQ backlog purged: 0 -> 0
+[16:23:22] Kafka topigi qayta yaratilmoqda
+[16:23:31] ilova ishga tushirilmoqda (mode=WRAPPER_B3)
+[16:23:41] ilova tayyor (pid 3038189)
+[16:23:44] fault F11 60s dan keyin yuboriladi
+[16:23:44] k6 yuklamasi boshlandi
+[fault 16:24:50] 20000 tranzaksiya ilovadan chetlab yaratilmoqda (PL/SQL batch)
+PL/SQL procedure successfully completed.
+
+[fault 16:25:06] F11 tugadi
+[16:27:03] pipeline bo'shashi kutilmoqda (maks 120s)
+[16:27:13] pipeline bo'sh (4s, sink=27000 xabar)
+[16:27:23] ground truth eksport qilinmoqda
+[16:27:26] Kafka topigi eksport qilinmoqda
+[16:28:19] tahlil
+{
+  "mode": "WRAPPER_B3",
+  "profile": "P1",
+  "rep": "2",
+  "fault": "F11",
+  "ground_truth_transitions": 86997,
+  "delivered_distinct": 27000,
+  "delivered_total": 27000,
+  "matched": 27000,
+  "missing": 59997,
+  "phantom": 0,
+  "malformed": 0,
+  "loss_rate": 0.68964447,
+  "loss_rate_ppm": 689644.47,
+  "duplicate_rate": 0.0,
+  "ordering_violation_rate": 0.0,
+  "txns_split_across_partitions": 0,
+  "latency_ms_p50": 144,
+  "latency_ms_p95": 253,
+  "latency_ms_p99": 1142,
+  "latency_ms_max": 3284,
+  "latency_ms_mean": 168.8,
+  "latency_samples": 27000,
+  "latency_negative_samples": 0
+}
+[16:28:20] ilova va konnektor to'xtatilmoqda
+[16:28:24] === TUGADI: results/WRAPPER_B3-P1-r2-F11-20260904162321 ===

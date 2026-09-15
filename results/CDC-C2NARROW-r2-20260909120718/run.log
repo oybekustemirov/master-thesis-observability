@@ -1,0 +1,4 @@
+[12:07:18] === RUN CDC-C2NARROW-r2-20260909120718 ===
+[12:07:18] mode=CDC profile=C2NARROW rep=2 tps=50 duration=180s fault=none
+[12:07:18] jar: target/master-thesis-observability-0.0.1-SNAPSHOT.jar
+[12:07:18] workload tozalanmoqda (reference saqlanadi)

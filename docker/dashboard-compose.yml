@@ -1,0 +1,29 @@
+# Standalone Docker Compose file for the mechanism-comparison dashboard.
+#
+# Deliberately SEPARATE from docker/docker-compose.yml (the Oracle/Kafka experiment
+# stack). The dashboard is fully self-contained static HTML with no backend calls,
+# so it has zero dependency on Oracle, Kafka, or anything else being healthy — it
+# starts in about two seconds and cannot fail the way a database-backed demo can.
+# This is the recommended thing to have open during a live call: it cannot go down
+# mid-meeting the way the full experiment stack did on 2026-09-14.
+#
+#   cd docker
+#   docker compose -f dashboard-compose.yml up -d      # build + start
+#   open http://localhost:8082
+#   docker compose -f dashboard-compose.yml down        # stop
+#
+# No image build step is used (no Dockerfile involved) — nginx:alpine mounts the
+# HTML file read-only directly from the repo, so an edit to
+# docs/mechanism-comparison.html is picked up on the next
+# `docker compose -f dashboard-compose.yml restart dashboard`, no rebuild required.
+name: thesis-dashboard
+
+services:
+  dashboard:
+    image: nginx:1.27-alpine
+    container_name: obsv-dashboard
+    volumes:
+      - ../docs/mechanism-comparison.html:/usr/share/nginx/html/index.html:ro
+    ports:
+      - "8082:80"
+    restart: unless-stopped

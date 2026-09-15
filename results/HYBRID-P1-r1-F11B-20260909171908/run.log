@@ -1,0 +1,55 @@
+[17:19:08] === RUN HYBRID-P1-r1-F11B-20260909171908 ===
+[17:19:08] mode=HYBRID profile=P1 rep=1 tps=50 duration=180s fault=F11B
+[17:19:08] jar: target/master-thesis-observability-0.0.1-SNAPSHOT.jar
+[17:19:08] arxiv redo tozalanmoqda
+[17:19:09] workload tozalanmoqda (reference saqlanadi)
+workload reset; reference data preserved
+AQ backlog purged: 0 -> 0
+[17:19:14] Kafka topigi qayta yaratilmoqda
+[17:19:23] ilova ishga tushirilmoqda (mode=HYBRID)
+[17:19:38] ilova tayyor (pid 134067)
+[17:19:38] Debezium konnektori ro'yxatdan o'tkazilmoqda (HYBRID, prefix=obsv_hybrid_p1_r1_f11b_20260909171908)
+konnektor ro'yxatdan o'tkazilmoqda: a1-hybrid-obsv_hybrid_p1_r1_f11b_20260909171908 (prefix=obsv_hybrid_p1_r1_f11b_20260909171908)
+konnektor RUNNING (2s)
+streaming tasdiqlanmoqda (heartbeat topigi: __debezium-heartbeat.obsv_hybrid_p1_r1_f11b_20260909171908)
+streaming tasdiqlandi (1 urinish)
+[17:19:45] fault F11B 60s dan keyin yuboriladi
+[17:19:45] k6 yuklamasi boshlandi
+[fault 17:20:45] 20000 tranzaksiya batch orqali, LEKIN outbox shartnomasi bilan
+PL/SQL procedure successfully completed.
+
+[fault 17:21:30] F11B tugadi
+[17:22:45] k6 iteratsiyalari: 8843
+[17:22:45] pipeline bo'shashi kutilmoqda (maks 120s)
+[17:23:30] pipeline bo'sh (15s, sink=24286 xabar)
+[17:23:40] ground truth eksport qilinmoqda
+[17:23:41] Kafka topigi eksport qilinmoqda
+[17:24:33] tahlil
+{
+  "mode": "HYBRID",
+  "profile": "P1",
+  "rep": "1",
+  "fault": "F11B",
+  "ground_truth_transitions": 86517,
+  "delivered_distinct": 24286,
+  "delivered_total": 24286,
+  "matched": 24286,
+  "missing": 62231,
+  "phantom": 0,
+  "malformed": 0,
+  "loss_rate": 0.71929216,
+  "loss_rate_ppm": 719292.16,
+  "duplicate_rate": 0.0,
+  "ordering_violation_rate": 0.0,
+  "txns_split_across_partitions": 0,
+  "latency_ms_p50": 10237,
+  "latency_ms_p95": 17193,
+  "latency_ms_p99": 18018,
+  "latency_ms_max": 18194,
+  "latency_ms_mean": 9620.7,
+  "latency_samples": 24286,
+  "latency_negative_samples": 0
+}
+[17:24:34] ilova va konnektor to'xtatilmoqda
+connector o'chirilmoqda: a1-hybrid-obsv_hybrid_p1_r1_f11b_20260909171908
+[17:24:46] === TUGADI: results/HYBRID-P1-r1-F11B-20260909171908 ===

@@ -1,0 +1,18 @@
+-- Debezium's heartbeat.action.query writes to this table on every heartbeat interval.
+--
+-- The heartbeat is not cosmetic here. It serves two purposes the experiment depends on:
+--
+--   1. READINESS. A connector reporting RUNNING is not yet guaranteed to be streaming. The
+--      harness waits for a heartbeat message to appear on the heartbeat topic before it starts
+--      the workload; without that wait the first seconds of every CDC run would be captured
+--      only sometimes, and the resulting intermittent gaps would be scored as event LOSS.
+--
+--   2. It keeps the connector's committed offset advancing during idle periods. Oracle's redo
+--      is mined by SCN, and a connector whose offset never advances forces LogMiner to re-scan
+--      from an ever-older SCN after a restart, which is the usual cause of the
+--      "Debezium is slow after a quiet night" complaint.
+--
+-- The capture user holds SELECT ANY TABLE but no write privilege anywhere, which is correct:
+-- a capture account should not be able to modify business data. This single-table, single-verb
+-- grant is the minimum that makes the heartbeat work without widening that boundary.
+GRANT UPDATE ON DBZ_HEARTBEAT TO c##dbzuser;

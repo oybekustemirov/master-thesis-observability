@@ -1,0 +1,51 @@
+[15:04:44] === RUN CDC-C2N1ON-r3-20260909150443 ===
+[15:04:44] mode=CDC profile=C2N1ON rep=3 tps=50 duration=180s fault=none
+[15:04:44] jar: target/master-thesis-observability-0.0.1-SNAPSHOT.jar
+[15:04:44] arxiv redo tozalanmoqda
+[15:04:44] workload tozalanmoqda (reference saqlanadi)
+workload reset; reference data preserved
+AQ backlog purged: 0 -> 0
+[15:04:45] Kafka topigi qayta yaratilmoqda
+[15:04:54] ilova ishga tushirilmoqda (mode=CDC)
+[15:05:09] ilova tayyor (pid 2457421)
+[15:05:09] Debezium konnektori ro'yxatdan o'tkazilmoqda (CDC, prefix=obsv_cdc_c2n1on_r3_20260909150443)
+konnektor ro'yxatdan o'tkazilmoqda: a1-cdc-obsv_cdc_c2n1on_r3_20260909150443 (prefix=obsv_cdc_c2n1on_r3_20260909150443)
+konnektor RUNNING (2s)
+streaming tasdiqlanmoqda (heartbeat topigi: __debezium-heartbeat.obsv_cdc_c2n1on_r3_20260909150443)
+streaming tasdiqlandi (1 urinish)
+[15:05:17] k6 yuklamasi boshlandi
+[15:08:18] k6 iteratsiyalari: 8945
+[15:08:18] pipeline bo'shashi kutilmoqda (maks 120s)
+[15:09:05] pipeline bo'sh (15s, sink=26835 xabar)
+[15:09:15] ground truth eksport qilinmoqda
+[15:09:16] Kafka topigi eksport qilinmoqda
+[15:09:43] tahlil
+{
+  "mode": "CDC",
+  "profile": "C2N1ON",
+  "rep": "3",
+  "fault": "none",
+  "ground_truth_transitions": 26835,
+  "delivered_distinct": 26835,
+  "delivered_total": 26835,
+  "matched": 26835,
+  "missing": 0,
+  "phantom": 0,
+  "malformed": 0,
+  "loss_rate": 0.0,
+  "loss_rate_ppm": 0.0,
+  "duplicate_rate": 0.0,
+  "ordering_violation_rate": 0.0,
+  "txns_split_across_partitions": 0,
+  "latency_ms_p50": 3501,
+  "latency_ms_p95": 5619,
+  "latency_ms_p99": 6259,
+  "latency_ms_max": 8011,
+  "latency_ms_mean": 3485.9,
+  "latency_samples": 26835,
+  "latency_negative_samples": 0,
+  "loss_rate_upper_bound_95_ppm": 111.79
+}
+[15:09:44] ilova va konnektor to'xtatilmoqda
+connector o'chirilmoqda: a1-cdc-obsv_cdc_c2n1on_r3_20260909150443
+[15:09:55] === TUGADI: results/CDC-C2N1ON-r3-20260909150443 ===

@@ -1,0 +1,29 @@
+[17:26:43] === RUN CDC-P1-r91-20260903172643 ===
+[17:26:43] mode=CDC profile=P1 rep=91 tps=50 duration=60s fault=none
+[17:26:43] jar: target/master-thesis-observability-0.0.1-SNAPSHOT.jar
+[17:26:43] workload tozalanmoqda (reference saqlanadi)
+workload reset; reference data preserved
+AQ backlog purged: 0 -> 0
+[17:26:43] Kafka topigi qayta yaratilmoqda
+[17:26:55] Debezium konnektori ro'yxatdan o'tkazilmoqda (CDC, prefix=obsv_cdc_p1_r91_20260903172643)
+connector o'chirilmoqda: a1-cdc-obsv_cdc_p1_r91_20260903171808
+konnektor ro'yxatdan o'tkazilmoqda: a1-cdc-obsv_cdc_p1_r91_20260903172643 (prefix=obsv_cdc_p1_r91_20260903172643)
+konnektor RUNNING (2s)
+streaming tasdiqlanmoqda (heartbeat topigi: __debezium-heartbeat.obsv_cdc_p1_r91_20260903172643)
+XATO: konnektor topshirig'i FAILED holatiga o'tdi
+org.apache.kafka.connect.errors.ConnectException: An exception occurred in the change event producer. This connector will be stopped.
+	at io.debezium.pipeline.ErrorHandler.setProducerThrowable(ErrorHandler.java:67)
+	at io.debezium.connector.oracle.logminer.AbstractLogMinerStreamingChangeEventSource.execute(AbstractLogMinerStreamingChangeEventSource.java:222)
+	at io.debezium.connector.oracle.logminer.AbstractLogMinerStreamingChangeEventSource.execute(AbstractLogMinerStreamingChangeEventSource.java:92)
+	at io.debezium.pipeline.ChangeEventSourceCoordinator.streamEvents(ChangeEventSourceCoordinator.java:339)
+	at io.debezium.pipeline.ChangeEventSourceCoordinator.executeChangeEventSources(ChangeEventSourceCoordinator.java:217)
+	at io.debezium.pipeline.ChangeEventSourceCoordinator.lambda$start$0(ChangeEventSourceCoordinator.java:148)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at io.debezium.util.Threads$3.lambda$newThread$0(Threads.java:314)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: io.debezium.DebeziumException: Failed to create flush table
+	at io.debezium.connector.oracle.logminer.logwriter.CommitLogWriterFlushStrategy.createFlushTableIfNotExists(CommitLogWriter
+[17:28:06] XATO: konnektor ishga tushmadi - run to'xtatildi

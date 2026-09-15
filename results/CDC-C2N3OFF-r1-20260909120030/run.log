@@ -1,0 +1,13 @@
+[12:00:30] === RUN CDC-C2N3OFF-r1-20260909120030 ===
+[12:00:30] mode=CDC profile=C2N3OFF rep=1 tps=50 duration=180s fault=none
+[12:00:30] jar: target/master-thesis-observability-0.0.1-SNAPSHOT.jar
+[12:00:30] workload tozalanmoqda (reference saqlanadi)
+workload reset; reference data preserved
+AQ backlog purged: 0 -> 0
+[12:00:31] Kafka topigi qayta yaratilmoqda
+[12:00:40] ilova ishga tushirilmoqda (mode=CDC)
+[12:00:54] ilova tayyor (pid 887452)
+[12:00:54] --no-connector: konnektorsiz ishlatilmoqda (C2 bazaviy sharti)
+[12:00:57] k6 yuklamasi boshlandi
+[12:03:59] k6 iteratsiyalari: 9000
+[12:03:59] pipeline bo'shashi kutilmoqda (maks 120s)
