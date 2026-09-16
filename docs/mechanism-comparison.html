@@ -153,6 +153,155 @@
   </div>
   <p class="muted" style="margin-top:.8rem">¹ Not the architecture's fault — see §4. Full table incl.
     F1R/F2/F4R/F5R/C2a and measurement instruments in the source document, §1 and §1.1.</p>
+
+  <h3 style="font-family:var(--f-display);font-size:1.02rem;margin:1.6rem 0 .3rem">How each method actually
+    reaches Kafka</h3>
+  <p class="note">The four methods differ in exactly one place: what happens <strong>inside the same
+    database commit</strong> as the business write, before anything leaves for Kafka. Three of them add
+    a step there; one adds nothing. Only the step highlighted below was tested by breaking it (fault
+    F8) — and breaking it stopped real payments.</p>
+
+  <figure style="margin:0 0 .4rem">
+    <svg viewBox="0 0 860 460" role="img" style="width:100%;height:auto;font-family:var(--f-body)"
+         aria-label="Four event-capture methods compared by what each adds inside the same database
+           commit as the business write, before delivery to Kafka. The trigger method adds a capture
+           step inside the commit that fault-test F8 broke, stopping 40 percent of payments. The
+           outbox and hybrid methods add an outbox-row write inside the commit. The CDC method adds
+           nothing inside the commit at all.">
+      <defs>
+        <marker id="mc-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7"
+                orient="auto-start-reverse">
+          <path d="M0,0 L8,4 L0,8 z" fill="currentColor"/>
+        </marker>
+      </defs>
+
+      <!-- column group headers -->
+      <text x="250" y="34" text-anchor="middle" font-size="12.5" font-weight="600" fill="currentColor">
+        Inside the business transaction</text>
+      <text x="610" y="34" text-anchor="middle" font-size="12.5" font-weight="600" fill="currentColor"
+            opacity=".75">After commit — asynchronous</text>
+      <line x1="430" y1="48" x2="430" y2="430" stroke="currentColor" stroke-width="1.5"
+            stroke-dasharray="2 5" opacity=".55"/>
+      <text x="430" y="444" text-anchor="middle" font-size="11" fill="currentColor" opacity=".6">commit
+        boundary</text>
+
+      <!-- ── Row 1 : A1 Trigger + AQ ─────────────────────────────────────── -->
+      <g font-size="12">
+        <rect x="14" y="92" width="9" height="9" fill="var(--c-aq)"/>
+        <text x="30" y="100.5" font-size="12" font-weight="600" fill="var(--c-aq)">A1 · Trigger + AQ</text>
+
+        <rect x="70" y="85" width="150" height="46" rx="4" fill="none" stroke="currentColor" stroke-width="1.4"/>
+        <text x="145" y="105" text-anchor="middle">TXN_A1 write</text>
+        <text x="145" y="120" text-anchor="middle" opacity=".65" font-size="10.5">(commit)</text>
+
+        <line x1="220" y1="108" x2="253" y2="108" stroke="currentColor" stroke-width="1.4" marker-end="url(#mc-arrow)"/>
+        <text x="236" y="98" text-anchor="middle" font-size="10.5" opacity=".8">fires</text>
+
+        <rect x="253" y="80" width="167" height="56" rx="4" fill="none" stroke="var(--bad)" stroke-width="2.6"/>
+        <text x="336" y="103" text-anchor="middle" fill="var(--bad)" font-weight="600">Trigger → AQ enqueue</text>
+        <text x="336" y="119" text-anchor="middle" fill="var(--bad)" font-size="10.5">F8: broke 40% of payments</text>
+
+        <line x1="420" y1="108" x2="453" y2="108" stroke="currentColor" stroke-width="1.4" marker-end="url(#mc-arrow)"/>
+
+        <rect x="453" y="85" width="167" height="46" rx="4" fill="none" stroke="currentColor" stroke-width="1.4"/>
+        <text x="536" y="103" text-anchor="middle">Bridge: batch dequeue</text>
+        <text x="536" y="118" text-anchor="middle" opacity=".65" font-size="10.5">blocking wait, ≤500/batch</text>
+
+        <line x1="620" y1="108" x2="653" y2="108" stroke="currentColor" stroke-width="1.4" marker-end="url(#mc-arrow)"/>
+
+        <rect x="653" y="85" width="110" height="46" rx="4" fill="none" stroke="currentColor" stroke-width="1.4"/>
+        <text x="708" y="108" text-anchor="middle" font-weight="600">Kafka</text>
+      </g>
+
+      <!-- ── Row 2 : A2 Outbox ──────────────────────────────────────────── -->
+      <g font-size="12">
+        <rect x="14" y="182" width="9" height="9" fill="var(--c-outbox)"/>
+        <text x="30" y="190.5" font-size="12" font-weight="600" fill="var(--c-outbox)">A2 · Outbox</text>
+
+        <rect x="70" y="175" width="150" height="46" rx="4" fill="none" stroke="currentColor" stroke-width="1.4"/>
+        <text x="145" y="195" text-anchor="middle">TXN_A1 write</text>
+        <text x="145" y="210" text-anchor="middle" opacity=".65" font-size="10.5">(commit)</text>
+
+        <line x1="220" y1="198" x2="253" y2="198" stroke="currentColor" stroke-width="1.4" marker-end="url(#mc-arrow)"/>
+        <text x="236" y="188" text-anchor="middle" font-size="10.5" opacity=".8">app writes</text>
+
+        <rect x="253" y="175" width="167" height="46" rx="4" fill="none" stroke="currentColor" stroke-width="1.4"/>
+        <text x="336" y="195" text-anchor="middle">Outbox row</text>
+        <text x="336" y="210" text-anchor="middle" opacity=".65" font-size="10.5">same transaction</text>
+
+        <line x1="420" y1="198" x2="453" y2="198" stroke="currentColor" stroke-width="1.4" marker-end="url(#mc-arrow)"/>
+
+        <rect x="453" y="175" width="167" height="46" rx="4" fill="none" stroke="currentColor" stroke-width="1.4"/>
+        <text x="536" y="195" text-anchor="middle">Relay polls table</text>
+        <text x="536" y="210" text-anchor="middle" opacity=".65" font-size="10.5">every 200 ms</text>
+
+        <line x1="620" y1="198" x2="653" y2="198" stroke="currentColor" stroke-width="1.4" marker-end="url(#mc-arrow)"/>
+
+        <rect x="653" y="175" width="110" height="46" rx="4" fill="none" stroke="currentColor" stroke-width="1.4"/>
+        <text x="708" y="198" text-anchor="middle" font-weight="600">Kafka</text>
+      </g>
+
+      <!-- ── Row 3 : A3 CDC ─────────────────────────────────────────────── -->
+      <g font-size="12">
+        <rect x="14" y="272" width="9" height="9" fill="var(--c-cdc)"/>
+        <text x="30" y="280.5" font-size="12" font-weight="600" fill="var(--c-cdc)">A3 · CDC</text>
+
+        <rect x="70" y="265" width="150" height="46" rx="4" fill="none" stroke="currentColor" stroke-width="1.4"/>
+        <text x="145" y="285" text-anchor="middle">TXN_A1 write</text>
+        <text x="145" y="300" text-anchor="middle" opacity=".65" font-size="10.5">(commit)</text>
+
+        <rect x="253" y="265" width="167" height="46" rx="4" fill="none" stroke="currentColor"
+              stroke-width="1.2" stroke-dasharray="4 3" opacity=".5"/>
+        <text x="336" y="292" text-anchor="middle" opacity=".55" font-style="italic">— nothing added —</text>
+
+        <line x1="420" y1="288" x2="453" y2="288" stroke="currentColor" stroke-width="1.4" stroke-dasharray="1 4" marker-end="url(#mc-arrow)"/>
+        <text x="436" y="278" text-anchor="middle" font-size="10.5" opacity=".8">redo log</text>
+
+        <rect x="453" y="265" width="167" height="46" rx="4" fill="none" stroke="currentColor" stroke-width="1.4"/>
+        <text x="536" y="285" text-anchor="middle">Debezium reads log</text>
+        <text x="536" y="300" text-anchor="middle" opacity=".65" font-size="10.5">LogMiner, ~seconds</text>
+
+        <line x1="620" y1="288" x2="653" y2="288" stroke="currentColor" stroke-width="1.4" marker-end="url(#mc-arrow)"/>
+
+        <rect x="653" y="265" width="110" height="46" rx="4" fill="none" stroke="currentColor" stroke-width="1.4"/>
+        <text x="708" y="288" text-anchor="middle" font-weight="600">Kafka</text>
+      </g>
+
+      <!-- ── Row 4 : HYBRID ─────────────────────────────────────────────── -->
+      <g font-size="12">
+        <rect x="14" y="362" width="9" height="9" fill="var(--c-hybrid)"/>
+        <text x="30" y="370.5" font-size="12" font-weight="600" fill="var(--c-hybrid)">HYBRID</text>
+
+        <rect x="70" y="355" width="150" height="46" rx="4" fill="none" stroke="currentColor" stroke-width="1.4"/>
+        <text x="145" y="375" text-anchor="middle">TXN_A1 write</text>
+        <text x="145" y="390" text-anchor="middle" opacity=".65" font-size="10.5">(commit)</text>
+
+        <line x1="220" y1="378" x2="253" y2="378" stroke="currentColor" stroke-width="1.4" marker-end="url(#mc-arrow)"/>
+        <text x="236" y="368" text-anchor="middle" font-size="10.5" opacity=".8">app writes</text>
+
+        <rect x="253" y="355" width="167" height="46" rx="4" fill="none" stroke="currentColor" stroke-width="1.4"/>
+        <text x="336" y="375" text-anchor="middle">Outbox row</text>
+        <text x="336" y="390" text-anchor="middle" opacity=".65" font-size="10.5">same transaction</text>
+
+        <line x1="420" y1="378" x2="453" y2="378" stroke="currentColor" stroke-width="1.4" stroke-dasharray="1 4" marker-end="url(#mc-arrow)"/>
+        <text x="436" y="368" text-anchor="middle" font-size="10.5" opacity=".8">redo log</text>
+
+        <rect x="453" y="355" width="167" height="46" rx="4" fill="none" stroke="currentColor" stroke-width="1.4"/>
+        <text x="536" y="373" text-anchor="middle">Debezium reads log</text>
+        <text x="536" y="388" text-anchor="middle" opacity=".65" font-size="10.5">EventRouter, outbox table</text>
+
+        <line x1="620" y1="378" x2="653" y2="378" stroke="currentColor" stroke-width="1.4" marker-end="url(#mc-arrow)"/>
+
+        <rect x="653" y="355" width="110" height="46" rx="4" fill="none" stroke="currentColor" stroke-width="1.4"/>
+        <text x="708" y="378" text-anchor="middle" font-weight="600">Kafka</text>
+      </g>
+    </svg>
+    <figcaption class="muted" style="margin-top:.5rem">Only the trigger method (row 1) places a capture
+      step inside the same commit as the payment — highlighted, because fault F8 broke exactly that
+      step and 40% of payments failed with it. The outbox and hybrid methods also write inside the
+      commit, but to their own table, not shared business logic. CDC adds nothing inside the commit at
+      all — its cost shows up later, in how much redo Debezium has to scan (§2, claim C2).</figcaption>
+  </figure>
 </section>
 
 <!-- ═══════════════════════════════════════════════ 2. LATENCY/REDO ═══ -->
