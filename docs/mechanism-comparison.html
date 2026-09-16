@@ -162,143 +162,161 @@
     F8) — and breaking it stopped real payments.</p>
 
   <figure style="margin:0 0 .4rem">
-    <svg viewBox="0 0 860 460" role="img" style="width:100%;height:auto;font-family:var(--f-body)"
+    <svg viewBox="0 0 960 600" width="960" height="600" role="img"
+         style="width:100%;height:auto;max-width:960px;display:block;margin:0 auto;font-family:var(--f-body)"
          aria-label="Four event-capture methods compared by what each adds inside the same database
            commit as the business write, before delivery to Kafka. The trigger method adds a capture
            step inside the commit that fault-test F8 broke, stopping 40 percent of payments. The
            outbox and hybrid methods add an outbox-row write inside the commit. The CDC method adds
            nothing inside the commit at all.">
       <defs>
-        <marker id="mc-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7"
+        <marker id="mc-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6.5" markerHeight="6.5"
                 orient="auto-start-reverse">
           <path d="M0,0 L8,4 L0,8 z" fill="currentColor"/>
         </marker>
       </defs>
 
       <!-- column group headers -->
-      <text x="250" y="34" text-anchor="middle" font-size="12.5" font-weight="600" fill="currentColor">
+      <text x="290" y="28" text-anchor="middle" font-size="13" font-weight="600" fill="currentColor">
         Inside the business transaction</text>
-      <text x="610" y="34" text-anchor="middle" font-size="12.5" font-weight="600" fill="currentColor"
-            opacity=".75">After commit — asynchronous</text>
-      <line x1="430" y1="48" x2="430" y2="430" stroke="currentColor" stroke-width="1.5"
-            stroke-dasharray="2 5" opacity=".55"/>
-      <text x="430" y="444" text-anchor="middle" font-size="11" fill="currentColor" opacity=".6">commit
-        boundary</text>
+      <text x="675" y="28" text-anchor="middle" font-size="13" font-weight="600" fill="currentColor"
+            opacity=".7">After commit — asynchronous</text>
+      <line x1="547" y1="52" x2="547" y2="560" stroke="currentColor" stroke-width="1.5"
+            stroke-dasharray="2 6" opacity=".4"/>
+      <text x="547" y="580" text-anchor="middle" font-size="11.5" fill="currentColor" opacity=".55">
+        commit boundary</text>
 
-      <!-- ── Row 1 : A1 Trigger + AQ ─────────────────────────────────────── -->
-      <g font-size="12">
-        <rect x="14" y="92" width="9" height="9" fill="var(--c-aq)"/>
-        <text x="30" y="100.5" font-size="12" font-weight="600" fill="var(--c-aq)">A1 · Trigger + AQ</text>
+      <!-- ══ Row 1 : A1 Trigger + AQ ══════════════════════════════════════ -->
+      <g>
+        <rect x="15" y="65" width="930" height="110" rx="12" fill="var(--c-aq)" opacity=".06"/>
+        <rect x="14" y="115" width="10" height="10" rx="2" fill="var(--c-aq)"/>
+        <text x="32" y="124" font-size="13" font-weight="700" fill="var(--c-aq)">A1 · Trigger + AQ</text>
 
-        <rect x="70" y="85" width="150" height="46" rx="4" fill="none" stroke="currentColor" stroke-width="1.4"/>
-        <text x="145" y="105" text-anchor="middle">TXN_A1 write</text>
-        <text x="145" y="120" text-anchor="middle" opacity=".65" font-size="10.5">(commit)</text>
+        <rect x="110" y="85" width="150" height="70" rx="8" fill="none" stroke="var(--c-aq)" stroke-width="1.6"/>
+        <text x="185" y="115" text-anchor="middle" font-size="12.5">TXN_A1 write</text>
+        <text x="185" y="132" text-anchor="middle" opacity=".65" font-size="10.5">(commit)</text>
 
-        <line x1="220" y1="108" x2="253" y2="108" stroke="currentColor" stroke-width="1.4" marker-end="url(#mc-arrow)"/>
-        <text x="236" y="98" text-anchor="middle" font-size="10.5" opacity=".8">fires</text>
+        <text x="290" y="78" text-anchor="middle" font-size="10.5" opacity=".8">trigger fires</text>
+        <line x1="260" y1="120" x2="318" y2="120" stroke="var(--c-aq)" stroke-width="1.6" marker-end="url(#mc-arrow)"/>
 
-        <rect x="253" y="80" width="167" height="56" rx="4" fill="none" stroke="var(--bad)" stroke-width="2.6"/>
-        <text x="336" y="103" text-anchor="middle" fill="var(--bad)" font-weight="600">Trigger → AQ enqueue</text>
-        <text x="336" y="119" text-anchor="middle" fill="var(--bad)" font-size="10.5">F8: broke 40% of payments</text>
+        <rect x="320" y="80" width="200" height="80" rx="8" fill="none" stroke="var(--bad)" stroke-width="2.8"/>
+        <text x="420" y="108" text-anchor="middle" fill="var(--bad)" font-size="12.5" font-weight="700">Trigger → AQ</text>
+        <text x="420" y="126" text-anchor="middle" fill="var(--bad)" font-size="11">enqueue (ON_COMMIT)</text>
+        <text x="420" y="146" text-anchor="middle" fill="var(--bad)" font-size="10.5" font-weight="600">F8: 40% of payments failed</text>
 
-        <line x1="420" y1="108" x2="453" y2="108" stroke="currentColor" stroke-width="1.4" marker-end="url(#mc-arrow)"/>
+        <text x="560" y="78" text-anchor="middle" font-size="10.5" opacity=".8">dequeue</text>
+        <line x1="520" y1="120" x2="573" y2="120" stroke="var(--c-aq)" stroke-width="1.6" marker-end="url(#mc-arrow)"/>
 
-        <rect x="453" y="85" width="167" height="46" rx="4" fill="none" stroke="currentColor" stroke-width="1.4"/>
-        <text x="536" y="103" text-anchor="middle">Bridge: batch dequeue</text>
-        <text x="536" y="118" text-anchor="middle" opacity=".65" font-size="10.5">blocking wait, ≤500/batch</text>
+        <rect x="575" y="85" width="200" height="70" rx="8" fill="none" stroke="var(--c-aq)" stroke-width="1.6"/>
+        <text x="675" y="112" text-anchor="middle" font-size="12">Bridge: batch dequeue</text>
+        <text x="675" y="130" text-anchor="middle" opacity=".65" font-size="10.5">blocking wait, ≤500/batch</text>
 
-        <line x1="620" y1="108" x2="653" y2="108" stroke="currentColor" stroke-width="1.4" marker-end="url(#mc-arrow)"/>
+        <text x="795" y="78" text-anchor="middle" font-size="10.5" opacity=".8">publish</text>
+        <line x1="775" y1="120" x2="813" y2="120" stroke="var(--c-aq)" stroke-width="1.6" marker-end="url(#mc-arrow)"/>
 
-        <rect x="653" y="85" width="110" height="46" rx="4" fill="none" stroke="currentColor" stroke-width="1.4"/>
-        <text x="708" y="108" text-anchor="middle" font-weight="600">Kafka</text>
+        <rect x="815" y="90" width="115" height="60" rx="8" fill="var(--c-aq)" opacity=".14"/>
+        <rect x="815" y="90" width="115" height="60" rx="8" fill="none" stroke="var(--c-aq)" stroke-width="1.6"/>
+        <text x="872" y="125" text-anchor="middle" font-size="13" font-weight="700">Kafka</text>
       </g>
 
-      <!-- ── Row 2 : A2 Outbox ──────────────────────────────────────────── -->
-      <g font-size="12">
-        <rect x="14" y="182" width="9" height="9" fill="var(--c-outbox)"/>
-        <text x="30" y="190.5" font-size="12" font-weight="600" fill="var(--c-outbox)">A2 · Outbox</text>
+      <!-- ══ Row 2 : A2 Outbox ═══════════════════════════════════════════ -->
+      <g>
+        <rect x="15" y="195" width="930" height="110" rx="12" fill="var(--c-outbox)" opacity=".06"/>
+        <rect x="14" y="245" width="10" height="10" rx="2" fill="var(--c-outbox)"/>
+        <text x="32" y="254" font-size="13" font-weight="700" fill="var(--c-outbox)">A2 · Application Outbox</text>
 
-        <rect x="70" y="175" width="150" height="46" rx="4" fill="none" stroke="currentColor" stroke-width="1.4"/>
-        <text x="145" y="195" text-anchor="middle">TXN_A1 write</text>
-        <text x="145" y="210" text-anchor="middle" opacity=".65" font-size="10.5">(commit)</text>
+        <rect x="110" y="215" width="150" height="70" rx="8" fill="none" stroke="var(--c-outbox)" stroke-width="1.6"/>
+        <text x="185" y="245" text-anchor="middle" font-size="12.5">TXN_A1 write</text>
+        <text x="185" y="262" text-anchor="middle" opacity=".65" font-size="10.5">(commit)</text>
 
-        <line x1="220" y1="198" x2="253" y2="198" stroke="currentColor" stroke-width="1.4" marker-end="url(#mc-arrow)"/>
-        <text x="236" y="188" text-anchor="middle" font-size="10.5" opacity=".8">app writes</text>
+        <text x="290" y="208" text-anchor="middle" font-size="10.5" opacity=".8">app writes 2nd row</text>
+        <line x1="260" y1="250" x2="318" y2="250" stroke="var(--c-outbox)" stroke-width="1.6" marker-end="url(#mc-arrow)"/>
 
-        <rect x="253" y="175" width="167" height="46" rx="4" fill="none" stroke="currentColor" stroke-width="1.4"/>
-        <text x="336" y="195" text-anchor="middle">Outbox row</text>
-        <text x="336" y="210" text-anchor="middle" opacity=".65" font-size="10.5">same transaction</text>
+        <rect x="320" y="215" width="200" height="70" rx="8" fill="none" stroke="var(--c-outbox)" stroke-width="1.6"/>
+        <text x="420" y="245" text-anchor="middle" font-size="12.5">Outbox row</text>
+        <text x="420" y="262" text-anchor="middle" opacity=".65" font-size="10.5">same transaction</text>
 
-        <line x1="420" y1="198" x2="453" y2="198" stroke="currentColor" stroke-width="1.4" marker-end="url(#mc-arrow)"/>
+        <text x="560" y="208" text-anchor="middle" font-size="10.5" opacity=".8">poll</text>
+        <line x1="520" y1="250" x2="573" y2="250" stroke="var(--c-outbox)" stroke-width="1.6" marker-end="url(#mc-arrow)"/>
 
-        <rect x="453" y="175" width="167" height="46" rx="4" fill="none" stroke="currentColor" stroke-width="1.4"/>
-        <text x="536" y="195" text-anchor="middle">Relay polls table</text>
-        <text x="536" y="210" text-anchor="middle" opacity=".65" font-size="10.5">every 200 ms</text>
+        <rect x="575" y="215" width="200" height="70" rx="8" fill="none" stroke="var(--c-outbox)" stroke-width="1.6"/>
+        <text x="675" y="245" text-anchor="middle" font-size="12">Relay polls the table</text>
+        <text x="675" y="262" text-anchor="middle" opacity=".65" font-size="10.5">every 200 ms</text>
 
-        <line x1="620" y1="198" x2="653" y2="198" stroke="currentColor" stroke-width="1.4" marker-end="url(#mc-arrow)"/>
+        <text x="795" y="208" text-anchor="middle" font-size="10.5" opacity=".8">publish</text>
+        <line x1="775" y1="250" x2="813" y2="250" stroke="var(--c-outbox)" stroke-width="1.6" marker-end="url(#mc-arrow)"/>
 
-        <rect x="653" y="175" width="110" height="46" rx="4" fill="none" stroke="currentColor" stroke-width="1.4"/>
-        <text x="708" y="198" text-anchor="middle" font-weight="600">Kafka</text>
+        <rect x="815" y="220" width="115" height="60" rx="8" fill="var(--c-outbox)" opacity=".14"/>
+        <rect x="815" y="220" width="115" height="60" rx="8" fill="none" stroke="var(--c-outbox)" stroke-width="1.6"/>
+        <text x="872" y="255" text-anchor="middle" font-size="13" font-weight="700">Kafka</text>
       </g>
 
-      <!-- ── Row 3 : A3 CDC ─────────────────────────────────────────────── -->
-      <g font-size="12">
-        <rect x="14" y="272" width="9" height="9" fill="var(--c-cdc)"/>
-        <text x="30" y="280.5" font-size="12" font-weight="600" fill="var(--c-cdc)">A3 · CDC</text>
+      <!-- ══ Row 3 : A3 CDC ══════════════════════════════════════════════ -->
+      <g>
+        <rect x="15" y="325" width="930" height="110" rx="12" fill="var(--c-cdc)" opacity=".06"/>
+        <rect x="14" y="375" width="10" height="10" rx="2" fill="var(--c-cdc)"/>
+        <text x="32" y="384" font-size="13" font-weight="700" fill="var(--c-cdc)">A3 · Log-based CDC</text>
 
-        <rect x="70" y="265" width="150" height="46" rx="4" fill="none" stroke="currentColor" stroke-width="1.4"/>
-        <text x="145" y="285" text-anchor="middle">TXN_A1 write</text>
-        <text x="145" y="300" text-anchor="middle" opacity=".65" font-size="10.5">(commit)</text>
+        <rect x="110" y="345" width="150" height="70" rx="8" fill="none" stroke="var(--c-cdc)" stroke-width="1.6"/>
+        <text x="185" y="375" text-anchor="middle" font-size="12.5">TXN_A1 write</text>
+        <text x="185" y="392" text-anchor="middle" opacity=".65" font-size="10.5">(commit)</text>
 
-        <rect x="253" y="265" width="167" height="46" rx="4" fill="none" stroke="currentColor"
-              stroke-width="1.2" stroke-dasharray="4 3" opacity=".5"/>
-        <text x="336" y="292" text-anchor="middle" opacity=".55" font-style="italic">— nothing added —</text>
+        <rect x="320" y="345" width="200" height="70" rx="8" fill="none" stroke="currentColor"
+              stroke-width="1.3" stroke-dasharray="5 4" opacity=".45"/>
+        <text x="420" y="384" text-anchor="middle" opacity=".55" font-style="italic" font-size="12">— nothing added —</text>
 
-        <line x1="420" y1="288" x2="453" y2="288" stroke="currentColor" stroke-width="1.4" stroke-dasharray="1 4" marker-end="url(#mc-arrow)"/>
-        <text x="436" y="278" text-anchor="middle" font-size="10.5" opacity=".8">redo log</text>
+        <text x="560" y="338" text-anchor="middle" font-size="10.5" opacity=".8">reads redo log</text>
+        <line x1="520" y1="380" x2="573" y2="380" stroke="var(--c-cdc)" stroke-width="1.6"
+              stroke-dasharray="1 5" marker-end="url(#mc-arrow)"/>
 
-        <rect x="453" y="265" width="167" height="46" rx="4" fill="none" stroke="currentColor" stroke-width="1.4"/>
-        <text x="536" y="285" text-anchor="middle">Debezium reads log</text>
-        <text x="536" y="300" text-anchor="middle" opacity=".65" font-size="10.5">LogMiner, ~seconds</text>
+        <rect x="575" y="345" width="200" height="70" rx="8" fill="none" stroke="var(--c-cdc)" stroke-width="1.6"/>
+        <text x="675" y="372" text-anchor="middle" font-size="12">Debezium / LogMiner</text>
+        <text x="675" y="390" text-anchor="middle" opacity=".65" font-size="10.5">mining cadence, ~seconds</text>
 
-        <line x1="620" y1="288" x2="653" y2="288" stroke="currentColor" stroke-width="1.4" marker-end="url(#mc-arrow)"/>
+        <text x="795" y="338" text-anchor="middle" font-size="10.5" opacity=".8">publish</text>
+        <line x1="775" y1="380" x2="813" y2="380" stroke="var(--c-cdc)" stroke-width="1.6" marker-end="url(#mc-arrow)"/>
 
-        <rect x="653" y="265" width="110" height="46" rx="4" fill="none" stroke="currentColor" stroke-width="1.4"/>
-        <text x="708" y="288" text-anchor="middle" font-weight="600">Kafka</text>
+        <rect x="815" y="350" width="115" height="60" rx="8" fill="var(--c-cdc)" opacity=".14"/>
+        <rect x="815" y="350" width="115" height="60" rx="8" fill="none" stroke="var(--c-cdc)" stroke-width="1.6"/>
+        <text x="872" y="385" text-anchor="middle" font-size="13" font-weight="700">Kafka</text>
       </g>
 
-      <!-- ── Row 4 : HYBRID ─────────────────────────────────────────────── -->
-      <g font-size="12">
-        <rect x="14" y="362" width="9" height="9" fill="var(--c-hybrid)"/>
-        <text x="30" y="370.5" font-size="12" font-weight="600" fill="var(--c-hybrid)">HYBRID</text>
+      <!-- ══ Row 4 : HYBRID ══════════════════════════════════════════════ -->
+      <g>
+        <rect x="15" y="455" width="930" height="110" rx="12" fill="var(--c-hybrid)" opacity=".06"/>
+        <rect x="14" y="505" width="10" height="10" rx="2" fill="var(--c-hybrid)"/>
+        <text x="32" y="514" font-size="13" font-weight="700" fill="var(--c-hybrid)">HYBRID · Outbox + CDC</text>
 
-        <rect x="70" y="355" width="150" height="46" rx="4" fill="none" stroke="currentColor" stroke-width="1.4"/>
-        <text x="145" y="375" text-anchor="middle">TXN_A1 write</text>
-        <text x="145" y="390" text-anchor="middle" opacity=".65" font-size="10.5">(commit)</text>
+        <rect x="110" y="475" width="150" height="70" rx="8" fill="none" stroke="var(--c-hybrid)" stroke-width="1.6"/>
+        <text x="185" y="505" text-anchor="middle" font-size="12.5">TXN_A1 write</text>
+        <text x="185" y="522" text-anchor="middle" opacity=".65" font-size="10.5">(commit)</text>
 
-        <line x1="220" y1="378" x2="253" y2="378" stroke="currentColor" stroke-width="1.4" marker-end="url(#mc-arrow)"/>
-        <text x="236" y="368" text-anchor="middle" font-size="10.5" opacity=".8">app writes</text>
+        <text x="290" y="468" text-anchor="middle" font-size="10.5" opacity=".8">app writes 2nd row</text>
+        <line x1="260" y1="510" x2="318" y2="510" stroke="var(--c-hybrid)" stroke-width="1.6" marker-end="url(#mc-arrow)"/>
 
-        <rect x="253" y="355" width="167" height="46" rx="4" fill="none" stroke="currentColor" stroke-width="1.4"/>
-        <text x="336" y="375" text-anchor="middle">Outbox row</text>
-        <text x="336" y="390" text-anchor="middle" opacity=".65" font-size="10.5">same transaction</text>
+        <rect x="320" y="475" width="200" height="70" rx="8" fill="none" stroke="var(--c-hybrid)" stroke-width="1.6"/>
+        <text x="420" y="505" text-anchor="middle" font-size="12.5">Outbox row</text>
+        <text x="420" y="522" text-anchor="middle" opacity=".65" font-size="10.5">same transaction</text>
 
-        <line x1="420" y1="378" x2="453" y2="378" stroke="currentColor" stroke-width="1.4" stroke-dasharray="1 4" marker-end="url(#mc-arrow)"/>
-        <text x="436" y="368" text-anchor="middle" font-size="10.5" opacity=".8">redo log</text>
+        <text x="560" y="468" text-anchor="middle" font-size="10.5" opacity=".8">reads redo log</text>
+        <line x1="520" y1="510" x2="573" y2="510" stroke="var(--c-hybrid)" stroke-width="1.6"
+              stroke-dasharray="1 5" marker-end="url(#mc-arrow)"/>
 
-        <rect x="453" y="355" width="167" height="46" rx="4" fill="none" stroke="currentColor" stroke-width="1.4"/>
-        <text x="536" y="373" text-anchor="middle">Debezium reads log</text>
-        <text x="536" y="388" text-anchor="middle" opacity=".65" font-size="10.5">EventRouter, outbox table</text>
+        <rect x="575" y="475" width="200" height="70" rx="8" fill="none" stroke="var(--c-hybrid)" stroke-width="1.6"/>
+        <text x="675" y="502" text-anchor="middle" font-size="12">Debezium EventRouter</text>
+        <text x="675" y="520" text-anchor="middle" opacity=".65" font-size="10.5">reads the outbox table's log</text>
 
-        <line x1="620" y1="378" x2="653" y2="378" stroke="currentColor" stroke-width="1.4" marker-end="url(#mc-arrow)"/>
+        <text x="795" y="468" text-anchor="middle" font-size="10.5" opacity=".8">publish</text>
+        <line x1="775" y1="510" x2="813" y2="510" stroke="var(--c-hybrid)" stroke-width="1.6" marker-end="url(#mc-arrow)"/>
 
-        <rect x="653" y="355" width="110" height="46" rx="4" fill="none" stroke="currentColor" stroke-width="1.4"/>
-        <text x="708" y="378" text-anchor="middle" font-weight="600">Kafka</text>
+        <rect x="815" y="480" width="115" height="60" rx="8" fill="var(--c-hybrid)" opacity=".14"/>
+        <rect x="815" y="480" width="115" height="60" rx="8" fill="none" stroke="var(--c-hybrid)" stroke-width="1.6"/>
+        <text x="872" y="515" text-anchor="middle" font-size="13" font-weight="700">Kafka</text>
       </g>
     </svg>
     <figcaption class="muted" style="margin-top:.5rem">Only the trigger method (row 1) places a capture
-      step inside the same commit as the payment — highlighted, because fault F8 broke exactly that
-      step and 40% of payments failed with it. The outbox and hybrid methods also write inside the
+      step inside the same commit as the payment — highlighted in red, because fault F8 broke exactly
+      that step and 40% of payments failed with it. The outbox and hybrid methods also write inside the
       commit, but to their own table, not shared business logic. CDC adds nothing inside the commit at
       all — its cost shows up later, in how much redo Debezium has to scan (§2, claim C2).</figcaption>
   </figure>
