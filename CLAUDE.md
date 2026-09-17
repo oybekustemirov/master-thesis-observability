@@ -112,4 +112,3 @@ Verification evidence required:
 Stop condition:
 Do not mark complete, commit, or push while any gate fails. Report blockers instead of relaxing the contract.
 ```
-

@@ -8,4 +8,3 @@ These rules apply to every coding agent working in this repository.
 4. A visual task is not complete after code generation. Validate all required viewports, direct hash links, overflow, text collisions, accessibility states, and content preservation.
 5. If any mandatory gate fails, continue fixing. Do not describe the work as complete, professional, polished, or production-ready while a known failure remains.
 6. Do not commit or push unless the user has requested publishing or the active task is an explicit continuation of an already-authorized publish workflow.
-
