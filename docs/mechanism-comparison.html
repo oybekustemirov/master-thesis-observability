@@ -5,110 +5,349 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Event-capture mechanisms — comparison</title>
 <style>
+/* ── 1. Design tokens ─────────────────────────────────────────────── */
+:root {
+  --ground:#F1F3F5; --surface:#FFFFFF; --ink:#101317; --ink-2:#52514E; --ink-3:#85847F;
+  --rule:#DDE1E6; --rule-2:#B8BEC6; --accent:#1F5C8B; --accent-wash:#E8EFF5;
+  --bad:#A3302B; --good:#2C6A4E; --warn:#9A6A00;
+  --bad-wash:#F7E9E8; --good-wash:#E7F1EC; --warn-wash:#F7F0DE;
+  --c-aq:#C24F1E; --c-outbox:#2266b8; --c-cdc:#0f8f61; --c-hybrid:#7147c4;
+  --c-aq-wash:#FBEDE4; --c-outbox-wash:#E7F0FA; --c-cdc-wash:#E4F5EE; --c-hybrid-wash:#F0E9FB;
+
+  --f-display: ui-serif, Georgia, "Times New Roman", serif;
+  --f-body: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --f-mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+
+  --sp-1:.25rem; --sp-2:.5rem; --sp-3:.75rem; --sp-4:1rem; --sp-5:1.5rem; --sp-6:2rem; --sp-7:3rem;
+  --radius-sm:3px; --radius-md:6px; --radius-lg:10px;
+  --content-max:78rem;
+  --nav-h:2.9rem;
+
+  --step--1:.8125rem; --step-0:.9375rem; --step-1:1.05rem; --step-2:1.25rem; --step-3:1.55rem; --step-4:clamp(1.6rem,3.6vw,2.25rem);
+}
+@media (prefers-color-scheme: dark) {
   :root {
-    --ground:#F1F3F5; --surface:#FFFFFF; --ink:#101317; --ink-2:#52514E; --ink-3:#85847F;
-    --rule:#DDE1E6; --rule-2:#B8BEC6; --accent:#1F5C8B; --accent-wash:#E8EFF5;
-    --bad:#A3302B; --good:#2C6A4E; --warn:#9A6A00;
-    --c-aq:#eb6834; --c-outbox:#2a78d6; --c-cdc:#1baf7a; --c-hybrid:#8a5cd6;
-    --f-display: ui-serif, Georgia, "Times New Roman", serif;
-    --f-body: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    --f-mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+    --ground:#121417; --surface:#1A1C20; --ink:#F2F4F6; --ink-2:#B9BDC4; --ink-3:#868B93;
+    --rule:#2C3138; --rule-2:#3E444C; --accent:#7BB4E3; --accent-wash:#1B2732;
+    --bad:#E58880; --good:#79C7A0; --warn:#DFB157;
+    --bad-wash:#2E1D1C; --good-wash:#16261F; --warn-wash:#2A2214;
+    --c-aq:#E28455; --c-outbox:#63A2E8; --c-cdc:#4FC694; --c-hybrid:#AC8AE8;
+    --c-aq-wash:#2A2019; --c-outbox-wash:#182432; --c-cdc-wash:#122A22; --c-hybrid-wash:#241C33;
   }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --ground:#121417; --surface:#1A1C20; --ink:#F2F4F6; --ink-2:#B9BDC4; --ink-3:#868B93;
-      --rule:#2C3138; --rule-2:#3E444C; --accent:#6FAAD9; --accent-wash:#1B2732;
-      --bad:#E07B73; --good:#6DBE96; --warn:#D6A544;
-      --c-aq:#d95926; --c-outbox:#3987e5; --c-cdc:#199e70; --c-hybrid:#a081e0;
-    }
-  }
-  * { box-sizing:border-box; }
-  body { margin:0; background:var(--ground); color:var(--ink); font-family:var(--f-body);
-         font-size:15px; line-height:1.55; -webkit-font-smoothing:antialiased; }
-  .wrap { max-width:82rem; margin:0 auto; padding:1.6rem 1.2rem 6rem; }
+}
+* { box-sizing:border-box; }
+html { -webkit-text-size-adjust:100%; }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior:smooth; } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration:0.001ms !important; animation-iteration-count:1 !important;
+    transition-duration:0.001ms !important; scroll-behavior:auto !important; }
+}
+body { margin:0; background:var(--ground); color:var(--ink); font-family:var(--f-body);
+       font-size:var(--step-0); line-height:1.6; -webkit-font-smoothing:antialiased; }
+.wrap { max-width:var(--content-max); margin:0 auto; padding:0 1.1rem 5rem; }
+main { display:block; }
 
-  header.top { border-bottom:2px solid var(--ink); padding-bottom:1rem; margin-bottom:1.2rem; }
-  .eyebrow { font-family:var(--f-mono); font-size:.66rem; letter-spacing:.14em;
-             text-transform:uppercase; color:var(--ink-3); margin-bottom:.5rem; }
-  h1 { font-family:var(--f-display); font-weight:600; font-size:clamp(1.5rem,3vw,2.1rem);
-       margin:0 0 .3rem; letter-spacing:-.01em; }
-  .sub { color:var(--ink-2); margin:0; max-width:76ch; font-size:.95rem; }
+::selection { background:var(--accent); color:#fff; }
+a { color:var(--accent); }
+:focus-visible { outline:2.5px solid var(--accent); outline-offset:2px; border-radius:2px; }
 
-  nav.jump { position:sticky; top:0; z-index:10; background:var(--ground);
-             display:flex; gap:.3rem; flex-wrap:wrap; padding:.8rem 0; margin-bottom:.6rem;
-             border-bottom:1px solid var(--rule); }
-  nav.jump a { font-family:var(--f-mono); font-size:.72rem; text-decoration:none;
-    color:var(--ink-2); background:var(--surface); border:1px solid var(--rule-2);
-    padding:.32rem .6rem; border-radius:3px; }
-  nav.jump a:hover { color:var(--accent); border-color:var(--accent); }
+.sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden;
+           clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+.skip-link { position:absolute; left:-999px; top:0; background:var(--ink); color:var(--ground);
+             padding:.6rem 1rem; z-index:200; font-family:var(--f-mono); font-size:.8rem;
+             border-radius:0 0 var(--radius-sm) 0; }
+.skip-link:focus { left:0; }
 
-  .box { background:var(--surface); border:1px solid var(--rule); padding:1.2rem 1.3rem;
-         margin-bottom:1.3rem; scroll-margin-top:4.2rem; }
-  .box h2 { font-family:var(--f-display); font-size:1.2rem; margin:0 0 .3rem; font-weight:600; }
-  .box .kicker { font-family:var(--f-mono); font-size:.66rem; letter-spacing:.1em;
-                 text-transform:uppercase; color:var(--accent); margin-bottom:.3rem; }
-  .box .note { color:var(--ink-2); font-size:.9rem; margin:0 0 1rem; max-width:78ch; }
-  .box .note strong { color:var(--ink); }
+code { font-family:var(--f-mono); font-size:.85em; background:var(--accent-wash);
+       padding:.06em .35em; border-radius:2px; overflow-wrap:break-word; }
+pre code { display:block; padding:.7rem .8rem; overflow-x:auto; white-space:pre-wrap; word-break:break-word; }
+.muted { color:var(--ink-3); font-size:.85rem; }
 
-  table { border-collapse:collapse; width:100%; font-size:.86rem; }
-  th, td { text-align:left; padding:.5rem .7rem; border-bottom:1px solid var(--rule);
-           vertical-align:top; }
-  thead th { font-family:var(--f-mono); font-size:.62rem; letter-spacing:.07em;
-             text-transform:uppercase; color:var(--ink-2); font-weight:500;
-             border-bottom:1px solid var(--rule-2); white-space:nowrap; }
-  tbody tr:last-child td { border-bottom:none; }
-  td.num, th.num { text-align:right; font-variant-numeric:tabular-nums; font-family:var(--f-mono); }
-  .scroll { overflow-x:auto; }
-  .hi { background:var(--accent-wash); font-weight:600; }
-  .good-txt { color:var(--good); font-weight:600; }
-  .bad-txt { color:var(--bad); font-weight:600; }
-  .ns { color:var(--ink-3); font-style:italic; }
+/* ── 2. Mechanism identity (colour + shape, never colour alone) ─────── */
+.mech-swatch { width:.68rem; height:.68rem; flex:none; display:inline-block; margin-right:.4rem;
+               vertical-align:-1px; }
+.mech-swatch.aq { border-radius:50%; background:var(--c-aq); }
+.mech-swatch.outbox { border-radius:2px; background:var(--c-outbox); }
+.mech-swatch.cdc { background:var(--c-cdc); clip-path:polygon(50% 3%,97% 97%,3% 97%); }
+.mech-swatch.hybrid { background:var(--c-hybrid); transform:rotate(45deg) scale(.82); border-radius:1px; }
+.mech-aq { color:var(--c-aq); } .mech-outbox { color:var(--c-outbox); }
+.mech-cdc { color:var(--c-cdc); } .mech-hybrid { color:var(--c-hybrid); }
 
-  .barrow { display:grid; grid-template-columns:9rem 1fr auto; gap:.7rem; align-items:center;
-            padding:.4rem 0; }
-  .barrow .lbl { font-size:.82rem; font-weight:600; }
-  .barrow .track { background:var(--rule); border-radius:3px; height:20px; position:relative;
-                   overflow:hidden; }
-  .barrow .track span { display:block; height:100%; border-radius:3px; }
-  .barrow .val { font-family:var(--f-mono); font-size:.82rem; white-space:nowrap;
-                 font-variant-numeric:tabular-nums; min-width:5.5rem; text-align:right; }
+/* ── 3. Hero ──────────────────────────────────────────────────────── */
+header.hero { padding:1.4rem 0 1.2rem; border-bottom:2px solid var(--ink); margin-bottom:1rem; }
+.eyebrow { font-family:var(--f-mono); font-size:.66rem; letter-spacing:.14em;
+           text-transform:uppercase; color:var(--ink-3); margin-bottom:.6rem; }
+h1 { font-family:var(--f-display); font-weight:600; font-size:var(--step-4);
+     margin:0 0 .5rem; letter-spacing:-.01em; max-width:24ch; }
+.hero-sub { color:var(--ink-2); margin:0 0 1.1rem; max-width:72ch; font-size:.98rem; }
 
-  .pill { display:inline-block; font-size:.7rem; padding:.12rem .5rem; border-radius:3px;
-          border:1px solid currentColor; font-weight:600; white-space:nowrap; }
-  .pill.good { color:var(--good); } .pill.bad { color:var(--bad); } .pill.warn { color:var(--warn); }
+.hero-stats { display:flex; flex-wrap:wrap; gap:1.6rem; margin:0 0 1.3rem; padding:.9rem 0;
+              border-top:1px solid var(--rule); border-bottom:1px solid var(--rule); }
+.hero-stats .stat { min-width:9rem; }
+.hero-stats .stat-num { display:block; font-family:var(--f-display); font-weight:600;
+                        font-size:1.7rem; line-height:1.1; }
+.hero-stats .stat-label { display:block; font-size:.76rem; color:var(--ink-2); margin-top:.15rem; }
 
-  details.qa { border:1px solid var(--rule); background:var(--accent-wash); padding:.7rem .9rem;
-               margin-bottom:.55rem; border-radius:4px; }
-  details.qa summary { cursor:pointer; font-weight:600; font-size:.9rem; color:var(--accent); }
-  details.qa summary::marker { color:var(--accent); }
-  details.qa .ans { margin-top:.6rem; padding-top:.6rem; border-top:1px dashed var(--rule-2); }
-  details.qa .ans p { margin:.3rem 0; color:var(--ink); font-size:.88rem; }
-  details.qa .ans p.say { font-style:italic; color:var(--ink-2); }
-  details.qa .quote { font-family:var(--f-mono); font-size:.78rem; color:var(--ink-3);
-                       margin-bottom:.4rem; }
+.mech-legend { display:grid; grid-template-columns:repeat(auto-fit, minmax(15.5rem,1fr));
+               gap:.7rem; margin:0; padding:0; list-style:none; }
+.mech-legend li { border:1px solid var(--rule); border-left-width:4px; background:var(--surface);
+                   padding:.6rem .8rem; border-radius:0 var(--radius-sm) var(--radius-sm) 0; }
+.mech-legend li.aq { border-left-color:var(--c-aq); } .mech-legend li.outbox { border-left-color:var(--c-outbox); }
+.mech-legend li.cdc { border-left-color:var(--c-cdc); } .mech-legend li.hybrid { border-left-color:var(--c-hybrid); }
+.mech-legend .name { font-weight:700; font-size:.86rem; display:flex; align-items:center; margin-bottom:.2rem; }
+.mech-legend .desc { font-size:.83rem; color:var(--ink-2); margin:0; }
 
-  code { font-family:var(--f-mono); font-size:.85em; background:var(--accent-wash);
-         padding:.06em .3em; border-radius:2px; }
-  .muted { color:var(--ink-3); font-size:.85rem; }
-  footer { margin-top:2.4rem; border-top:1px solid var(--rule-2); padding-top:.8rem;
-           font-family:var(--f-mono); font-size:.68rem; color:var(--ink-3); }
+/* ── 4. Decisive-findings strip (executive scan) ─────────────────── */
+.findings { display:grid; grid-template-columns:repeat(auto-fit, minmax(15.5rem,1fr));
+            gap:.7rem; margin:0 0 1.2rem; padding:0; list-style:none; }
+.finding-card { background:var(--surface); border:1px solid var(--rule); border-radius:var(--radius-md);
+                padding:.85rem .95rem; display:flex; flex-direction:column; gap:.35rem; }
+.finding-card .fc-kicker { font-family:var(--f-mono); font-size:.62rem; letter-spacing:.08em;
+                           text-transform:uppercase; color:var(--ink-3); }
+.finding-card p { margin:0; font-size:.87rem; color:var(--ink); }
+.finding-card p strong { font-variant-numeric:tabular-nums; }
+.finding-card .fc-link { font-family:var(--f-mono); font-size:.72rem; margin-top:auto; text-decoration:none; }
+.finding-card .fc-link:hover, .finding-card .fc-link:focus-visible { text-decoration:underline; }
 
-  .print-hide { }
-  @media print { nav.jump, details.qa { display:none; } }
+/* ── 5. Navigation ────────────────────────────────────────────────── */
+nav.jump { position:sticky; top:0; z-index:20; background:var(--ground);
+           display:flex; gap:.35rem; flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch;
+           padding:.65rem 0; margin-bottom:.7rem; border-bottom:1px solid var(--rule);
+           scrollbar-width:thin; height:var(--nav-h); }
+nav.jump a { font-family:var(--f-mono); font-size:.72rem; text-decoration:none; flex:none;
+             color:var(--ink-2); background:var(--surface); border:1px solid var(--rule-2);
+             padding:.32rem .65rem; border-radius:3px; white-space:nowrap; }
+nav.jump a:hover { color:var(--accent); border-color:var(--accent); }
+nav.jump a[aria-current="location"] { color:var(--surface); background:var(--accent); border-color:var(--accent); }
+
+.part-divider { display:flex; align-items:center; gap:.7rem; margin:1.7rem 0 .9rem;
+                font-family:var(--f-mono); font-size:.68rem; letter-spacing:.1em;
+                text-transform:uppercase; color:var(--ink-3); }
+.part-divider::after { content:""; flex:1; height:1px; background:var(--rule-2); }
+
+/* ── 6. Section box ───────────────────────────────────────────────── */
+.box { background:var(--surface); border:1px solid var(--rule); padding:1.2rem 1.3rem;
+       margin-bottom:1.1rem; scroll-margin-top:calc(var(--nav-h) + .6rem); border-radius:var(--radius-md); }
+.box h2 { font-family:var(--f-display); font-size:1.22rem; margin:0 0 .3rem; font-weight:600; }
+.box h3 { font-family:var(--f-display); font-size:1.02rem; margin:1.5rem 0 .4rem; font-weight:600; }
+.box .kicker { font-family:var(--f-mono); font-size:.66rem; letter-spacing:.1em;
+               text-transform:uppercase; color:var(--accent); margin-bottom:.3rem; }
+.box .note { color:var(--ink-2); font-size:.9rem; margin:0 0 1rem; max-width:78ch; }
+.box .note strong { color:var(--ink); }
+.callout { margin:.9rem 0; padding:.5rem .9rem; border-left:3px solid var(--warn); background:var(--warn-wash);
+           border-radius:0 var(--radius-sm) var(--radius-sm) 0; }
+.callout.bad { border-left-color:var(--bad); background:var(--bad-wash); }
+
+/* ── 7. Tables ────────────────────────────────────────────────────── */
+table { border-collapse:collapse; width:100%; font-size:.86rem; }
+caption { text-align:left; font-size:.8rem; color:var(--ink-3); margin-bottom:.4rem; }
+th, td { text-align:left; padding:.5rem .7rem; border-bottom:1px solid var(--rule); vertical-align:top; }
+thead th { font-family:var(--f-mono); font-size:.62rem; letter-spacing:.07em; text-transform:uppercase;
+           color:var(--ink-2); font-weight:500; border-bottom:1px solid var(--rule-2); white-space:nowrap;
+           background:var(--surface); }
+tbody tr:last-child td { border-bottom:none; }
+td.num, th.num { text-align:right; font-variant-numeric:tabular-nums; font-family:var(--f-mono); }
+tr.group-row th { background:var(--ground); font-family:var(--f-mono); font-size:.66rem;
+                  letter-spacing:.08em; text-transform:uppercase; color:var(--ink-3); text-align:left;
+                  padding-top:.7rem; padding-bottom:.35rem; border-bottom:1px solid var(--rule-2); }
+th[scope="row"] { font-weight:600; }
+
+.best { font-weight:700; }
+.best::before { content:"✓ "; color:var(--good); }
+.risk { color:var(--bad); font-weight:600; }
+.risk::before { content:"▲ "; font-size:.8em; }
+.favorable { color:var(--good); font-weight:600; }
+.ns-tag { color:var(--ink-3); font-style:italic; font-weight:400; }
+
+.legend { display:flex; flex-wrap:wrap; gap:.5rem 1.1rem; font-size:.78rem; color:var(--ink-2);
+          margin:0 0 .9rem; padding:.55rem .75rem; background:var(--ground); border-radius:var(--radius-sm);
+          border:1px solid var(--rule); }
+.legend .li { display:inline-flex; align-items:center; gap:.35rem; white-space:nowrap; }
+.legend .sw { width:.85rem; text-align:center; }
+
+/* ── 8. Scroll regions (tables + diagram): no page-level overflow ──── */
+.scroll-cue { display:none; font-family:var(--f-mono); font-size:.68rem; color:var(--accent);
+              letter-spacing:.03em; margin-bottom:.4rem; align-items:center; gap:.3rem; }
+.scroll-cue::before { content:"↔"; font-size:.95rem; }
+.scroll-region { overflow-x:auto; -webkit-overflow-scrolling:touch; position:relative;
+                 border:1px solid var(--rule); border-radius:var(--radius-md); }
+.scroll-region:focus-visible { outline:2.5px solid var(--accent); outline-offset:1px; }
+.scroll-region table { border:none; }
+.scroll-region.plain { border:none; border-radius:0; }
+@media (max-width:700px) { .scroll-cue { display:inline-flex; } }
+
+/* sticky first column + header on the matrix */
+.matrix-table thead th { position:sticky; top:0; z-index:3; }
+.matrix-table th:first-child, .matrix-table td:first-child {
+  position:sticky; left:0; z-index:2; background:var(--surface);
+  box-shadow:1px 0 0 var(--rule-2); min-width:11.5rem; max-width:15rem;
+}
+.matrix-table tr.group-row th:first-child { z-index:4; }
+
+/* ── 9. Capture-path diagram ──────────────────────────────────────── */
+.diagram-inner { min-width:760px; padding:.4rem; }
+.diagram-inner svg { width:100%; height:auto; display:block; margin:0 auto; font-family:var(--f-body); }
+figcaption.muted { margin-top:.6rem; font-size:.82rem; }
+
+/* ── 10. Evidence charts (latency / redo) ─────────────────────────── */
+.chart { margin:.9rem 0 1.3rem; }
+.chart-title { font-family:var(--f-mono); font-size:.68rem; letter-spacing:.06em; text-transform:uppercase;
+               color:var(--ink-3); margin-bottom:.5rem; }
+.barrow { display:grid; grid-template-columns:6.2rem 1fr auto; gap:.7rem; align-items:center; padding:.3rem 0; }
+.barrow .lbl { font-size:.82rem; font-weight:600; display:flex; align-items:center; }
+.barrow .track { background:var(--rule); border-radius:3px; height:20px; position:relative; overflow:hidden;
+                 background-image:linear-gradient(to right, var(--rule-2) 0 1px, transparent 1px 25%);
+                 background-size:25% 100%; }
+.barrow .track span { display:block; height:100%; border-radius:3px; }
+.barrow .val { font-family:var(--f-mono); font-size:.82rem; white-space:nowrap;
+               font-variant-numeric:tabular-nums; min-width:5.6rem; text-align:right; }
+.chart-axis { display:flex; justify-content:space-between; font-family:var(--f-mono); font-size:.64rem;
+              color:var(--ink-3); margin:.25rem 0 0 6.9rem; padding-right:5.6rem; }
+
+/* ── 11. Evidence callout cards ───────────────────────────────────── */
+.evidence-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(15.5rem,1fr)); gap:.7rem;
+                 margin:1rem 0; }
+.evidence-card { border:1px solid var(--rule); border-radius:var(--radius-md); padding:.75rem .85rem;
+                 background:var(--ground); }
+.evidence-card .ec-kicker { font-family:var(--f-mono); font-size:.62rem; letter-spacing:.08em;
+                            text-transform:uppercase; color:var(--warn); margin-bottom:.3rem; }
+.evidence-card p { margin:0 0 .4rem; font-size:.84rem; }
+.evidence-card a { font-family:var(--f-mono); font-size:.72rem; }
+
+/* ── 12. Recommendation cards ─────────────────────────────────────── */
+.reco-grid { list-style:none; margin:0 0 1rem; padding:0; display:grid;
+             grid-template-columns:repeat(auto-fit, minmax(16.5rem,1fr)); gap:.8rem; }
+.reco-card { border:1px solid var(--rule); border-radius:var(--radius-md); padding:.9rem 1rem; }
+.reco-card dt { font-family:var(--f-mono); font-size:.62rem; letter-spacing:.08em; text-transform:uppercase;
+                color:var(--ink-3); margin:.6rem 0 .15rem; }
+.reco-card dt:first-child { margin-top:0; }
+.reco-card dd { margin:0; }
+.reco-card .reco-if { font-size:.9rem; color:var(--ink); }
+.reco-card .reco-then { display:flex; align-items:center; gap:.4rem; font-weight:700; font-size:1.02rem; }
+.reco-card .reco-then .mech-swatch { width:.8rem; height:.8rem; }
+.reco-card .reco-because { font-size:.85rem; color:var(--ink-2); }
+
+/* ── 13. Q&A ──────────────────────────────────────────────────────── */
+details.qa { border:1px solid var(--rule); background:var(--accent-wash); padding:.7rem .9rem;
+             margin-bottom:.55rem; border-radius:4px; }
+details.qa summary { cursor:pointer; font-weight:600; font-size:.9rem; color:var(--accent);
+                      padding:.15rem 0; }
+details.qa summary::marker { color:var(--accent); }
+details.qa summary:focus-visible { outline-offset:4px; }
+details.qa .ans { margin-top:.6rem; padding-top:.6rem; border-top:1px dashed var(--rule-2); }
+details.qa .ans p { margin:.3rem 0; color:var(--ink); font-size:.88rem; }
+details.qa .ans p.say { font-style:italic; color:var(--ink-2); }
+details.qa .quote { font-family:var(--f-mono); font-size:.78rem; color:var(--ink-3); margin-bottom:.4rem; }
+
+/* ── 14. Config disclosures ───────────────────────────────────────── */
+details.disclosure { border:1px solid var(--rule); border-radius:var(--radius-md); padding:0 .9rem;
+                      margin:.8rem 0; }
+details.disclosure summary { cursor:pointer; font-weight:600; font-size:.88rem; padding:.65rem 0;
+                              font-family:var(--f-display); }
+details.disclosure summary:focus-visible { outline-offset:4px; }
+details.disclosure .disclosure-body { padding-bottom:.9rem; }
+@media print {
+  details.disclosure:not(.qa) > *:not(summary) { display:block !important; }
+  details.disclosure summary::after { content:" (expanded for print)"; font-size:.7em; color:var(--ink-3); }
+}
+
+.pill { display:inline-block; font-size:.7rem; padding:.12rem .5rem; border-radius:3px;
+        border:1px solid currentColor; font-weight:600; white-space:nowrap; }
+.pill.good { color:var(--good); } .pill.bad { color:var(--bad); } .pill.warn { color:var(--warn); }
+
+/* ── utility: spacing/weight variants used sparingly instead of style= ── */
+.mt-08 { margin-top:.8rem; } .mt-1 { margin-top:1rem; }
+.fig-tight { margin:0 0 .4rem; }
+.text-regular { font-weight:400; }
+.text-small { font-size:.8rem; }
+
+footer { margin-top:2.2rem; border-top:1px solid var(--rule-2); padding-top:.8rem;
+         font-family:var(--f-mono); font-size:.68rem; color:var(--ink-3); }
+
+/* ── 15. Print ────────────────────────────────────────────────────── */
+@media print {
+  nav.jump, details.qa, .skip-link, .scroll-cue { display:none !important; }
+  body { background:#fff; color:#000; }
+  .box { border:1px solid #999; break-inside:avoid; }
+  .scroll-region { overflow:visible; border:none; }
+  .matrix-table th:first-child, .matrix-table td:first-child { position:static; box-shadow:none; }
+  a { color:#000; text-decoration:underline; }
+}
+
+/* ── 16. Small-viewport guarantees (360px+) ───────────────────────── */
+@media (max-width:420px) {
+  .wrap { padding:0 .7rem 4rem; }
+  h1 { font-size:1.4rem; }
+  .box { padding:1rem .85rem; }
+  .barrow { grid-template-columns:4.6rem 1fr auto; gap:.4rem; }
+  .chart-axis { margin-left:5.3rem; padding-right:4rem; }
+}
 </style>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to main content</a>
 <div class="wrap">
 
-<header class="top">
+<header class="hero">
   <div class="eyebrow">Chapters 5–6 · event-capture mechanisms for Oracle-backed transaction processing</div>
   <h1>Four ways to capture a state-change event — measured, not estimated</h1>
-  <p class="sub">175 archived experimental cells, ~720,000 transitions. Every comparison below is
-    between modes under identical conditions, on Oracle 26ai Free / Kafka 4.1 / Debezium 3.5.2.
-    Full source: <code>docs/empirical_comparison_results.md</code>.</p>
+  <p class="hero-sub">Every comparison below is between modes under identical conditions, on Oracle
+    26ai Free / Kafka 4.1 / Debezium 3.5.2. Full source:
+    <code>docs/empirical_comparison_results.md</code>.</p>
+
+  <div class="hero-stats" role="group" aria-label="Experiment scale">
+    <div class="stat"><span class="stat-num">175</span><span class="stat-label">archived experimental cells</span></div>
+    <div class="stat"><span class="stat-num">~720,000</span><span class="stat-label">measured state transitions</span></div>
+    <div class="stat"><span class="stat-num">4</span><span class="stat-label">capture mechanisms, identical workload</span></div>
+  </div>
+
+  <h2 class="sr-only">Decision in one view</h2>
+  <ul class="mech-legend">
+    <li class="aq"><p class="name"><span class="mech-swatch aq" aria-hidden="true"></span>
+      <span class="mech-aq">A1 · Trigger + AQ</span></p>
+      <p class="desc">Fastest, but highest redo and availability coupling.</p></li>
+    <li class="outbox"><p class="name"><span class="mech-swatch outbox" aria-hidden="true"></span>
+      <span class="mech-outbox">A2 · Application Outbox</span></p>
+      <p class="desc">Moderate latency, application-writer contract required.</p></li>
+    <li class="cdc"><p class="name"><span class="mech-swatch cdc" aria-hidden="true"></span>
+      <span class="mech-cdc">A3 · Log-based CDC</span></p>
+      <p class="desc">Near-zero writer overhead and full writer coverage, but seconds of latency and semantic logging risk.</p></li>
+    <li class="hybrid"><p class="name"><span class="mech-swatch hybrid" aria-hidden="true"></span>
+      <span class="mech-hybrid">HYBRID · Outbox + CDC</span></p>
+      <p class="desc">Atomic outbox capture with CDC relay, but coverage still depends on every writer honouring the contract.</p></li>
+  </ul>
 </header>
 
-<nav class="jump">
+<h2 class="sr-only">Decisive findings</h2>
+<ul class="findings" aria-label="Decisive findings, at a glance">
+  <li class="finding-card">
+    <span class="fc-kicker">Silent failure</span>
+    <p><strong>9,003 / 9,003</strong> messages matched the transition count exactly, and
+      two-thirds of the payloads were semantically empty.</p>
+    <a class="fc-link" href="#silent">Full result →</a>
+  </li>
+  <li class="finding-card">
+    <span class="fc-kicker">Writer-bypass coverage — F11</span>
+    <p><span class="mech-aq">AQ</span> &amp; <span class="mech-cdc">CDC</span>: <strong>0%</strong> loss.
+      <span class="mech-outbox">Outbox</span> &amp; <span class="mech-hybrid">Hybrid</span>: <strong>69.0%</strong>
+      loss when a writer bypasses the app.</p>
+    <a class="fc-link" href="#coverage">Full result →</a>
+  </li>
+  <li class="finding-card">
+    <span class="fc-kicker">Availability coupling — F8</span>
+    <p><span class="mech-aq">AQ only</span>: <strong>40%</strong> of payments failed when the
+      capture path broke mid-run.</p>
+    <a class="fc-link" href="#matrix">Full result →</a>
+  </li>
+  <li class="finding-card">
+    <span class="fc-kicker">Refuted predictions</span>
+    <p><strong>Three</strong> predictions made in advance were refuted — two of them contradicting
+      this thesis's own prior analysis.</p>
+    <a class="fc-link" href="#refuted">Full result →</a>
+  </li>
+</ul>
+
+<nav class="jump" aria-label="Section navigation">
   <a href="#matrix">1. Comparison matrix</a>
   <a href="#latency">2. Latency vs. redo</a>
   <a href="#silent">3. Silent failure (CDC)</a>
@@ -120,201 +359,250 @@
   <a href="#qa">9. Q&amp;A / objections</a>
 </nav>
 
+<main id="main">
+
+<div class="part-divider">Part 1 — Comparative evidence</div>
+
 <!-- ═══════════════════════════════════════════════════ 1. MATRIX ═══ -->
 <section class="box" id="matrix">
   <div class="kicker">What is being compared</div>
   <h2>1. The comparison matrix</h2>
   <p class="note">Four mechanisms for the same problem: an Oracle-backed A1 transaction changes
-    state, and something must turn that into an event. <strong>A1</strong> writes it from a PL/SQL
-    trigger onto Oracle AQ. <strong>A2</strong> writes it from the application into a transactional
-    outbox table, relayed by a poller. <strong>A3</strong> writes nothing — Debezium reads the
-    change directly from the redo log via LogMiner. <strong>HYBRID</strong> combines A2's outbox
-    with A3's relay.</p>
-  <div class="scroll">
-    <table>
+    state, and something must turn that into an event. <strong class="mech-aq">A1</strong> writes it
+    from a PL/SQL trigger onto Oracle AQ. <strong class="mech-outbox">A2</strong> writes it from the
+    application into a transactional outbox table, relayed by a poller. <strong class="mech-cdc">A3</strong>
+    writes nothing — Debezium reads the change directly from the redo log via LogMiner.
+    <strong class="mech-hybrid">HYBRID</strong> combines A2's outbox with A3's relay.</p>
+
+  <div class="legend" role="note" aria-label="How to read the matrix">
+    <span class="li"><span class="sw best">✓</span> best on this metric</span>
+    <span class="li"><span class="sw favorable">●</span> favorable / lower cost</span>
+    <span class="li"><span class="sw risk">▲</span> measured risk</span>
+    <span class="li"><span class="ns-tag">n.s.</span> — not statistically significant</span>
+  </div>
+
+  <p class="scroll-cue" id="matrix-cue">Scroll to compare all four mechanisms</p>
+  <div class="scroll-region" tabindex="0" role="region" aria-labelledby="matrix-caption" id="matrix-scroll">
+    <table class="matrix-table">
+      <caption id="matrix-caption">Core comparison of A1 · Trigger+AQ, A2 · Application Outbox, A3 · Log-based CDC, and Hybrid across latency, database cost, reliability, and implementation effort.</caption>
       <thead><tr>
-        <th>Metric</th><th class="num">A1 · Trigger + AQ</th><th class="num">A2 · App Outbox</th>
-        <th class="num">A3 · CDC (Debezium)</th><th class="num">HYBRID</th>
+        <th scope="col">Metric</th>
+        <th scope="col" class="num"><span class="mech-swatch aq" aria-hidden="true"></span>A1 · Trigger + AQ</th>
+        <th scope="col" class="num"><span class="mech-swatch outbox" aria-hidden="true"></span>A2 · App Outbox</th>
+        <th scope="col" class="num"><span class="mech-swatch cdc" aria-hidden="true"></span>A3 · CDC (Debezium)</th>
+        <th scope="col" class="num"><span class="mech-swatch hybrid" aria-hidden="true"></span>HYBRID</th>
       </tr></thead>
       <tbody>
-        <tr><td>End-to-end latency, p50</td><td class="num hi">6 ms</td><td class="num">128 ms</td><td class="num">3,362 ms</td><td class="num">3,186 ms</td></tr>
-        <tr><td>End-to-end latency, p99</td><td class="num">1,017 ms</td><td class="num">1,279 ms</td><td class="num">8,177 ms</td><td class="num">7,539 ms</td></tr>
-        <tr><td>Redo amplification vs control</td><td class="num bad-txt">+171.4%</td><td class="num bad-txt">+110.4%</td><td class="num good-txt">+0.7% <span class="ns">n.s.</span></td><td class="num bad-txt">+84.0%</td></tr>
-        <tr><td>— significance (exact permutation)</td><td class="num">p=0.0079</td><td class="num">p=0.0079</td><td class="num ns">p=0.0952</td><td class="num">p=0.0079</td></tr>
-        <tr><td>OLTP impact, HTTP p95 delta</td><td class="num">+1.55 ms</td><td class="num">+1.64 ms</td><td class="num good-txt">−0.18 ms</td><td class="num">+2.37 ms</td></tr>
-        <tr><td>Extra DB commits / 120s run</td><td class="num bad-txt">+6,758</td><td class="num">+531</td><td class="num good-txt">+101</td><td class="num">+99</td></tr>
-        <tr><td>Loss, clean running</td><td class="num">&lt;33.5 ppm</td><td class="num">&lt;33.3 ppm</td><td class="num">&lt;33.3 ppm</td><td class="num">&lt;33.3 ppm</td></tr>
-        <tr><td>Loss, writer bypasses app (F11)</td><td class="num good-txt">0%</td><td class="num bad-txt">69.0%</td><td class="num good-txt">0%</td><td class="num bad-txt">69.0%¹</td></tr>
-        <tr><td>Availability coupling (F8)</td><td class="num bad-txt">40% payments failed</td><td class="num good-txt">none</td><td class="num good-txt">none</td><td class="num good-txt">none</td></tr>
-        <tr><td>Implementation volume (measured LOC)</td><td class="num">591</td><td class="num">468</td><td class="num hi">175</td><td class="num">253</td></tr>
-        <tr><td>Added dependencies</td><td class="num">2</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+        <tr class="group-row"><th colspan="5" scope="colgroup">Latency</th></tr>
+        <tr><th scope="row">End-to-end latency, p50</th>
+          <td class="num best">6 ms<span class="sr-only"> — best on this metric</span></td>
+          <td class="num">128 ms</td><td class="num">3,362 ms</td><td class="num">3,186 ms</td></tr>
+        <tr><th scope="row">End-to-end latency, p99</th>
+          <td class="num">1,017 ms</td><td class="num">1,279 ms</td><td class="num">8,177 ms</td><td class="num">7,539 ms</td></tr>
+
+        <tr class="group-row"><th colspan="5" scope="colgroup">Database cost</th></tr>
+        <tr><th scope="row">Redo amplification vs. control</th>
+          <td class="num risk">+171.4%<span class="sr-only"> — measured risk</span></td>
+          <td class="num risk">+110.4%<span class="sr-only"> — measured risk</span></td>
+          <td class="num favorable">+0.7% <span class="ns-tag">(n.s.)</span></td>
+          <td class="num risk">+84.0%<span class="sr-only"> — measured risk</span></td></tr>
+        <tr><th scope="row">— significance (exact permutation)</th>
+          <td class="num">p=0.0079</td><td class="num">p=0.0079</td>
+          <td class="num"><span class="ns-tag">p=0.0952 (n.s.)</span></td><td class="num">p=0.0079</td></tr>
+        <tr><th scope="row">OLTP impact, HTTP p95 delta</th>
+          <td class="num">+1.55 ms</td><td class="num">+1.64 ms</td>
+          <td class="num favorable">−0.18 ms</td><td class="num">+2.37 ms</td></tr>
+        <tr><th scope="row">Extra DB commits / 120s run</th>
+          <td class="num risk">+6,758<span class="sr-only"> — measured risk</span></td>
+          <td class="num">+531</td><td class="num favorable">+101</td><td class="num">+99</td></tr>
+
+        <tr class="group-row"><th colspan="5" scope="colgroup">Reliability &amp; safety</th></tr>
+        <tr><th scope="row">Loss, clean running</th>
+          <td class="num">&lt;33.5 ppm</td><td class="num">&lt;33.3 ppm</td><td class="num">&lt;33.3 ppm</td><td class="num">&lt;33.3 ppm</td></tr>
+        <tr><th scope="row">Loss, writer bypasses app (F11)</th>
+          <td class="num favorable">0%</td>
+          <td class="num risk">69.0%<span class="sr-only"> — measured risk</span></td>
+          <td class="num favorable">0%</td>
+          <td class="num risk">69.0%¹<span class="sr-only"> — measured risk</span></td></tr>
+        <tr><th scope="row">Availability coupling (F8)</th>
+          <td class="num risk">40% payments failed<span class="sr-only"> — measured risk</span></td>
+          <td class="num favorable">none</td><td class="num favorable">none</td><td class="num favorable">none</td></tr>
+
+        <tr class="group-row"><th colspan="5" scope="colgroup">Implementation effort</th></tr>
+        <tr><th scope="row">Implementation volume (measured LOC)</th>
+          <td class="num">591</td><td class="num">468</td>
+          <td class="num best">175<span class="sr-only"> — best on this metric</span></td><td class="num">253</td></tr>
+        <tr><th scope="row">Added dependencies</th>
+          <td class="num">2</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
       </tbody>
     </table>
   </div>
-  <p class="muted" style="margin-top:.8rem">¹ Not the architecture's fault — see §4. Full table incl.
+  <p class="muted mt-08">¹ Not the architecture's fault — see §4. Full table incl.
     F1R/F2/F4R/F5R/C2a and measurement instruments in the source document, §1 and §1.1.</p>
 
-  <h3 style="font-family:var(--f-display);font-size:1.02rem;margin:1.6rem 0 .3rem">How each method actually
-    reaches Kafka</h3>
+  <h3>How each method actually reaches Kafka</h3>
   <p class="note">The four methods differ in exactly one place: what happens <strong>inside the same
     database commit</strong> as the business write, before anything leaves for Kafka. Three of them add
     a step there; one adds nothing. Only the step highlighted below was tested by breaking it (fault
     F8) — and breaking it stopped real payments.</p>
 
-  <figure style="margin:0 0 .4rem">
-    <svg viewBox="0 0 960 600" width="960" height="600" role="img"
-         style="width:100%;height:auto;max-width:960px;display:block;margin:0 auto;font-family:var(--f-body)"
-         aria-label="Four event-capture methods compared by what each adds inside the same database
-           commit as the business write, before delivery to Kafka. The trigger method adds a capture
-           step inside the commit that fault-test F8 broke, stopping 40 percent of payments. The
-           outbox and hybrid methods add an outbox-row write inside the commit. The CDC method adds
-           nothing inside the commit at all.">
-      <defs>
-        <marker id="mc-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6.5" markerHeight="6.5"
-                orient="auto-start-reverse">
-          <path d="M0,0 L8,4 L0,8 z" fill="currentColor"/>
-        </marker>
-      </defs>
+  <p class="scroll-cue" id="diagram-cue">Scroll to see the full diagram</p>
+  <figure class="fig-tight">
+    <div class="scroll-region plain" tabindex="0" role="region" aria-labelledby="diagram-caption" id="diagram-scroll">
+      <div class="diagram-inner">
+        <svg viewBox="0 0 960 600" width="960" height="600" role="img"
+             aria-label="Four event-capture methods compared by what each adds inside the same database
+               commit as the business write, before delivery to Kafka. The trigger method adds a capture
+               step inside the commit that fault-test F8 broke, stopping 40 percent of payments. The
+               outbox and hybrid methods add an outbox-row write inside the commit. The CDC method adds
+               nothing inside the commit at all.">
+          <defs>
+            <marker id="mc-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6.5" markerHeight="6.5"
+                    orient="auto-start-reverse">
+              <path d="M0,0 L8,4 L0,8 z" fill="currentColor"/>
+            </marker>
+          </defs>
 
-      <!-- column group headers -->
-      <text x="290" y="28" text-anchor="middle" font-size="13" font-weight="600" fill="currentColor">
-        Inside the business transaction</text>
-      <text x="675" y="28" text-anchor="middle" font-size="13" font-weight="600" fill="currentColor"
-            opacity=".7">After commit — asynchronous</text>
-      <line x1="547" y1="52" x2="547" y2="560" stroke="currentColor" stroke-width="1.5"
-            stroke-dasharray="2 6" opacity=".4"/>
-      <text x="547" y="580" text-anchor="middle" font-size="11.5" fill="currentColor" opacity=".55">
-        commit boundary</text>
+          <text x="290" y="28" text-anchor="middle" font-size="13" font-weight="600" fill="currentColor">
+            Inside the business transaction</text>
+          <text x="675" y="28" text-anchor="middle" font-size="13" font-weight="600" fill="currentColor"
+                opacity=".7">After commit — asynchronous</text>
+          <line x1="547" y1="52" x2="547" y2="560" stroke="currentColor" stroke-width="1.5"
+                stroke-dasharray="2 6" opacity=".4"/>
+          <text x="547" y="580" text-anchor="middle" font-size="11.5" fill="currentColor" opacity=".55">
+            commit boundary</text>
 
-      <!-- ══ Row 1 : A1 Trigger + AQ ══════════════════════════════════════ -->
-      <g>
-        <rect x="15" y="65" width="930" height="110" rx="12" fill="var(--c-aq)" opacity=".06"/>
-        <rect x="14" y="115" width="10" height="10" rx="2" fill="var(--c-aq)"/>
-        <text x="32" y="124" font-size="13" font-weight="700" fill="var(--c-aq)">A1 · Trigger + AQ</text>
+          <!-- Row 1 : A1 Trigger + AQ -->
+          <g>
+            <rect x="15" y="65" width="930" height="110" rx="12" fill="var(--c-aq)" opacity=".07"/>
+            <rect x="14" y="115" width="10" height="10" rx="2" fill="var(--c-aq)"/>
+            <text x="32" y="124" font-size="13" font-weight="700" fill="var(--c-aq)">A1 · Trigger + AQ</text>
 
-        <rect x="110" y="85" width="150" height="70" rx="8" fill="none" stroke="var(--c-aq)" stroke-width="1.6"/>
-        <text x="185" y="115" text-anchor="middle" font-size="12.5">TXN_A1 write</text>
-        <text x="185" y="132" text-anchor="middle" opacity=".65" font-size="10.5">(commit)</text>
+            <rect x="110" y="85" width="150" height="70" rx="8" fill="none" stroke="var(--c-aq)" stroke-width="1.6"/>
+            <text x="185" y="115" text-anchor="middle" font-size="12.5">TXN_A1 write</text>
+            <text x="185" y="132" text-anchor="middle" opacity=".65" font-size="10.5">(commit)</text>
 
-        <text x="290" y="78" text-anchor="middle" font-size="10.5" opacity=".8">trigger fires</text>
-        <line x1="260" y1="120" x2="318" y2="120" stroke="var(--c-aq)" stroke-width="1.6" marker-end="url(#mc-arrow)"/>
+            <text x="290" y="78" text-anchor="middle" font-size="10.5" opacity=".8">trigger fires</text>
+            <line x1="260" y1="120" x2="318" y2="120" stroke="var(--c-aq)" stroke-width="1.6" marker-end="url(#mc-arrow)"/>
 
-        <rect x="320" y="80" width="200" height="80" rx="8" fill="none" stroke="var(--bad)" stroke-width="2.8"/>
-        <text x="420" y="108" text-anchor="middle" fill="var(--bad)" font-size="12.5" font-weight="700">Trigger → AQ</text>
-        <text x="420" y="126" text-anchor="middle" fill="var(--bad)" font-size="11">enqueue (ON_COMMIT)</text>
-        <text x="420" y="146" text-anchor="middle" fill="var(--bad)" font-size="10.5" font-weight="600">F8: 40% of payments failed</text>
+            <rect x="320" y="80" width="200" height="80" rx="8" fill="none" stroke="var(--bad)" stroke-width="2.8"/>
+            <text x="420" y="108" text-anchor="middle" fill="var(--bad)" font-size="12.5" font-weight="700">Trigger → AQ</text>
+            <text x="420" y="126" text-anchor="middle" fill="var(--bad)" font-size="11">enqueue (ON_COMMIT)</text>
+            <text x="420" y="146" text-anchor="middle" fill="var(--bad)" font-size="10.5" font-weight="600">F8: 40% of payments failed</text>
 
-        <text x="560" y="78" text-anchor="middle" font-size="10.5" opacity=".8">dequeue</text>
-        <line x1="520" y1="120" x2="573" y2="120" stroke="var(--c-aq)" stroke-width="1.6" marker-end="url(#mc-arrow)"/>
+            <text x="560" y="78" text-anchor="middle" font-size="10.5" opacity=".8">dequeue</text>
+            <line x1="520" y1="120" x2="573" y2="120" stroke="var(--c-aq)" stroke-width="1.6" marker-end="url(#mc-arrow)"/>
 
-        <rect x="575" y="85" width="200" height="70" rx="8" fill="none" stroke="var(--c-aq)" stroke-width="1.6"/>
-        <text x="675" y="112" text-anchor="middle" font-size="12">Bridge: batch dequeue</text>
-        <text x="675" y="130" text-anchor="middle" opacity=".65" font-size="10.5">blocking wait, ≤500/batch</text>
+            <rect x="575" y="85" width="200" height="70" rx="8" fill="none" stroke="var(--c-aq)" stroke-width="1.6"/>
+            <text x="675" y="112" text-anchor="middle" font-size="12">Bridge: batch dequeue</text>
+            <text x="675" y="130" text-anchor="middle" opacity=".65" font-size="10.5">blocking wait, ≤500/batch</text>
 
-        <text x="795" y="78" text-anchor="middle" font-size="10.5" opacity=".8">publish</text>
-        <line x1="775" y1="120" x2="813" y2="120" stroke="var(--c-aq)" stroke-width="1.6" marker-end="url(#mc-arrow)"/>
+            <text x="795" y="78" text-anchor="middle" font-size="10.5" opacity=".8">publish</text>
+            <line x1="775" y1="120" x2="813" y2="120" stroke="var(--c-aq)" stroke-width="1.6" marker-end="url(#mc-arrow)"/>
 
-        <rect x="815" y="90" width="115" height="60" rx="8" fill="var(--c-aq)" opacity=".14"/>
-        <rect x="815" y="90" width="115" height="60" rx="8" fill="none" stroke="var(--c-aq)" stroke-width="1.6"/>
-        <text x="872" y="125" text-anchor="middle" font-size="13" font-weight="700">Kafka</text>
-      </g>
+            <rect x="815" y="90" width="115" height="60" rx="8" fill="var(--c-aq)" opacity=".16"/>
+            <rect x="815" y="90" width="115" height="60" rx="8" fill="none" stroke="var(--c-aq)" stroke-width="1.6"/>
+            <text x="872" y="125" text-anchor="middle" font-size="13" font-weight="700">Kafka</text>
+          </g>
 
-      <!-- ══ Row 2 : A2 Outbox ═══════════════════════════════════════════ -->
-      <g>
-        <rect x="15" y="195" width="930" height="110" rx="12" fill="var(--c-outbox)" opacity=".06"/>
-        <rect x="14" y="245" width="10" height="10" rx="2" fill="var(--c-outbox)"/>
-        <text x="32" y="254" font-size="13" font-weight="700" fill="var(--c-outbox)">A2 · Application Outbox</text>
+          <!-- Row 2 : A2 Outbox -->
+          <g>
+            <rect x="15" y="195" width="930" height="110" rx="12" fill="var(--c-outbox)" opacity=".07"/>
+            <rect x="14" y="245" width="10" height="10" rx="2" fill="var(--c-outbox)"/>
+            <text x="32" y="254" font-size="13" font-weight="700" fill="var(--c-outbox)">A2 · Application Outbox</text>
 
-        <rect x="110" y="215" width="150" height="70" rx="8" fill="none" stroke="var(--c-outbox)" stroke-width="1.6"/>
-        <text x="185" y="245" text-anchor="middle" font-size="12.5">TXN_A1 write</text>
-        <text x="185" y="262" text-anchor="middle" opacity=".65" font-size="10.5">(commit)</text>
+            <rect x="110" y="215" width="150" height="70" rx="8" fill="none" stroke="var(--c-outbox)" stroke-width="1.6"/>
+            <text x="185" y="245" text-anchor="middle" font-size="12.5">TXN_A1 write</text>
+            <text x="185" y="262" text-anchor="middle" opacity=".65" font-size="10.5">(commit)</text>
 
-        <text x="290" y="208" text-anchor="middle" font-size="10.5" opacity=".8">app writes 2nd row</text>
-        <line x1="260" y1="250" x2="318" y2="250" stroke="var(--c-outbox)" stroke-width="1.6" marker-end="url(#mc-arrow)"/>
+            <text x="290" y="208" text-anchor="middle" font-size="10.5" opacity=".8">app writes 2nd row</text>
+            <line x1="260" y1="250" x2="318" y2="250" stroke="var(--c-outbox)" stroke-width="1.6" marker-end="url(#mc-arrow)"/>
 
-        <rect x="320" y="215" width="200" height="70" rx="8" fill="none" stroke="var(--c-outbox)" stroke-width="1.6"/>
-        <text x="420" y="245" text-anchor="middle" font-size="12.5">Outbox row</text>
-        <text x="420" y="262" text-anchor="middle" opacity=".65" font-size="10.5">same transaction</text>
+            <rect x="320" y="215" width="200" height="70" rx="8" fill="none" stroke="var(--c-outbox)" stroke-width="1.6"/>
+            <text x="420" y="245" text-anchor="middle" font-size="12.5">Outbox row</text>
+            <text x="420" y="262" text-anchor="middle" opacity=".65" font-size="10.5">same transaction</text>
 
-        <text x="560" y="208" text-anchor="middle" font-size="10.5" opacity=".8">poll</text>
-        <line x1="520" y1="250" x2="573" y2="250" stroke="var(--c-outbox)" stroke-width="1.6" marker-end="url(#mc-arrow)"/>
+            <text x="560" y="208" text-anchor="middle" font-size="10.5" opacity=".8">poll</text>
+            <line x1="520" y1="250" x2="573" y2="250" stroke="var(--c-outbox)" stroke-width="1.6" marker-end="url(#mc-arrow)"/>
 
-        <rect x="575" y="215" width="200" height="70" rx="8" fill="none" stroke="var(--c-outbox)" stroke-width="1.6"/>
-        <text x="675" y="245" text-anchor="middle" font-size="12">Relay polls the table</text>
-        <text x="675" y="262" text-anchor="middle" opacity=".65" font-size="10.5">every 200 ms</text>
+            <rect x="575" y="215" width="200" height="70" rx="8" fill="none" stroke="var(--c-outbox)" stroke-width="1.6"/>
+            <text x="675" y="245" text-anchor="middle" font-size="12">Relay polls the table</text>
+            <text x="675" y="262" text-anchor="middle" opacity=".65" font-size="10.5">every 200 ms</text>
 
-        <text x="795" y="208" text-anchor="middle" font-size="10.5" opacity=".8">publish</text>
-        <line x1="775" y1="250" x2="813" y2="250" stroke="var(--c-outbox)" stroke-width="1.6" marker-end="url(#mc-arrow)"/>
+            <text x="795" y="208" text-anchor="middle" font-size="10.5" opacity=".8">publish</text>
+            <line x1="775" y1="250" x2="813" y2="250" stroke="var(--c-outbox)" stroke-width="1.6" marker-end="url(#mc-arrow)"/>
 
-        <rect x="815" y="220" width="115" height="60" rx="8" fill="var(--c-outbox)" opacity=".14"/>
-        <rect x="815" y="220" width="115" height="60" rx="8" fill="none" stroke="var(--c-outbox)" stroke-width="1.6"/>
-        <text x="872" y="255" text-anchor="middle" font-size="13" font-weight="700">Kafka</text>
-      </g>
+            <rect x="815" y="220" width="115" height="60" rx="8" fill="var(--c-outbox)" opacity=".16"/>
+            <rect x="815" y="220" width="115" height="60" rx="8" fill="none" stroke="var(--c-outbox)" stroke-width="1.6"/>
+            <text x="872" y="255" text-anchor="middle" font-size="13" font-weight="700">Kafka</text>
+          </g>
 
-      <!-- ══ Row 3 : A3 CDC ══════════════════════════════════════════════ -->
-      <g>
-        <rect x="15" y="325" width="930" height="110" rx="12" fill="var(--c-cdc)" opacity=".06"/>
-        <rect x="14" y="375" width="10" height="10" rx="2" fill="var(--c-cdc)"/>
-        <text x="32" y="384" font-size="13" font-weight="700" fill="var(--c-cdc)">A3 · Log-based CDC</text>
+          <!-- Row 3 : A3 CDC -->
+          <g>
+            <rect x="15" y="325" width="930" height="110" rx="12" fill="var(--c-cdc)" opacity=".07"/>
+            <rect x="14" y="375" width="10" height="10" rx="2" fill="var(--c-cdc)"/>
+            <text x="32" y="384" font-size="13" font-weight="700" fill="var(--c-cdc)">A3 · Log-based CDC</text>
 
-        <rect x="110" y="345" width="150" height="70" rx="8" fill="none" stroke="var(--c-cdc)" stroke-width="1.6"/>
-        <text x="185" y="375" text-anchor="middle" font-size="12.5">TXN_A1 write</text>
-        <text x="185" y="392" text-anchor="middle" opacity=".65" font-size="10.5">(commit)</text>
+            <rect x="110" y="345" width="150" height="70" rx="8" fill="none" stroke="var(--c-cdc)" stroke-width="1.6"/>
+            <text x="185" y="375" text-anchor="middle" font-size="12.5">TXN_A1 write</text>
+            <text x="185" y="392" text-anchor="middle" opacity=".65" font-size="10.5">(commit)</text>
 
-        <rect x="320" y="345" width="200" height="70" rx="8" fill="none" stroke="currentColor"
-              stroke-width="1.3" stroke-dasharray="5 4" opacity=".45"/>
-        <text x="420" y="384" text-anchor="middle" opacity=".55" font-style="italic" font-size="12">— nothing added —</text>
+            <rect x="320" y="345" width="200" height="70" rx="8" fill="none" stroke="currentColor"
+                  stroke-width="1.3" stroke-dasharray="5 4" opacity=".45"/>
+            <text x="420" y="384" text-anchor="middle" opacity=".55" font-style="italic" font-size="12">— nothing added —</text>
 
-        <text x="560" y="338" text-anchor="middle" font-size="10.5" opacity=".8">reads redo log</text>
-        <line x1="520" y1="380" x2="573" y2="380" stroke="var(--c-cdc)" stroke-width="1.6"
-              stroke-dasharray="1 5" marker-end="url(#mc-arrow)"/>
+            <text x="560" y="338" text-anchor="middle" font-size="10.5" opacity=".8">reads redo log</text>
+            <line x1="520" y1="380" x2="573" y2="380" stroke="var(--c-cdc)" stroke-width="1.6"
+                  stroke-dasharray="1 5" marker-end="url(#mc-arrow)"/>
 
-        <rect x="575" y="345" width="200" height="70" rx="8" fill="none" stroke="var(--c-cdc)" stroke-width="1.6"/>
-        <text x="675" y="372" text-anchor="middle" font-size="12">Debezium / LogMiner</text>
-        <text x="675" y="390" text-anchor="middle" opacity=".65" font-size="10.5">mining cadence, ~seconds</text>
+            <rect x="575" y="345" width="200" height="70" rx="8" fill="none" stroke="var(--c-cdc)" stroke-width="1.6"/>
+            <text x="675" y="372" text-anchor="middle" font-size="12">Debezium / LogMiner</text>
+            <text x="675" y="390" text-anchor="middle" opacity=".65" font-size="10.5">mining cadence, ~seconds</text>
 
-        <text x="795" y="338" text-anchor="middle" font-size="10.5" opacity=".8">publish</text>
-        <line x1="775" y1="380" x2="813" y2="380" stroke="var(--c-cdc)" stroke-width="1.6" marker-end="url(#mc-arrow)"/>
+            <text x="795" y="338" text-anchor="middle" font-size="10.5" opacity=".8">publish</text>
+            <line x1="775" y1="380" x2="813" y2="380" stroke="var(--c-cdc)" stroke-width="1.6" marker-end="url(#mc-arrow)"/>
 
-        <rect x="815" y="350" width="115" height="60" rx="8" fill="var(--c-cdc)" opacity=".14"/>
-        <rect x="815" y="350" width="115" height="60" rx="8" fill="none" stroke="var(--c-cdc)" stroke-width="1.6"/>
-        <text x="872" y="385" text-anchor="middle" font-size="13" font-weight="700">Kafka</text>
-      </g>
+            <rect x="815" y="350" width="115" height="60" rx="8" fill="var(--c-cdc)" opacity=".16"/>
+            <rect x="815" y="350" width="115" height="60" rx="8" fill="none" stroke="var(--c-cdc)" stroke-width="1.6"/>
+            <text x="872" y="385" text-anchor="middle" font-size="13" font-weight="700">Kafka</text>
+          </g>
 
-      <!-- ══ Row 4 : HYBRID ══════════════════════════════════════════════ -->
-      <g>
-        <rect x="15" y="455" width="930" height="110" rx="12" fill="var(--c-hybrid)" opacity=".06"/>
-        <rect x="14" y="505" width="10" height="10" rx="2" fill="var(--c-hybrid)"/>
-        <text x="32" y="514" font-size="13" font-weight="700" fill="var(--c-hybrid)">HYBRID · Outbox + CDC</text>
+          <!-- Row 4 : HYBRID -->
+          <g>
+            <rect x="15" y="455" width="930" height="110" rx="12" fill="var(--c-hybrid)" opacity=".07"/>
+            <rect x="14" y="505" width="10" height="10" rx="2" fill="var(--c-hybrid)"/>
+            <text x="32" y="514" font-size="13" font-weight="700" fill="var(--c-hybrid)">HYBRID · Outbox + CDC</text>
 
-        <rect x="110" y="475" width="150" height="70" rx="8" fill="none" stroke="var(--c-hybrid)" stroke-width="1.6"/>
-        <text x="185" y="505" text-anchor="middle" font-size="12.5">TXN_A1 write</text>
-        <text x="185" y="522" text-anchor="middle" opacity=".65" font-size="10.5">(commit)</text>
+            <rect x="110" y="475" width="150" height="70" rx="8" fill="none" stroke="var(--c-hybrid)" stroke-width="1.6"/>
+            <text x="185" y="505" text-anchor="middle" font-size="12.5">TXN_A1 write</text>
+            <text x="185" y="522" text-anchor="middle" opacity=".65" font-size="10.5">(commit)</text>
 
-        <text x="290" y="468" text-anchor="middle" font-size="10.5" opacity=".8">app writes 2nd row</text>
-        <line x1="260" y1="510" x2="318" y2="510" stroke="var(--c-hybrid)" stroke-width="1.6" marker-end="url(#mc-arrow)"/>
+            <text x="290" y="468" text-anchor="middle" font-size="10.5" opacity=".8">app writes 2nd row</text>
+            <line x1="260" y1="510" x2="318" y2="510" stroke="var(--c-hybrid)" stroke-width="1.6" marker-end="url(#mc-arrow)"/>
 
-        <rect x="320" y="475" width="200" height="70" rx="8" fill="none" stroke="var(--c-hybrid)" stroke-width="1.6"/>
-        <text x="420" y="505" text-anchor="middle" font-size="12.5">Outbox row</text>
-        <text x="420" y="522" text-anchor="middle" opacity=".65" font-size="10.5">same transaction</text>
+            <rect x="320" y="475" width="200" height="70" rx="8" fill="none" stroke="var(--c-hybrid)" stroke-width="1.6"/>
+            <text x="420" y="505" text-anchor="middle" font-size="12.5">Outbox row</text>
+            <text x="420" y="522" text-anchor="middle" opacity=".65" font-size="10.5">same transaction</text>
 
-        <text x="560" y="468" text-anchor="middle" font-size="10.5" opacity=".8">reads redo log</text>
-        <line x1="520" y1="510" x2="573" y2="510" stroke="var(--c-hybrid)" stroke-width="1.6"
-              stroke-dasharray="1 5" marker-end="url(#mc-arrow)"/>
+            <text x="560" y="468" text-anchor="middle" font-size="10.5" opacity=".8">reads redo log</text>
+            <line x1="520" y1="510" x2="573" y2="510" stroke="var(--c-hybrid)" stroke-width="1.6"
+                  stroke-dasharray="1 5" marker-end="url(#mc-arrow)"/>
 
-        <rect x="575" y="475" width="200" height="70" rx="8" fill="none" stroke="var(--c-hybrid)" stroke-width="1.6"/>
-        <text x="675" y="502" text-anchor="middle" font-size="12">Debezium EventRouter</text>
-        <text x="675" y="520" text-anchor="middle" opacity=".65" font-size="10.5">reads the outbox table's log</text>
+            <rect x="575" y="475" width="200" height="70" rx="8" fill="none" stroke="var(--c-hybrid)" stroke-width="1.6"/>
+            <text x="675" y="502" text-anchor="middle" font-size="12">Debezium EventRouter</text>
+            <text x="675" y="520" text-anchor="middle" opacity=".65" font-size="10.5">reads the outbox table's log</text>
 
-        <text x="795" y="468" text-anchor="middle" font-size="10.5" opacity=".8">publish</text>
-        <line x1="775" y1="510" x2="813" y2="510" stroke="var(--c-hybrid)" stroke-width="1.6" marker-end="url(#mc-arrow)"/>
+            <text x="795" y="468" text-anchor="middle" font-size="10.5" opacity=".8">publish</text>
+            <line x1="775" y1="510" x2="813" y2="510" stroke="var(--c-hybrid)" stroke-width="1.6" marker-end="url(#mc-arrow)"/>
 
-        <rect x="815" y="480" width="115" height="60" rx="8" fill="var(--c-hybrid)" opacity=".14"/>
-        <rect x="815" y="480" width="115" height="60" rx="8" fill="none" stroke="var(--c-hybrid)" stroke-width="1.6"/>
-        <text x="872" y="515" text-anchor="middle" font-size="13" font-weight="700">Kafka</text>
-      </g>
-    </svg>
-    <figcaption class="muted" style="margin-top:.5rem">Only the trigger method (row 1) places a capture
+            <rect x="815" y="480" width="115" height="60" rx="8" fill="var(--c-hybrid)" opacity=".16"/>
+            <rect x="815" y="480" width="115" height="60" rx="8" fill="none" stroke="var(--c-hybrid)" stroke-width="1.6"/>
+            <text x="872" y="515" text-anchor="middle" font-size="13" font-weight="700">Kafka</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+    <figcaption class="muted" id="diagram-caption">Only the trigger method (row 1) places a capture
       step inside the same commit as the payment — highlighted in red, because fault F8 broke exactly
       that step and 40% of payments failed with it. The outbox and hybrid methods also write inside the
       commit, but to their own table, not shared business logic. CDC adds nothing inside the commit at
@@ -326,17 +614,43 @@
 <section class="box" id="latency">
   <div class="kicker">Section 2.1 · the trade-off is real</div>
   <h2>2. Latency spans 560×, and it runs opposite to redo cost</h2>
-  <p class="note">Same events, same workload. <strong>AQ is notified</strong> at commit
-    (<code>DBMS_AQ.DEQUEUE</code> blocks, no poll). <strong>The outbox relay asks repeatedly</strong>
-    — half a 200&nbsp;ms poll interval expected, matching the measured 128&nbsp;ms. <strong>Both
-    Debezium pipelines wait for the LogMiner cycle</strong> — seconds, not milliseconds.</p>
-  <div class="barrow"><span class="lbl">AQ</span><div class="track"><span style="width:0.2%;background:var(--c-aq)"></span></div><span class="val">6 ms</span></div>
-  <div class="barrow"><span class="lbl">Outbox</span><div class="track"><span style="width:3.8%;background:var(--c-outbox)"></span></div><span class="val">128 ms</span></div>
-  <div class="barrow"><span class="lbl">HYBRID</span><div class="track"><span style="width:94.7%;background:var(--c-hybrid)"></span></div><span class="val">3,186 ms</span></div>
-  <div class="barrow"><span class="lbl">CDC</span><div class="track"><span style="width:100%;background:var(--c-cdc)"></span></div><span class="val">3,362 ms</span></div>
-  <p class="note" style="margin-top:1rem"><strong>Speed of delivery is bought with work done inside
-    the transaction.</strong> AQ is fastest and most expensive to write (+171% redo); CDC is
-    slowest and free to the writer (+0.7%, not distinguishable from the uninstrumented control).</p>
+  <p class="note">Same events, same workload. <strong class="mech-aq">AQ is notified</strong> at commit
+    (<code>DBMS_AQ.DEQUEUE</code> blocks, no poll). <strong class="mech-outbox">The outbox relay asks
+    repeatedly</strong> — half a 200&nbsp;ms poll interval expected, matching the measured 128&nbsp;ms.
+    <strong>Both Debezium pipelines wait for the LogMiner cycle</strong> — seconds, not milliseconds.</p>
+
+  <div class="chart">
+    <p class="chart-title">End-to-end latency, p50 — log scale (linear encoding would make three of
+      these four bars invisible)</p>
+    <div class="barrow"><span class="lbl"><span class="mech-swatch aq" aria-hidden="true"></span>AQ</span>
+      <div class="track"><span style="width:19.5%;background:var(--c-aq)"></span></div><span class="val">6 ms</span></div>
+    <div class="barrow"><span class="lbl"><span class="mech-swatch outbox" aria-hidden="true"></span>Outbox</span>
+      <div class="track"><span style="width:52.7%;background:var(--c-outbox)"></span></div><span class="val">128 ms</span></div>
+    <div class="barrow"><span class="lbl"><span class="mech-swatch hybrid" aria-hidden="true"></span>Hybrid</span>
+      <div class="track"><span style="width:87.6%;background:var(--c-hybrid)"></span></div><span class="val">3,186 ms</span></div>
+    <div class="barrow"><span class="lbl"><span class="mech-swatch cdc" aria-hidden="true"></span>CDC</span>
+      <div class="track"><span style="width:88.2%;background:var(--c-cdc)"></span></div><span class="val">3,362 ms</span></div>
+    <div class="chart-axis" aria-hidden="true"><span>1 ms</span><span>10 ms</span><span>100 ms</span><span>1 s</span><span>10 s</span></div>
+  </div>
+
+  <div class="chart">
+    <p class="chart-title">Redo amplification vs. control — linear scale, same mechanism order</p>
+    <div class="barrow"><span class="lbl"><span class="mech-swatch aq" aria-hidden="true"></span>AQ</span>
+      <div class="track"><span style="width:95.2%;background:var(--c-aq)"></span></div><span class="val">+171.4%</span></div>
+    <div class="barrow"><span class="lbl"><span class="mech-swatch outbox" aria-hidden="true"></span>Outbox</span>
+      <div class="track"><span style="width:61.3%;background:var(--c-outbox)"></span></div><span class="val">+110.4%</span></div>
+    <div class="barrow"><span class="lbl"><span class="mech-swatch hybrid" aria-hidden="true"></span>Hybrid</span>
+      <div class="track"><span style="width:46.7%;background:var(--c-hybrid)"></span></div><span class="val">+84.0%</span></div>
+    <div class="barrow"><span class="lbl"><span class="mech-swatch cdc" aria-hidden="true"></span>CDC</span>
+      <div class="track"><span style="width:0.4%;background:var(--c-cdc)"></span></div><span class="val">+0.7% <span class="ns-tag">(n.s.)</span></span></div>
+    <div class="chart-axis" aria-hidden="true"><span>0%</span><span>45%</span><span>90%</span><span>135%</span><span>180%</span></div>
+  </div>
+
+  <p class="note"><strong>Read the two charts as one relationship, row for row:</strong> as latency
+    grows down the mechanism order (AQ → Outbox → Hybrid → CDC), redo amplification falls. Speed of
+    delivery is bought with work done inside the transaction. AQ is fastest and most expensive to
+    write (+171% redo); CDC is slowest and free to the writer (+0.7%, not distinguishable from the
+    uninstrumented control).</p>
   <p class="note"><strong>CDC's cost is not zero — it is moved, not removed (claim C2).</strong>
     Database CPU rises at <strong>13.0 CPU-seconds per GB of discarded redo</strong> (95% bootstrap
     CI 5.86–18.62), and at the highest tested level <strong>79% of CDC's database-side cost was
@@ -352,14 +666,14 @@
     Counts matched exactly. Every message was well-formed JSON. Connector <code>RUNNING</code>,
     lag flat, zero warnings. Every conventional health signal said the pipeline was perfect.</p>
   <p class="note"><strong>Two thirds of those messages looked like this:</strong></p>
-  <p><code>{ "TXN_ID": "0", "TXN_REF": "", "AMOUNT": "0.0000", "STATUS": "VALIDATED" }</code></p>
+  <pre><code>{ "TXN_ID": "0", "TXN_REF": "", "AMOUNT": "0.0000", "STATUS": "VALIDATED" }</code></pre>
   <p class="note">Minimal supplemental logging means the redo record for an <code>UPDATE</code>
     carries only the changed columns; Debezium fills the rest with type defaults. Only
     reconciliation against an <strong>independent ground truth on a semantic key</strong> exposed
     it — no count, no health check, no lag metric could. Fixed with
     <code>ADD SUPPLEMENTAL LOG DATA (ALL) COLUMNS</code>; the same run then reconciled 9,003/9,003
     with zero loss, zero phantoms.</p>
-  <p class="note" style="border-left:3px solid var(--warn); padding-left:.8rem">
+  <p class="callout">
     <strong>A pipeline can deliver exactly the right number of structurally valid, semantically
     empty messages, and every conventional health signal will report success.</strong></p>
 </section>
@@ -370,18 +684,19 @@
   <h2>4. The hybrid's coverage is an organisational property, not an architectural one</h2>
   <p class="note">An end-of-day PL/SQL batch writes A1 transactions directly, bypassing the
     application entirely (~87,000 transitions):</p>
-  <div class="scroll">
+  <div class="scroll-region" tabindex="0" role="region" aria-labelledby="coverage-caption">
     <table>
-      <thead><tr><th>Mode</th><th class="num">Missing</th><th class="num">Loss rate</th></tr></thead>
+      <caption id="coverage-caption">Loss rate per mode when a writer bypasses the application (fault F11).</caption>
+      <thead><tr><th scope="col">Mode</th><th scope="col" class="num">Missing</th><th scope="col" class="num">Loss rate</th></tr></thead>
       <tbody>
-        <tr><td>AQ</td><td class="num">0 / 86,990</td><td class="num good-txt">0%</td></tr>
-        <tr><td>CDC</td><td class="num">0 / 86,994</td><td class="num good-txt">0%</td></tr>
-        <tr><td>Outbox (WRAPPER_B3)</td><td class="num bad-txt">59,983 / 86,984</td><td class="num bad-txt">69.0%</td></tr>
-        <tr><td>HYBRID</td><td class="num bad-txt">59,990 / 86,991</td><td class="num bad-txt">69.0%</td></tr>
+        <tr><th scope="row">AQ</th><td class="num">0 / 86,990</td><td class="num favorable">0%</td></tr>
+        <tr><th scope="row">CDC</th><td class="num">0 / 86,994</td><td class="num favorable">0%</td></tr>
+        <tr><th scope="row">Outbox (WRAPPER_B3)</th><td class="num risk">59,983 / 86,984</td><td class="num risk">69.0%</td></tr>
+        <tr><th scope="row">HYBRID</th><td class="num risk">59,990 / 86,991</td><td class="num risk">69.0%</td></tr>
       </tbody>
     </table>
   </div>
-  <p class="note" style="margin-top:1rem"><strong>The hybrid failed identically to the plain
+  <p class="note mt-1"><strong>The hybrid failed identically to the plain
     outbox — not predicted in advance.</strong> Writer coverage is not a property of the
     architecture; it is a property of whether an organisation modifies <em>every</em> writer to go
     through the shared contract. In a core bank with decades of batch jobs, that cannot be
@@ -396,26 +711,27 @@
   <p class="note">Four components are <strong>measured</strong>, not guessed. Only the final
     ordinal grade synthesises them into one label, and that synthesis is stated as judgement —
     checkable against the numbers beside it, not asked to be taken on trust.</p>
-  <div class="scroll">
+  <div class="scroll-region" tabindex="0" role="region" aria-labelledby="loe-caption">
     <table>
-      <thead><tr><th>Component</th><th class="num">A1 · AQ</th><th class="num">A2 · Outbox</th>
-        <th class="num">A3 · CDC</th><th class="num">HYBRID</th></tr></thead>
+      <caption id="loe-caption">Measured implementation-effort components and the resulting judged effort grade, per mechanism.</caption>
+      <thead><tr><th scope="col">Component</th><th scope="col" class="num">A1 · AQ</th><th scope="col" class="num">A2 · Outbox</th>
+        <th scope="col" class="num">A3 · CDC</th><th scope="col" class="num">HYBRID</th></tr></thead>
       <tbody>
-        <tr><td><strong>Lines of code</strong> <span class="muted">(measured)</span></td>
-          <td class="num">591</td><td class="num">468</td><td class="num hi">175</td><td class="num">253</td></tr>
-        <tr><td><strong>Added dependencies</strong> <span class="muted">(measured)</span></td>
+        <tr><th scope="row">Lines of code <span class="muted">(measured)</span></th>
+          <td class="num">591</td><td class="num">468</td><td class="num best">175<span class="sr-only"> — best on this metric</span></td><td class="num">253</td></tr>
+        <tr><th scope="row">Added dependencies <span class="muted">(measured)</span></th>
           <td class="num">2</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
-        <tr><td><strong>Required infrastructure</strong> <span class="muted">(measured)</span></td>
+        <tr><th scope="row">Required infrastructure <span class="muted">(measured)</span></th>
           <td class="num">none beyond Oracle</td><td class="num">none beyond Oracle</td>
           <td class="num">Kafka Connect + Debezium</td><td class="num">Kafka Connect + Debezium</td></tr>
-        <tr><td><strong>Environment defects hit while building</strong> <span class="muted">(measured)</span></td>
+        <tr><th scope="row">Environment defects hit while building <span class="muted">(measured)</span></th>
           <td class="num">6</td><td class="num">3</td><td class="num">5</td><td class="num">4</td></tr>
-        <tr class="hi"><td>LOE / complexity <span class="muted" style="font-weight:400">(judgement, from the rows above)</span></td>
-          <td class="num">High</td><td class="num">Medium</td><td class="num">Low–Medium</td><td class="num">Medium</td></tr>
+        <tr><th scope="row">LOE / complexity <span class="muted text-regular">(judgement, from the rows above)</span></th>
+          <td class="num best">High</td><td class="num">Medium</td><td class="num">Low–Medium</td><td class="num">Medium</td></tr>
       </tbody>
     </table>
   </div>
-  <p class="note" style="margin-top:.8rem">A3 has <strong>zero lines of application source code</strong>
+  <p class="note mt-08">A3 has <strong>zero lines of application source code</strong>
     — the 175 lines are Kafka Connect JSON configuration and a registration script, not code that
     ships inside the bank's application. That is a qualitative difference the line count alone
     understates: it is also the only approach that does not touch the existing system's source at
@@ -429,18 +745,21 @@
   <p class="note">Of seven statements the fault matrix set out to test: three established, one
     supported with a stated statistical limit, <strong>three refuted</strong> — two of them
     contradicting this thesis's own predictions, made before any of it was built.</p>
-  <table>
-    <thead><tr><th>Prediction (stated in advance)</th><th>Result</th></tr></thead>
-    <tbody>
-      <tr><td>Purging every archive after 10 forced log switches (F4) would cause loss</td>
-        <td><span class="pill bad">Refuted</span> — 0% loss observed</td></tr>
-      <tr><td>Holding a transaction 240s past a 180s configured retention (F5) would discard it</td>
-        <td><span class="pill bad">Refuted</span> — not discarded</td></tr>
-      <tr><td>Relaying the outbox with Debezium (HYBRID) "cuts end-to-end latency" (own prior analysis)</td>
-        <td><span class="pill bad">Refuted</span> — arrives 25× later than AQ; benefit is DB protection, not speed</td></tr>
-    </tbody>
-  </table>
-  <p class="note" style="margin-top:.8rem">A refuted prediction, tested under a controlled fault
+  <div class="scroll-region" tabindex="0" role="region" aria-labelledby="refuted-caption">
+    <table>
+      <caption id="refuted-caption">Predictions stated in advance of testing, and the observed result.</caption>
+      <thead><tr><th scope="col">Prediction (stated in advance)</th><th scope="col">Result</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Purging every archive after 10 forced log switches (F4) would cause loss</th>
+          <td><span class="pill bad">Refuted</span> — 0% loss observed</td></tr>
+        <tr><th scope="row">Holding a transaction 240s past a 180s configured retention (F5) would discard it</th>
+          <td><span class="pill bad">Refuted</span> — not discarded</td></tr>
+        <tr><th scope="row">Relaying the outbox with Debezium (HYBRID) "cuts end-to-end latency" (own prior analysis)</th>
+          <td><span class="pill bad">Refuted</span> — arrives 25× later than AQ; benefit is DB protection, not speed</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note mt-08">A refuted prediction, tested under a controlled fault
     injection with a stated methodology, is what distinguishes this from a report that only
     confirms documented behaviour.</p>
 </section>
@@ -449,29 +768,59 @@
 <section class="box" id="recommend">
   <div class="kicker">"Provide result of comparison and results"</div>
   <h2>7. Recommendation, by constraint</h2>
-  <table>
-    <thead><tr><th>If the constraint is…</th><th>Recommended</th><th>Because</th></tr></thead>
-    <tbody>
-      <tr><td>Every writer goes through the app; source is modifiable</td><td class="hi">HYBRID</td>
-        <td>No dual write, no polling load, lowest in-transaction cost of the atomic options</td></tr>
-      <tr><td>Writers bypass the app and cannot be modified</td><td class="hi">CDC or AQ</td>
-        <td>The only two that captured 100% of the bypassing batch (F11)</td></tr>
-      <tr><td>Sub-100ms latency is a hard requirement</td><td class="hi">AQ</td>
-        <td>6 ms median. Cost: +171% redo, and a capture defect can fail payments (F8)</td></tr>
-      <tr><td>Database overhead must be near zero</td><td class="hi">CDC</td>
-        <td>+0.7% redo, −0.18ms p95 — neither distinguishable from the uninstrumented control</td></tr>
-      <tr><td>Cannot introduce Kafka Connect / Debezium</td><td class="hi">Outbox</td>
-        <td>468 lines, no new infrastructure. Costs +110% redo and a 200ms polling delay</td></tr>
-    </tbody>
-  </table>
-  <p class="note" style="margin-top:1rem; border-left:3px solid var(--bad); padding-left:.8rem">
+  <p class="note">Start from the constraint that actually applies, not from a ranked score — there
+    is no universal winner in the matrix above.</p>
+
+  <ul class="reco-grid">
+    <li class="reco-card">
+      <dl>
+        <dt>If the constraint is</dt><dd class="reco-if">Every writer goes through the app; source is modifiable</dd>
+        <dt>Recommended</dt><dd class="reco-then"><span class="mech-swatch hybrid" aria-hidden="true"></span><span class="mech-hybrid">HYBRID</span></dd>
+        <dt>Because</dt><dd class="reco-because">No dual write, no polling load, lowest in-transaction cost of the atomic options</dd>
+      </dl>
+    </li>
+    <li class="reco-card">
+      <dl>
+        <dt>If the constraint is</dt><dd class="reco-if">Writers bypass the app and cannot be modified</dd>
+        <dt>Recommended</dt><dd class="reco-then"><span class="mech-swatch cdc" aria-hidden="true"></span><span class="mech-cdc">CDC</span>
+          <span class="muted text-regular text-small">or</span>
+          <span class="mech-swatch aq" aria-hidden="true"></span><span class="mech-aq">AQ</span></dd>
+        <dt>Because</dt><dd class="reco-because">The only two that captured 100% of the bypassing batch (F11)</dd>
+      </dl>
+    </li>
+    <li class="reco-card">
+      <dl>
+        <dt>If the constraint is</dt><dd class="reco-if">Sub-100ms latency is a hard requirement</dd>
+        <dt>Recommended</dt><dd class="reco-then"><span class="mech-swatch aq" aria-hidden="true"></span><span class="mech-aq">AQ</span></dd>
+        <dt>Because</dt><dd class="reco-because">6 ms median. Cost: +171% redo, and a capture defect can fail payments (F8)</dd>
+      </dl>
+    </li>
+    <li class="reco-card">
+      <dl>
+        <dt>If the constraint is</dt><dd class="reco-if">Database overhead must be near zero</dd>
+        <dt>Recommended</dt><dd class="reco-then"><span class="mech-swatch cdc" aria-hidden="true"></span><span class="mech-cdc">CDC</span></dd>
+        <dt>Because</dt><dd class="reco-because">+0.7% redo, −0.18ms p95 — neither distinguishable from the uninstrumented control</dd>
+      </dl>
+    </li>
+    <li class="reco-card">
+      <dl>
+        <dt>If the constraint is</dt><dd class="reco-if">Cannot introduce Kafka Connect / Debezium</dd>
+        <dt>Recommended</dt><dd class="reco-then"><span class="mech-swatch outbox" aria-hidden="true"></span><span class="mech-outbox">Outbox</span></dd>
+        <dt>Because</dt><dd class="reco-because">468 lines, no new infrastructure. Costs +110% redo and a 200ms polling delay</dd>
+      </dl>
+    </li>
+  </ul>
+
+  <p class="callout bad">
     <strong>The single most important trade-off: availability coupling.</strong> AQ is the only
     mechanism where a defect in the observability path <strong>stopped 40% of payments</strong>
     (fault F8). For a core banking system that is not a performance characteristic — it is a
     category of outage the other three approaches structurally cannot produce.</p>
 </section>
 
-<!-- ═══════════════════════════════════════════════ 8. Q&A ═══ -->
+<div class="part-divider">Part 2 — Audit trail</div>
+
+<!-- ═══════════════════════════════════════════════ 8. CONFIG ═══ -->
 <section class="box" id="config">
   <div class="kicker">Requested detail — read from the running instance, not memory</div>
   <h2>8. Exact experimental setup and configuration</h2>
@@ -479,76 +828,99 @@
     configuration that produced §1's numbers. Full detail with file paths:
     <code>docs/empirical_comparison_results.md</code> §6.</p>
 
-  <p class="note" style="margin-top:1rem"><strong>Harness.</strong> 5 repetitions per mode,
-    50 TPS, 120 s steady-state / 180 s fault duration, fault injected at 60 s. Repetitions
-    interleaved (rep 1 of every mode, then rep 2, …) and mode order rotated per repetition, so
-    no mode is confounded with time-of-day drift or a fixed cold-cache position.</p>
-  <p><code>./scripts/run-experiment.sh --mode WRAPPER_B3 --profile P1 --tps 50 --duration 120s --rep 1</code></p>
+  <h3>Harness</h3>
+  <p class="note">5 repetitions per mode, 50 TPS, 120 s steady-state / 180 s fault duration, fault
+    injected at 60 s. Repetitions interleaved (rep 1 of every mode, then rep 2, …) and mode order
+    rotated per repetition, so no mode is confounded with time-of-day drift or a fixed cold-cache
+    position.</p>
+  <pre><code>./scripts/run-experiment.sh --mode WRAPPER_B3 --profile P1 --tps 50 --duration 120s --rep 1</code></pre>
 
-  <p class="note" style="margin-top:1rem"><strong>Oracle instance</strong> (Oracle AI Database
-    26ai Free 23.26.3) — queried live:</p>
-  <div class="scroll"><table>
-    <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
-    <tbody>
-      <tr><td>sga_target / sga_max_size</td><td class="num">1.5 GB</td></tr>
-      <tr><td>pga_aggregate_target</td><td class="num">512 MB</td></tr>
-      <tr><td>processes / sessions / open_cursors</td><td class="num">200 / 322 / 300</td></tr>
-      <tr><td>Redo log groups</td><td class="num">2 × 10 MB (image default)</td></tr>
-      <tr><td>log_mode / force_logging</td><td class="num">ARCHIVELOG / TRUE</td></tr>
-    </tbody>
-  </table></div>
-  <p class="note">Stated honestly: 10 MB redo groups switch every few seconds under AQ's
+  <h3>Oracle instance</h3>
+  <p class="note">Oracle AI Database 26ai Free 23.26.3 — queried live:</p>
+  <div class="scroll-region" tabindex="0" role="region" aria-labelledby="oracle-caption">
+    <table>
+      <caption id="oracle-caption">Live Oracle instance parameters used for every run.</caption>
+      <thead><tr><th scope="col">Parameter</th><th scope="col">Value</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">sga_target / sga_max_size</th><td class="num">1.5 GB</td></tr>
+        <tr><th scope="row">pga_aggregate_target</th><td class="num">512 MB</td></tr>
+        <tr><th scope="row">processes / sessions / open_cursors</th><td class="num">200 / 322 / 300</td></tr>
+        <tr><th scope="row">Redo log groups</th><td class="num">2 × 10 MB (image default)</td></tr>
+        <tr><th scope="row">log_mode / force_logging</th><td class="num">ARCHIVELOG / TRUE</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="callout">Stated honestly: 10 MB redo groups switch every few seconds under AQ's
     +171% redo load, visible as <code>Checkpoint not complete</code> in the alert log. Every
     mode runs against the same log configuration, so the relative comparison holds; the
     absolute redo percentages are specific to a small-redo-log instance.</p>
 
-  <p class="note" style="margin-top:1rem"><strong>Per-mode activation</strong> — set
-    automatically at application startup by <code>ModeActivator</code>, not by hand:</p>
-  <div class="scroll"><table>
-    <thead><tr><th>Mode</th><th>Ground-truth trigger</th><th>AQ trigger</th><th>ALL-COLUMN supplemental logging</th></tr></thead>
-    <tbody>
-      <tr><td>OFF</td><td class="num">off</td><td class="num">off</td><td class="num">none</td></tr>
-      <tr><td>BASELINE_GT</td><td class="num">on</td><td class="num">off</td><td class="num">none</td></tr>
-      <tr><td>AQ</td><td class="num">on</td><td class="num">on</td><td class="num">none</td></tr>
-      <tr><td>WRAPPER_B1/B2/B3</td><td class="num">on</td><td class="num">off</td><td class="num">none</td></tr>
-      <tr><td>CDC</td><td class="num">on</td><td class="num">off</td><td class="num">TXN_A1</td></tr>
-      <tr><td>HYBRID</td><td class="num">on</td><td class="num">off</td><td class="num">A1_EVENT_OUTBOX</td></tr>
-    </tbody>
-  </table></div>
+  <details class="disclosure">
+    <summary>Per-mode activation (set automatically by <code>ModeActivator</code>)</summary>
+    <div class="disclosure-body">
+      <div class="scroll-region" tabindex="0" role="region" aria-labelledby="mode-caption">
+        <table>
+          <caption id="mode-caption">Trigger and supplemental-logging state activated per mode at application startup.</caption>
+          <thead><tr><th scope="col">Mode</th><th scope="col">Ground-truth trigger</th><th scope="col">AQ trigger</th><th scope="col">ALL-COLUMN supplemental logging</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">OFF</th><td class="num">off</td><td class="num">off</td><td class="num">none</td></tr>
+            <tr><th scope="row">BASELINE_GT</th><td class="num">on</td><td class="num">off</td><td class="num">none</td></tr>
+            <tr><th scope="row">AQ</th><td class="num">on</td><td class="num">on</td><td class="num">none</td></tr>
+            <tr><th scope="row">WRAPPER_B1/B2/B3</th><td class="num">on</td><td class="num">off</td><td class="num">none</td></tr>
+            <tr><th scope="row">CDC</th><td class="num">on</td><td class="num">off</td><td class="num">TXN_A1</td></tr>
+            <tr><th scope="row">HYBRID</th><td class="num">on</td><td class="num">off</td><td class="num">A1_EVENT_OUTBOX</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </details>
 
-  <p class="note" style="margin-top:1rem"><strong>Debezium connector (CDC)</strong> — key parameters:</p>
-  <p><code>snapshot.mode=no_data · log.mining.strategy=online_catalog · log.mining.transaction.retention.ms=180000 · heartbeat.interval.ms=1000 · decimal.handling.mode=string</code></p>
+  <h3>Debezium connector (CDC)</h3>
+  <p class="note">Key parameters:</p>
+  <pre><code>snapshot.mode=no_data · log.mining.strategy=online_catalog · log.mining.transaction.retention.ms=180000 · heartbeat.interval.ms=1000 · decimal.handling.mode=string</code></pre>
   <p class="note">The 180,000 ms retention is fault F5's exact target — a transaction held open
     past it is silently discarded by design, confirmed by the fault test. HYBRID differs by
     capturing <code>A1_EVENT_OUTBOX</code> instead, through Debezium's <code>EventRouter</code>
     outbox transform, with <code>table.field.event.timestamp</code> deliberately left unset
     (setting it produced a physically impossible −1 ms median latency in an earlier draft).</p>
 
-  <p class="note" style="margin-top:1rem"><strong>Fault injection — exact mechanics</strong>
-    (<code>scripts/inject-fault.sh</code>):</p>
-  <div class="scroll"><table>
-    <thead><tr><th>Fault</th><th>Exact action</th></tr></thead>
-    <tbody>
-      <tr><td>F8</td><td>Recompiles <code>PKG_A1_EVENT</code> with its type-resolution function forced to return an invalid value, making the capture package invalid mid-run</td></tr>
-      <tr><td>F11</td><td><code>PKG_SYNTH_DATA.generate_transactions(p_count=20000, p_source='BATCH_EOD')</code> — writes <code>TXN_A1</code> directly, bypassing the app and the outbox contract</td></tr>
-      <tr><td>F11B</td><td>Same batch, with <code>p_emit_outbox =&gt; TRUE</code> — the same writer honouring the shared contract</td></tr>
-      <tr><td>F4/F4R</td><td>Stop Connect → switch/archive the redo log 10×→ <code>RMAN DELETE ARCHIVELOG ALL</code> → restart Connect</td></tr>
-      <tr><td>F5/F5R</td><td>5,000-row transaction held open 240 s (60 s past the 180 s retention) before commit</td></tr>
-    </tbody>
-  </table></div>
+  <details class="disclosure">
+    <summary>Fault injection — exact mechanics (<code>scripts/inject-fault.sh</code>)</summary>
+    <div class="disclosure-body">
+      <div class="scroll-region" tabindex="0" role="region" aria-labelledby="fault-caption">
+        <table>
+          <caption id="fault-caption">Exact mechanism used to inject each fault referenced in the matrix and findings.</caption>
+          <thead><tr><th scope="col">Fault</th><th scope="col">Exact action</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">F8</th><td>Recompiles <code>PKG_A1_EVENT</code> with its type-resolution function forced to return an invalid value, making the capture package invalid mid-run</td></tr>
+            <tr><th scope="row">F11</th><td><code>PKG_SYNTH_DATA.generate_transactions(p_count=20000, p_source='BATCH_EOD')</code> — writes <code>TXN_A1</code> directly, bypassing the app and the outbox contract</td></tr>
+            <tr><th scope="row">F11B</th><td>Same batch, with <code>p_emit_outbox =&gt; TRUE</code> — the same writer honouring the shared contract</td></tr>
+            <tr><th scope="row">F4/F4R</th><td>Stop Connect → switch/archive the redo log 10×→ <code>RMAN DELETE ARCHIVELOG ALL</code> → restart Connect</td></tr>
+            <tr><th scope="row">F5/F5R</th><td>5,000-row transaction held open 240 s (60 s past the 180 s retention) before commit</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </details>
 
-  <p class="note" style="margin-top:1rem"><strong>Approach 1 (trigger+AQ)</strong>: queue table
-    <code>A1_EVT_QT</code> (payload <code>SYS.AQ$_JMS_TEXT_MESSAGE</code>), queue
-    <code>A1_EVT_Q</code>, compound trigger <code>TRG_TXN_A1_AQ</code> buffering per-row and
-    emitting per-statement, <code>DBMS_AQ.ENQUEUE</code> with
-    <code>visibility =&gt; ON_COMMIT</code>. Bridge dequeues batches of up to 500 messages
-    (500 ms receive timeout), single-threaded to preserve enqueue order.</p>
-  <p class="note"><strong>Approach 2 (outbox)</strong>: table <code>A1_EVENT_OUTBOX</code>
-    (insert-only), write contract <code>EMIT_A1_EVENT</code> — no autonomous transaction, the
-    caller's transaction owns the commit. <code>OutboxRelay</code> polls every 200 ms, batch
-    size 500.</p>
+  <details class="disclosure">
+    <summary>Approach 1 &amp; Approach 2 — implementation detail</summary>
+    <div class="disclosure-body">
+      <p class="note"><strong>Approach 1 (trigger+AQ)</strong>: queue table
+        <code>A1_EVT_QT</code> (payload <code>SYS.AQ$_JMS_TEXT_MESSAGE</code>), queue
+        <code>A1_EVT_Q</code>, compound trigger <code>TRG_TXN_A1_AQ</code> buffering per-row and
+        emitting per-statement, <code>DBMS_AQ.ENQUEUE</code> with
+        <code>visibility =&gt; ON_COMMIT</code>. Bridge dequeues batches of up to 500 messages
+        (500 ms receive timeout), single-threaded to preserve enqueue order.</p>
+      <p class="note"><strong>Approach 2 (outbox)</strong>: table <code>A1_EVENT_OUTBOX</code>
+        (insert-only), write contract <code>EMIT_A1_EVENT</code> — no autonomous transaction, the
+        caller's transaction owns the commit. <code>OutboxRelay</code> polls every 200 ms, batch
+        size 500.</p>
+    </div>
+  </details>
 </section>
 
+<!-- ═══════════════════════════════════════════════ 9. Q&A ═══ -->
 <section class="box" id="qa">
   <div class="kicker">For the meeting</div>
   <h2>9. Anticipated questions and objections</h2>
@@ -600,7 +972,7 @@
       <p class="say">Say:</p>
       <p>"Here" — open §1, walk latency → redo → loss → LOE left to right, then §7 for the
       constraint-driven recommendation. Do not read every row; point at the ones with a colour:
-      AQ's 40% payment failure (bad-txt, §1/§4), CDC's near-zero redo (good-txt, §1/§2).</p>
+      AQ's 40% payment failure (risk, §1/§4), CDC's near-zero redo (favorable, §1/§2).</p>
     </div>
   </details>
 
@@ -665,10 +1037,54 @@
   </details>
 </section>
 
+</main>
+
 <footer>
   Source: <code>docs/empirical_comparison_results.md</code> · Raw data: <code>results/summary.csv</code>
   · Full statistics: <code>results/aggregate-P1.md</code> · ITPU master's thesis
 </footer>
 </div>
+
+<script>
+(function () {
+  "use strict";
+  // Progressive enhancement only — every feature below degrades to plain
+  // anchor links / always-visible scroll cues if it fails or is unsupported.
+  try {
+    var navLinks = Array.prototype.slice.call(document.querySelectorAll('nav.jump a'));
+    var targets = navLinks
+      .map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); })
+      .filter(Boolean);
+    if ('IntersectionObserver' in window && targets.length) {
+      var byId = {};
+      navLinks.forEach(function (a) { byId[a.getAttribute('href').slice(1)] = a; });
+      var current = null;
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            if (current) current.removeAttribute('aria-current');
+            current = byId[entry.target.id];
+            if (current) current.setAttribute('aria-current', 'location');
+          }
+        });
+      }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+      targets.forEach(function (t) { io.observe(t); });
+    }
+  } catch (e) { /* nav still works without active-state highlighting */ }
+
+  try {
+    document.querySelectorAll('.scroll-region').forEach(function (region) {
+      var cueId = region.getAttribute('id') === 'matrix-scroll' ? 'matrix-cue'
+                : region.getAttribute('id') === 'diagram-scroll' ? 'diagram-cue' : null;
+      if (!cueId) return;
+      var cue = document.getElementById(cueId);
+      if (!cue) return;
+      region.addEventListener('scroll', function () {
+        if (region.scrollLeft > 12) cue.style.opacity = '0.35'; else cue.style.opacity = '1';
+      }, { passive: true });
+    });
+  } catch (e) { /* scroll cue simply stays visible */ }
+})();
+</script>
 </body>
 </html>
