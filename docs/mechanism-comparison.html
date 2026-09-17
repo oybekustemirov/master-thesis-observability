@@ -21,7 +21,7 @@
   --sp-1:.25rem; --sp-2:.5rem; --sp-3:.75rem; --sp-4:1rem; --sp-5:1.5rem; --sp-6:2rem; --sp-7:3rem;
   --radius-sm:3px; --radius-md:6px; --radius-lg:10px;
   --content-max:78rem;
-  --nav-h:2.9rem;
+  --nav-h:4.5rem;
 
   --step--1:.8125rem; --step-0:.9375rem; --step-1:1.05rem; --step-2:1.25rem; --step-3:1.55rem; --step-4:clamp(1.6rem,3.6vw,2.25rem);
 }
@@ -37,7 +37,6 @@
 }
 * { box-sizing:border-box; }
 html { -webkit-text-size-adjust:100%; }
-@media (prefers-reduced-motion: no-preference) { html { scroll-behavior:smooth; } }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration:0.001ms !important; animation-iteration-count:1 !important;
     transition-duration:0.001ms !important; scroll-behavior:auto !important; }
@@ -111,12 +110,13 @@ h1 { font-family:var(--f-display); font-weight:600; font-size:var(--step-4);
 
 /* ── 5. Navigation ────────────────────────────────────────────────── */
 nav.jump { position:sticky; top:0; z-index:20; background:var(--ground);
-           display:flex; gap:.35rem; flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch;
+           display:grid; grid-template-columns:repeat(9,minmax(0,1fr)); gap:.35rem; overflow:visible;
            padding:.65rem 0; margin-bottom:.7rem; border-bottom:1px solid var(--rule);
-           scrollbar-width:thin; height:var(--nav-h); }
-nav.jump a { font-family:var(--f-mono); font-size:.72rem; text-decoration:none; flex:none;
+           min-height:var(--nav-h); }
+nav.jump a { font-family:var(--f-mono); font-size:.68rem; line-height:1.25; text-decoration:none;
+             min-width:0; display:flex; align-items:center; justify-content:center; text-align:center;
              color:var(--ink-2); background:var(--surface); border:1px solid var(--rule-2);
-             padding:.32rem .65rem; border-radius:3px; white-space:nowrap; }
+             padding:.42rem .3rem; border-radius:3px; white-space:normal; }
 nav.jump a:hover { color:var(--accent); border-color:var(--accent); }
 nav.jump a[aria-current="location"] { color:var(--surface); background:var(--accent); border-color:var(--accent); }
 
@@ -275,6 +275,13 @@ footer { margin-top:2.2rem; border-top:1px solid var(--rule-2); padding-top:.8re
 }
 
 /* ── 16. Small-viewport guarantees (360px+) ───────────────────────── */
+@media (max-width:900px) {
+  :root { --nav-h:2.9rem; }
+  nav.jump { display:flex; gap:.35rem; flex-wrap:nowrap; overflow-x:auto;
+             -webkit-overflow-scrolling:touch; scrollbar-width:thin; min-height:var(--nav-h); }
+  nav.jump a { flex:none; justify-content:flex-start; text-align:left; white-space:nowrap;
+               font-size:.72rem; padding:.32rem .65rem; }
+}
 @media (max-width:420px) {
   .wrap { padding:0 .7rem 4rem; }
   h1 { font-size:1.4rem; }
@@ -348,15 +355,15 @@ footer { margin-top:2.2rem; border-top:1px solid var(--rule-2); padding-top:.8re
 </ul>
 
 <nav class="jump" aria-label="Section navigation">
-  <a href="#matrix">1. Comparison matrix</a>
-  <a href="#latency">2. Latency vs. redo</a>
-  <a href="#silent">3. Silent failure (CDC)</a>
+  <a href="#matrix">1. Matrix</a>
+  <a href="#latency">2. Latency &amp; redo</a>
+  <a href="#silent">3. Silent CDC failure</a>
   <a href="#coverage">4. Writer coverage</a>
-  <a href="#loe">5. Implementation effort</a>
-  <a href="#refuted">6. Refuted predictions</a>
+  <a href="#loe">5. Effort</a>
+  <a href="#refuted">6. Refuted claims</a>
   <a href="#recommend">7. Recommendation</a>
-  <a href="#config">8. Exact configuration</a>
-  <a href="#qa">9. Q&amp;A / objections</a>
+  <a href="#config">8. Setup</a>
+  <a href="#qa">9. Q&amp;A</a>
 </nav>
 
 <main id="main">
