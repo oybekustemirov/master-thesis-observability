@@ -174,7 +174,7 @@ th[scope="row"] { font-weight:600; }
 .scroll-region:focus-visible { outline:2.5px solid var(--accent); outline-offset:1px; }
 .scroll-region table { border:none; }
 .scroll-region.plain { border:none; border-radius:0; }
-@media (max-width:700px) { .scroll-cue { display:inline-flex; } }
+@media (max-width:1000px) { .scroll-cue { display:inline-flex; } }
 
 /* sticky first column + header on the matrix */
 .matrix-table thead th { position:sticky; top:0; z-index:3; }
@@ -185,7 +185,7 @@ th[scope="row"] { font-weight:600; }
 .matrix-table tr.group-row th:first-child { z-index:4; }
 
 /* ── 9. Capture-path diagram ──────────────────────────────────────── */
-.diagram-inner { min-width:760px; padding:.4rem; }
+.diagram-inner { min-width:920px; padding:.4rem; }
 .diagram-inner svg { width:100%; height:auto; display:block; margin:0 auto; font-family:var(--f-body); }
 figcaption.muted { margin-top:.6rem; font-size:.82rem; }
 
@@ -457,7 +457,7 @@ footer { margin-top:2.2rem; border-top:1px solid var(--rule-2); padding-top:.8re
   <figure class="fig-tight">
     <div class="scroll-region plain" tabindex="0" role="region" aria-labelledby="diagram-caption" id="diagram-scroll">
       <div class="diagram-inner">
-        <svg viewBox="0 0 960 600" width="960" height="600" role="img"
+        <svg viewBox="0 0 1060 600" width="1060" height="600" role="img"
              aria-label="Four event-capture methods compared by what each adds inside the same database
                commit as the business write, before delivery to Kafka. The trigger method adds a capture
                step inside the commit that fault-test F8 broke, stopping 40 percent of payments. The
@@ -470,20 +470,22 @@ footer { margin-top:2.2rem; border-top:1px solid var(--rule-2); padding-top:.8re
             </marker>
           </defs>
 
-          <text x="290" y="28" text-anchor="middle" font-size="13" font-weight="600" fill="currentColor">
+          <text x="395" y="28" text-anchor="middle" font-size="13" font-weight="600" fill="currentColor">
             Inside the business transaction</text>
-          <text x="675" y="28" text-anchor="middle" font-size="13" font-weight="600" fill="currentColor"
+          <text x="780" y="28" text-anchor="middle" font-size="13" font-weight="600" fill="currentColor"
                 opacity=".7">After commit — asynchronous</text>
-          <line x1="547" y1="52" x2="547" y2="560" stroke="currentColor" stroke-width="1.5"
+          <line x1="652" y1="52" x2="652" y2="560" stroke="currentColor" stroke-width="1.5"
                 stroke-dasharray="2 6" opacity=".4"/>
-          <text x="547" y="580" text-anchor="middle" font-size="11.5" fill="currentColor" opacity=".55">
+          <text x="652" y="580" text-anchor="middle" font-size="11.5" fill="currentColor" opacity=".55">
             commit boundary</text>
 
           <!-- Row 1 : A1 Trigger + AQ -->
           <g>
-            <rect x="15" y="65" width="930" height="110" rx="12" fill="var(--c-aq)" opacity=".07"/>
+            <rect x="15" y="65" width="1030" height="110" rx="12" fill="var(--c-aq)" opacity=".07"/>
             <rect x="14" y="115" width="10" height="10" rx="2" fill="var(--c-aq)"/>
             <text x="32" y="124" font-size="13" font-weight="700" fill="var(--c-aq)">A1 · Trigger + AQ</text>
+
+            <g transform="translate(105 0)">
 
             <rect x="110" y="85" width="150" height="70" rx="8" fill="none" stroke="var(--c-aq)" stroke-width="1.6"/>
             <text x="185" y="115" text-anchor="middle" font-size="12.5">TXN_A1 write</text>
@@ -510,13 +512,16 @@ footer { margin-top:2.2rem; border-top:1px solid var(--rule-2); padding-top:.8re
             <rect x="815" y="90" width="115" height="60" rx="8" fill="var(--c-aq)" opacity=".16"/>
             <rect x="815" y="90" width="115" height="60" rx="8" fill="none" stroke="var(--c-aq)" stroke-width="1.6"/>
             <text x="872" y="125" text-anchor="middle" font-size="13" font-weight="700">Kafka</text>
+            </g>
           </g>
 
           <!-- Row 2 : A2 Outbox -->
           <g>
-            <rect x="15" y="195" width="930" height="110" rx="12" fill="var(--c-outbox)" opacity=".07"/>
+            <rect x="15" y="195" width="1030" height="110" rx="12" fill="var(--c-outbox)" opacity=".07"/>
             <rect x="14" y="245" width="10" height="10" rx="2" fill="var(--c-outbox)"/>
             <text x="32" y="254" font-size="13" font-weight="700" fill="var(--c-outbox)">A2 · Application Outbox</text>
+
+            <g transform="translate(105 0)">
 
             <rect x="110" y="215" width="150" height="70" rx="8" fill="none" stroke="var(--c-outbox)" stroke-width="1.6"/>
             <text x="185" y="245" text-anchor="middle" font-size="12.5">TXN_A1 write</text>
@@ -542,13 +547,16 @@ footer { margin-top:2.2rem; border-top:1px solid var(--rule-2); padding-top:.8re
             <rect x="815" y="220" width="115" height="60" rx="8" fill="var(--c-outbox)" opacity=".16"/>
             <rect x="815" y="220" width="115" height="60" rx="8" fill="none" stroke="var(--c-outbox)" stroke-width="1.6"/>
             <text x="872" y="255" text-anchor="middle" font-size="13" font-weight="700">Kafka</text>
+            </g>
           </g>
 
           <!-- Row 3 : A3 CDC -->
           <g>
-            <rect x="15" y="325" width="930" height="110" rx="12" fill="var(--c-cdc)" opacity=".07"/>
+            <rect x="15" y="325" width="1030" height="110" rx="12" fill="var(--c-cdc)" opacity=".07"/>
             <rect x="14" y="375" width="10" height="10" rx="2" fill="var(--c-cdc)"/>
             <text x="32" y="384" font-size="13" font-weight="700" fill="var(--c-cdc)">A3 · Log-based CDC</text>
+
+            <g transform="translate(105 0)">
 
             <rect x="110" y="345" width="150" height="70" rx="8" fill="none" stroke="var(--c-cdc)" stroke-width="1.6"/>
             <text x="185" y="375" text-anchor="middle" font-size="12.5">TXN_A1 write</text>
@@ -572,13 +580,16 @@ footer { margin-top:2.2rem; border-top:1px solid var(--rule-2); padding-top:.8re
             <rect x="815" y="350" width="115" height="60" rx="8" fill="var(--c-cdc)" opacity=".16"/>
             <rect x="815" y="350" width="115" height="60" rx="8" fill="none" stroke="var(--c-cdc)" stroke-width="1.6"/>
             <text x="872" y="385" text-anchor="middle" font-size="13" font-weight="700">Kafka</text>
+            </g>
           </g>
 
           <!-- Row 4 : HYBRID -->
           <g>
-            <rect x="15" y="455" width="930" height="110" rx="12" fill="var(--c-hybrid)" opacity=".07"/>
+            <rect x="15" y="455" width="1030" height="110" rx="12" fill="var(--c-hybrid)" opacity=".07"/>
             <rect x="14" y="505" width="10" height="10" rx="2" fill="var(--c-hybrid)"/>
             <text x="32" y="514" font-size="13" font-weight="700" fill="var(--c-hybrid)">HYBRID · Outbox + CDC</text>
+
+            <g transform="translate(105 0)">
 
             <rect x="110" y="475" width="150" height="70" rx="8" fill="none" stroke="var(--c-hybrid)" stroke-width="1.6"/>
             <text x="185" y="505" text-anchor="middle" font-size="12.5">TXN_A1 write</text>
@@ -605,6 +616,7 @@ footer { margin-top:2.2rem; border-top:1px solid var(--rule-2); padding-top:.8re
             <rect x="815" y="480" width="115" height="60" rx="8" fill="var(--c-hybrid)" opacity=".16"/>
             <rect x="815" y="480" width="115" height="60" rx="8" fill="none" stroke="var(--c-hybrid)" stroke-width="1.6"/>
             <text x="872" y="515" text-anchor="middle" font-size="13" font-weight="700">Kafka</text>
+            </g>
           </g>
         </svg>
       </div>
